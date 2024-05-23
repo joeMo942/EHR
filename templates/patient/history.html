@@ -1,0 +1,217 @@
+{% extends "patient/base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-10">
+            <div class="card">
+              <div class="card-body">
+                <h2 class="card-title text-center mb-4">Medical History Form</h2>
+                {% include "includes/alerts.html" %}
+                <form id="historyForm" class="forms-sample" method="post" action="{% url 'medical_his' %}">
+                  {% csrf_token %}
+
+                  <!-- User ID -->
+                  <div class="form-group">
+                    <label for="userId"><strong>User name</strong></label>
+                    <input type="text" class="form-control" id="userId" value="{{user.first_name }}" readonly>
+                  </div>
+
+                  <!-- Patient ID -->
+                  {% comment %} <div class="form-group">
+                    <label for="patientNumber"><strong>Patient ID</strong></label>
+                    <input type="text" class="form-control" id="patientNumber" name="patientNumber"
+                      value="{{ patient.patient_no }}" readonly>
+                  </div> {% endcomment %}
+
+                  <h4 class="card-title">Medical Conditions</h4>
+                  <div class="symptoms-container">
+                    <label><input type="checkbox" name="conditions" value="Alcohol"
+                        {% if medical_history and medical_history.alcohol %}checked{% endif %}> Alcohol
+                      Consumption</label><br>
+                    <label><input type="checkbox" name="conditions" value="Smoking"
+                        {% if medical_history and medical_history.smoking %}checked{% endif %}> Smoking</label><br>
+                    <label><input type="checkbox" name="conditions" value="HighBloodPressure"
+                        {% if medical_history and medical_history.high_blood_pressure %}checked{% endif %}> High Blood
+                      Pressure</label><br>
+                    <label><input type="checkbox" name="conditions" value="Diabetes"
+                        {% if medical_history and medical_history.diabetes %}checked{% endif %}> Diabetes</label><br>
+                    <label><input type="checkbox" name="conditions" value="HighCholesterol"
+                        {% if medical_history and medical_history.high_colest %}checked{% endif %}> High
+                      Cholesterol</label><br>
+                  </div>
+
+                  <h4 class="card-title mt-4">Vaccinations</h4>
+                  <div class="vaccinationFields">
+                    <div class="commonVaccinations">
+                      <label><input type="checkbox" name="vaccinations" value="Influenza"
+                          {% if 'Influenza' in vaccinations %}checked{% endif %}> Influenza</label><br>
+                      <label><input type="checkbox" name="vaccinations" value="MMR"
+                          {% if 'MMR' in vaccinations %}checked{% endif %}> MMR (Measles, Mumps, Rubella)</label><br>
+                      <label><input type="checkbox" name="vaccinations" value="DTaP"
+                          {% if 'DTaP' in vaccinations %}checked{% endif %}> DTaP (Diphtheria, Tetanus,
+                        Pertussis)</label><br>
+                      <label><input type="checkbox" name="vaccinations" value="Hepatitis B"
+                          {% if 'Hepatitis B' in vaccinations %}checked{% endif %}> Hepatitis B</label><br>
+                    </div>
+                  </div>
+
+                  <h4 class="card-title mt-4">Diseases</h4>
+                  <div class="diseaseFields">
+                    <div class="commonDiseases">
+                      <label><input type="checkbox" name="diseases" value="Hypertension"
+                          {% if 'Hypertension' in diseases %}checked{% endif %}> Hypertension</label><br>
+                      <label><input type="checkbox" name="diseases" value="Diabetes"
+                          {% if 'Diabetes' in diseases %}checked{% endif %}> Diabetes</label><br>
+                      <label><input type="checkbox" name="diseases" value="Asthma"
+                          {% if 'Asthma' in diseases %}checked{% endif %}> Asthma</label><br>
+                      <label><input type="checkbox" name="diseases" value="Arthritis"
+                          {% if 'Arthritis' in diseases %}checked{% endif %}> Arthritis</label><br>
+                    </div>
+                  </div>
+
+                  <h4 class="card-title mt-4">Illnesses</h4>
+                  <div class="illnessFields">
+                    <div class="commonIllnesses">
+                      <label><input type="checkbox" name="illnesses" value="Common Cold"
+                          {% if 'Common Cold' in illnesses %}checked{% endif %}> Common Cold</label><br>
+                      <label><input type="checkbox" name="illnesses" value="Flu"
+                          {% if 'Flu' in illnesses %}checked{% endif %}> Flu</label><br>
+                      <label><input type="checkbox" name="illnesses" value="Strep Throat"
+                          {% if 'Strep Throat' in illnesses %}checked{% endif %}> Strep Throat</label><br>
+                      <label><input type="checkbox" name="illnesses" value="Sinusitis"
+                          {% if 'Sinusitis' in illnesses %}checked{% endif %}> Sinusitis</label><br>
+                    </div>
+                  </div>
+
+                  <h4 class="card-title mt-4">Previous Surgeries</h4>
+                  <div class="prevSurgeryFields">
+                    {% for prev_surgery in prev_surgeries %}
+                    <div class="prevSurgeryField">
+                      <label for="prevSurgeryName">Surgery Name:</label>
+                      <input type="text" class="form-control prevSurgeryName" name="prevSurgeries"
+                        value="{{ prev_surgery.prev_surgery_name }}" placeholder="Surgery Name">
+                    </div>
+                    {% endfor %}
+                    {% if not prev_surgeries %}
+                    <div class="prevSurgeryField">
+                      <label for="prevSurgeryName">Surgery Name:</label>
+                      <input type="text" class="form-control prevSurgeryName" name="prevSurgeries"
+                        placeholder="Surgery Name">
+                    </div>
+                    {% endif %}
+                  </div>
+
+                  <h4 class="card-title mt-4">Allergies</h4>
+
+                  <!-- Medication Allergies -->
+                  <div class="allergiesFields">
+                    <div class="medicationAllergy">
+                      <label>Are you allergic to any medications?</label><br>
+                      <label><input type="radio" name="medicationAllergy" value="yes"
+                          {% if medication_allergies %}checked{% endif %}> Yes</label>
+                      <label><input type="radio" name="medicationAllergy" value="no"
+                          {% if not medication_allergies %}checked{% endif %}> No</label>
+                      <div id="medicationAllergyDetails">
+                        <ul id="medicationAllergyList">
+                          {% for allergy in medication_allergies %}
+                          <li><input type="text" class="form-control medicationAllergyField" name="medicationAllergies"
+                              value="{{ allergy.name }}" placeholder="Specify medication allergy"></li>
+                          {% endfor %}
+                          {% if not medication_allergies %}
+                          <li><input type="text" class="form-control medicationAllergyField" name="medicationAllergies"
+                              placeholder="Specify medication allergy"></li>
+                          {% endif %}
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="foodAllergy mt-3">
+                      <label>Are you allergic to any foods?</label><br>
+                      <label><input type="radio" name="foodAllergy" value="yes"
+                          {% if food_allergies %}checked{% endif %}> Yes</label>
+                      <label><input type="radio" name="foodAllergy" value="no"
+                          {% if not food_allergies %}checked{% endif %}> No</label>
+                      <div id="foodAllergyDetails">
+                        <ul id="foodAllergyList">
+                          {% for allergy in food_allergies %}
+                          <li><input type="text" class="form-control foodAllergyField" name="foodAllergies"
+                              value="{{ allergy.name }}" placeholder="Specify food allergy"></li>
+                          {% endfor %}
+                          {% if not food_allergies %}
+                          <li><input type="text" class="form-control foodAllergyField" name="foodAllergies"
+                              placeholder="Specify food allergy"></li>
+                          {% endif %}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                  <h4 class="card-title mt-4">Current Medications</h4>
+                  <div class="currentMedications">
+                    <label>Are you currently taking any medications?</label><br>
+                    <label><input type="radio" name="takingMedications" value="yes"
+                        {% if current_medications %}checked{% endif %}> Yes</label>
+                    <label><input type="radio" name="takingMedications" value="no"
+                        {% if not current_medications %}checked{% endif %}> No</label>
+                    <div id="medicationsDetails">
+                      <div id="medicationFields">
+                        {% for medication in current_medications %}
+                        <div class="medicationField">
+                          <label for="medicationName">Medication Name:</label>
+                          <input type="text" class="form-control medicationName" name="medications[name]"
+                            value="{{ medication.name }}" placeholder="Medication Name">
+                          <label for="medicationDosage">Dosage:</label>
+                          <input type="text" class="form-control medicationDosage" name="medications[dosage]"
+                            value="{{ medication.dosage }}" placeholder="Dosage">
+                          <label for="medicationDuration">Duration:</label>
+                          <input type="text" class="form-control medicationDuration" name="medications[duration]"
+                            value="{{ medication.duration }}" placeholder="Duration">
+                        </div>
+                        {% endfor %}
+                        {% if not current_medications %}
+                        <div class="medicationField">
+                          <label for="medicationName">Medication Name:</label>
+                          <input type="text" class="form-control medicationName" name="medications[name]"
+                            placeholder="Medication Name">
+                          <label for="medicationDosage">Dosage:</label>
+                          <input type="text" class="form-control medicationDosage" name="medications[dosage]"
+                            placeholder="Dosage">
+                          <label for="medicationDuration">Duration:</label>
+                          <input type="text" class="form-control medicationDuration" name="medications[duration]"
+                            placeholder="Duration">
+                        </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+
+                  <h4 class="card-title mt-4">Additional Notes</h4>
+                  <div class="form-group">
+                    {% if medical_history %}
+                    <textarea class="form-control" id="additionalNotes" name="additionalNotes" rows="4"
+                      placeholder="Additional Notes">{{ medical_history.additional_notes }}</textarea>
+                    {% else %}
+                    <textarea class="form-control" id="additionalNotes" name="additionalNotes" rows="4"
+                      placeholder="Additional Notes"></textarea>
+                    {% endif %}
+                  </div>
+
+                  <div class="mt-4">
+                    <button type="submit" class="btn btn-primary mr-2">Save Medical History</button>
+                    <button type="button" class="btn btn-light">Cancel</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

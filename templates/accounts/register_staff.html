@@ -1,0 +1,115 @@
+{% extends "includes/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container-scroller">
+    <div class="container-fluid page-body-wrapper full-page-wrapper">
+        <div class="content-wrapper d-flex align-items-center auth px-0">
+            <div class="row w-100 mx-0">
+                <div class="col-lg-4 mx-auto">
+                    <div class="auth-form-light text-left py-5 px-4 px-sm-5">
+                        <div class="brand-logo">
+                            <img src="{% static 'images/logo.svg' %}" alt="logo">
+                        </div>
+                        <h4>Hello! let's get started</h4>
+                        <h6 class="fw-light">Create Your Account.</h6>
+                        {% include "includes/alerts.html" %}
+                        <form class="pt-3" action="{% url 'registerstaff' %}" method="POST">
+                            {% csrf_token %}
+
+                            <div class="form-group">
+                                <label>First name</label>
+                                {{ form.first_name }}
+                                {{ form.first_name.errors }}
+                            </div>
+
+                            <div class="form-group">
+                                <label>Last name</label>
+                                {{ form.last_name }}
+                                {{ form.last_name.errors }}
+                            </div>
+
+                            <div class="form-group">
+                                <label>Email</label>
+                                {{ form.email }}
+                                {{ form.email.errors }}
+                            </div>
+
+                            <div class="form-group">
+                                <label>Phone Number</label>
+                                {{ form.contact_no }}
+                                {{ form.contact_no.errors }}
+                            </div>
+
+                            <div class="form-group">
+                                <label>SSN</label>
+                                {{ form.ssn }}
+                                {{ form.ssn.errors }}
+                            </div>
+
+                            <div class="form-group">
+                                <label>Birth Date</label>
+                                {{ form.birth_date }}
+                                {{ form.birth_date.errors }}
+                            </div>
+
+                            <div class="form-group">
+                                <label>Gender</label>
+                                {{ form.gender }}
+                                {{ form.gender.errors }}
+                            </div>
+                            <div class="form-group">
+                                <label>user type</label>
+                                {{ form.type }}
+                                {{ form.type.errors }}
+                            </div>
+
+                            <div class="form-group">
+                                <label>Password</label>
+                                {{ form.password }}
+                                {{ form.password.errors }}
+                            </div>
+
+                            <div class="form-group">
+                                <label>Confirm Password</label>
+                                {{ form.confirm_password }}
+                                {{ form.confirm_password.errors }}
+                            </div>
+
+                            <div class="mt-3">
+                                <button class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn"
+                                    type="submit">Register
+                                </button>
+                            </div>
+
+                            <div class="my-2 d-flex justify-content-between align-items-center">
+                                <div class="form-check">
+                                    <label class="form-check-label text-muted">
+                                        <input type="checkbox" class="form-check-input">
+                                        Keep me signed in
+                                    </label>
+                                </div>
+                                <a href="#" class="auth-link text-black">Forgot password?</a>
+                            </div>
+
+                            <div class="mb-2">
+                                <button type="button" class="btn btn-block btn-facebook auth-form-btn">
+                                    <i class="ti-facebook me-2"></i>Connect using Facebook
+                                </button>
+                            </div>
+
+                            <div class="text-center mt-4 fw-light">
+                                Don't have an account? <a href="{% url 'register' %}" class="text-primary">Create</a>
+                            </div>
+
+                            {{ form.non_field_errors }}
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- content-wrapper ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+</div>
+{% endblock %}

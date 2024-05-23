@@ -1,0 +1,104 @@
+{% extends "patient/base.html" %}
+{% load static %}
+{% block content %}
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="home-tab">
+          <!---->
+          <div class="row flex-grow">
+            <div class="col-12 grid-margin stretch-card">
+              <div class="card card-rounded table-darkBGImg">
+                <div class="card-body">
+                  <div class="col-sm-8">
+                    <h3 class="text-white upgrade-info mb-0">
+                      Book your <span class="fw-bold">next Doctor</span> Appointment
+                    </h3>
+                    <a href="#" class="btn btn-info upgrade-btn">Book now</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-4 d-flex flex-column">
+              <div class="row flex-grow">
+                <div class="col-md-6 col-lg-12 grid-margin stretch-card">
+                  <div class="card bg-primary card-rounded">
+                    <div class="card-body pb-0">
+                      <h4 class="card-title card-title-dash text-white mb-4">blood pressure</h4>
+                      <div class="row">
+                        <div class="col-sm-4">
+                          <p class="status-summary-ight-white mb-1">value</p>
+                          <h2 class="text-info">180/90</h2>
+                        </div>
+                        <div class="col-sm-8">
+                          <div class="status-summary-chart-wrapper pb-4">
+                            <a><img src="{% static 'bloodpressure.svg'%}" width="50" height="50"></a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 d-flex flex-column">
+              <div class="row flex-grow">
+                <div class="col-md-6 col-lg-12 grid-margin stretch-card">
+                  <div class="card bg-primary card-rounded">
+                    <div class="card-body pb-0">
+                      <h4 class="card-title card-title-dash text-white mb-4">heart beat</h4>
+                      <div class="row">
+                        <div class="col-sm-4">
+                          <p class="status-summary-ight-white mb-1"> Value</p>
+                          <h2 class="text-info">70</h2>
+                        </div>
+                        <div class="col-sm-8">
+                          <div class="status-summary-chart-wrapper pb-4">
+                            <a><img src="{% static 'beat-heart-hospital-svgrepo-com.svg'%}" width="50" height="50"></a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 d-flex flex-column">
+              <div class="row flex-grow">
+                <div class="col-md-6 col-lg-12 grid-margin stretch-card">
+                  <div class="card bg-primary card-rounded">
+                    <div class="card-body pb-0">
+                      <h4 class="card-title card-title-dash text-white mb-4">weight</h4>
+                      <div class="row">
+                        <div class="col-sm-4">
+                          <p class="status-summary-ight-white mb-1">value</p>
+                          <h2 class="text-info">70</h2>
+                        </div>
+                        <div class="col-sm-8">
+                          <div class="status-summary-chart-wrapper pb-4">
+                            <a><img src="{% static 'weight-scales-svgrepo-com.svg'%}" width="50" height="50"></a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- content-wrapper ends -->
+  <!-- partial:partials/_footer.html -->
+
+  <!-- partial -->
+</div>
+<!-- main-panel ends -->
+{% endblock %}
