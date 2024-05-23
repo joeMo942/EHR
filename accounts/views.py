@@ -4,7 +4,7 @@ from .models import Account
 from django.shortcuts import redirect
 from django.contrib import messages, auth
 from django.contrib.auth.decorators import login_required
-
+from patient.models import Patient
 
 # Activation Email
 from django.core.mail import EmailMessage
@@ -76,6 +76,7 @@ def avtivation(request,uidb64,token):
     if user is not None:
         if default_token_generator.check_token(user,token):
             user.is_active=True
+            Patient.objects.create(user=user)
             user.save()
             messages.success(request,"Account has been activated")
             return redirect('login')
