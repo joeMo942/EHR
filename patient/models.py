@@ -4,10 +4,10 @@ from accounts.models import Account
 
 
 class Patient(models.Model):
-    patient_no = models.IntegerField(primary_key=True,auto_created=True)  # The composite primary key (patient_no, assessment_id) found, that is not supported. The first column is selected.
+    patient_no = models.IntegerField(primary_key=True,auto_created=True,blank=False)  # The composite primary key (patient_no, assessment_id) found, that is not supported. The first column is selected.
     # assessment = models.ForeignKey(InitialAssessment, models.DO_NOTHING)
     # nikname=models.CharField(max_length=100)
-    user = models.ForeignKey(Account, on_delete=models.CASCADE, blank=False)
+    user = models.ForeignKey(Account, on_delete=models.CASCADE, blank=False,unique=True)
 
     def __str__(self):
         return f"{self.user.first_name} {self.user.last_name}"
@@ -17,7 +17,7 @@ class Patient(models.Model):
 
 class MedicalHis(models.Model):
     # history_no = models.AutoField(primary_key=True,auto_created=True)
-    patient_no = models.ForeignKey(Patient, on_delete=models.CASCADE, blank=True, null=True)
+    patient_no = models.ForeignKey(Patient, on_delete=models.CASCADE,blank=False)
     alcohol = models.BooleanField(default=False)
     smoking = models.BooleanField(default=False)
     high_blood_pressure = models.BooleanField(default=False)
