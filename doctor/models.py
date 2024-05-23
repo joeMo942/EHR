@@ -1,14 +1,19 @@
 from django.db import models
-
+from accounts.models import Account
 
 class Department(models.Model):
-    name = models.CharField(primary_key=True, max_length=50)
-    location = models.CharField(max_length=100, blank=True, null=True)
-    specialization = models.CharField(max_length=50, blank=True, null=True)
-    medical_id = models.IntegerField()
-    fees = models.IntegerField(blank=True, null=True)
+    name = models.CharField(max_length=50,unique=True,blank=False)
+    location = models.CharField(max_length=100,blank=True)
+    specialization = models.CharField(max_length=50)
+    fees = models.IntegerField(default=0,blank=False)
+
+    def __str__(self):
+        return self.name
 
 
 class Doctor(models.Model):
-    dept_name = models.ForeignKey(Department, models.DO_NOTHING, db_column='dept_name', blank=True, null=True)
-    user = models.ForeignKey('Person', on_delete=models.CASCADE)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE)
+    user = models.ForeignKey(Account, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.user.first_name} {self.user.last_name}"
