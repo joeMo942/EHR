@@ -217,3 +217,6 @@ def save_medical_history(request):
             'current_medications': current_medications,
         }
         return render(request, 'patient/history.html', context)
+    
+def patient_home(request):
+    return render(request, 'patient/index.html')
