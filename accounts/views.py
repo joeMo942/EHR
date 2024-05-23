@@ -96,10 +96,10 @@ def login(request):
         if user is not None:
             auth.login(request,user)
             print(user.type)
-            return redirect('home')
+            return redirect('patient_home')
         else:
             messages.error(request,"Invalid login Email or Password")
-            return redirect('login')
+            return redirect('patient_home')
 
     return render(request, 'accounts/login.html')
 

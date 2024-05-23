@@ -34,7 +34,8 @@ def save_medical_history(request):
             diabetes='Diabetes' in request.POST.getlist('conditions'),
             high_colest='HighCholesterol' in request.POST.getlist('conditions')
         )
-        medical_history.save()
+        if created:
+            medical_history.save()
         # Save vaccinations
         vaccinations = request.POST.getlist('vaccinations')
         for vaccination in vaccinations:
@@ -114,3 +115,6 @@ def save_medical_history(request):
             'current_medications': current_medications,
         }
         return render(request, 'patient/history.html', context)
+    
+def patient_home(request):
+    return render(request, 'patient/index.html')
