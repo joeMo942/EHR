@@ -98,6 +98,8 @@ def login(request):
             print(user.type)
             if user.type == 'doctor':
                 return redirect('doctor_home')
+            elif user.type == 'receptionist':
+                return redirect('receptionist_home')
             else:
                 return redirect('patient_home')
         else:

@@ -163,8 +163,6 @@ def get_availability_by_doctor(request):
     return JsonResponse({'availabilities': [], 'price': 0})
 
 
-    
-
 def booked_appointment(request):
     return render(request, 'patient/booked-appointment.html')
 
