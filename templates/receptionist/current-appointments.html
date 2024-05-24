@@ -1,0 +1,185 @@
+{% extends "includes/base-receptionist.html" %}
+{% load static %}
+{% block content %}
+<!-- partial -->
+<div class="main-panel">
+<div class="content-wrapper">
+    <h2 class="dashboard-heading">Appointment Dashboard</h2>
+    <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Appointments</h4>
+                    <div class="form-group">
+                        <label for="searchSSN">Search by Patient SSN:</label>
+                        <input type="text" id="searchSSN" oninput="searchAppointments()" class="form-control">
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Doctor</th>
+                                    <th>Patient</th>
+                                    <th>Patient SSN</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="appointmentsTableBody">
+                                <!-- Appointment data will be dynamically added here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <section id="manageAppointment" style="display:none;">
+        <h2>Manage Appointment</h2>
+        <form id="manageAppointmentForm">
+            <div class="form-group">
+                <label for="appointmentID">Appointment ID:</label>
+                <input type="text" id="appointmentID" name="appointmentID" required class="form-control" readonly>
+            </div>
+            <div class="form-group">
+                <label for="status">Action:</label>
+                <select id="status" name="status" required class="form-control">
+                    <option value="approved">Approve</option>
+                    <option value="declined">Decline</option>
+                </select>
+            </div>
+            <input type="submit" id="submitButton" value="Submit" class="btn btn-primary">
+        </form>
+    </section>
+</div>
+</div>
+
+<script>
+const appointments = [
+{ doctor: 'Dr. Smith', patient: 'John Doe', ssn: '123-45-6789', date: '2024-05-10', time: '09:00 AM', status: 'pending' },
+{ doctor: 'Dr. Brown', patient: 'Jane Doe', ssn: '987-65-4321', date: '2024-05-12', time: '10:00 AM', status: 'pending' },
+{ doctor: 'Dr. Lee', patient: 'Alice Smith', ssn: '456-78-9123', date: '2024-05-15', time: '11:00 AM', status: 'approved' }
+];
+
+function populateAppointments() {
+const appointmentsTableBody = document.getElementById('appointmentsTableBody');
+appointmentsTableBody.innerHTML = '';
+appointments.forEach(appointment => {
+const row = `
+    <tr>
+        <td>${appointment.doctor}</td>
+        <td>${appointment.patient}</td>
+        <td>${appointment.ssn}</td>
+        <td>${appointment.date}</td>
+        <td>${appointment.time}</td>
+        <td>
+            <select id="status-${appointment.ssn}" onchange="updateStatus('${appointment.ssn}')">
+                <option value="pending" ${appointment.status === 'pending' ? 'selected' : ''}>Pending</option>
+                <option value="approved" ${appointment.status === 'approved' ? 'selected' : ''}>Approved</option>
+                <option value="declined" ${appointment.status === 'declined' ? 'selected' : ''}>Declined</option>
+            </select>
+        </td>
+        <td>
+            <button class="btn btn-primary" onclick="manageAppointment('${appointment.doctor}', '${appointment.patient}', '${appointment.ssn}', '${appointment.date}', '${appointment.time}', '${appointment.status}')">Submit</button>
+        </td>
+    </tr>
+`;
+appointmentsTableBody.innerHTML += row;
+});
+}
+
+function updateStatus(ssn) {
+const statusSelect = document.getElementById(`status-${ssn}`);
+const newStatus = statusSelect.value;
+
+const appointment = appointments.find(app => app.ssn === ssn);
+if (appointment) {
+appointment.status = newStatus;
+
+const statusLabel = document.getElementById(`status-${ssn}`);
+statusLabel.classList.remove('badge-danger', 'badge-success', 'badge-pending');
+statusLabel.classList.add(`badge-${newStatus === 'approved' ? 'success' : newStatus === 'declined' ? 'danger' : 'pending'}`);
+console.log(`Appointment ${ssn} status updated to: ${newStatus}`);
+}
+}
+
+function manageAppointment(doctor, patient, ssn, date, time, status) {
+document.getElementById('appointmentID').value = `${doctor}-${patient}-${ssn}-${date}-${time}`;
+document.getElementById('status').value = status;
+document.getElementById('manageAppointmentForm').dispatchEvent(new Event('submit'));
+}
+
+function handleManageAppointment(event) {
+event.preventDefault();
+const appointmentID = document.getElementById('appointmentID').value;
+const action = document.getElementById('status').value.toLowerCase(); // Convert action to lowercase
+
+const [doctor, patient, ssn, date, time] = appointmentID.split('-');
+
+const appointment = appointments.find(app => 
+app.doctor === doctor && 
+app.patient === patient &&
+app.ssn === ssn &&
+app.date === date && 
+app.time === time
+);
+
+if (appointment) {
+appointment.status = action === 'approve' ? 'approved' : 'declined';
+
+const statusLabel = document.getElementById(`status-${ssn}`);
+statusLabel.textContent = appointment.status;
+statusLabel.classList.remove('badge-danger', 'badge-success');
+statusLabel.classList.add(`badge-${appointment.status === 'approved' ? 'success' : 'danger'}`);
+}
+
+console.log(`Appointment ${appointmentID} status updated to: ${appointment.status}`);
+document.getElementById('manageAppointmentForm').reset();
+}
+
+function searchAppointments() {
+const searchSSN = document.getElementById('searchSSN').value;
+const filteredAppointments = appointments.filter(appointment => appointment.ssn.includes(searchSSN));
+const appointmentsTableBody = document.getElementById('appointmentsTableBody');
+appointmentsTableBody.innerHTML = '';
+filteredAppointments.forEach(appointment => {
+const row = `
+    <tr>
+        <td>${appointment.doctor}</td>
+        <td>${appointment.patient}</td>
+        <td>${appointment.ssn}</td>
+        <td>${appointment.date}</td>
+        <td>${appointment.time}</td>
+        <td>
+            <select id="status-${appointment.ssn}" onchange="updateStatus('${appointment.ssn}')">
+                <option value="pending" ${appointment.status === 'pending' ? 'selected' : ''}>Pending</option>
+                <option value="approved" ${appointment.status === 'approved' ? 'selected' : ''}>Approved</option>
+                <option value="declined" ${appointment.status === 'declined' ? 'selected' : ''}>Declined</option>
+            </select>
+        </td>
+        <td>
+            <button class="btn btn-primary" onclick="manageAppointment('${appointment.doctor}', '${appointment.patient}', '${appointment.ssn}', '${appointment.date}', '${appointment.time}', '${appointment.status}')">Submit</button>
+        </td>
+    </tr>
+`;
+appointmentsTableBody.innerHTML += row;
+});
+}
+
+window.onload = function() {
+populateAppointments();
+document.getElementById('manageAppointmentForm').addEventListener('submit', handleManageAppointment);
+};
+
+</script>
+</script>
+
+<!-- content-wrapper ends -->
+<!-- partial:partials/_footer.html -->
+
+<!-- partial -->
+</div>
+<!-- main-panel ends -->
+{% endblock %}  
