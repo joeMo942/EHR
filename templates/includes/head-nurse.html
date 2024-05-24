@@ -1,0 +1,101 @@
+{% load static %}
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Nurse Dashboard</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="{% static 'vendors/feather/feather.css' %}">
+    <link rel="stylesheet" href="{% static 'vendors/mdi/css/materialdesignicons.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendors/ti-icons/css/themify-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'vendors/typicons/typicons.css' %}">
+    <link rel="stylesheet" href="{% static 'vendors/simple-line-icons/css/simple-line-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'vendors/css/vendor.bundle.base.css' %}">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <link rel="stylesheet" href="{% static 'vendors/datatables.net-bs4/dataTables.bootstrap4.css' %}">
+    <link rel="stylesheet" href="{% static 'js/select.dataTables.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendors/select2/select2.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendors/select2-bootstrap-theme/select2-bootstrap.min.css' %}">
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="{% static 'css/vertical-layout-light/style.css' %}">
+    <!-- endinject -->
+    <link rel="icon" href="{% static 'alpha-g-circle.svg' %}" type="image/svg+xml">
+</head>
+<style>
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+h1 {
+    text-align: center;
+    color: #333;
+}
+form {
+    display: flex;
+    flex-direction: column;
+}
+label {
+    margin: 10px 0 5px;
+    color: #333;
+}
+input, textarea {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+.submit-container {
+    text-align: center;
+}
+.submit-container input {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+.submit-container input:hover {
+    background-color: #218838;
+}
+.welcome-text {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.welcome-text .text-black {
+    font-weight: bold;
+    margin-left: 10px;
+}
+.navbar-menu-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+.navbar-menu-wrapper .navbar-nav {
+    display: flex;
+    align-items: center;
+}
+.navbar-menu-wrapper .navbar-nav .nav-item {
+    margin-left: 20px;
+}
+.navbar-menu-wrapper .navbar-nav .profile-img {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+}
+.navbar-menu-wrapper .navbar-nav .nav-item input {
+    border: none;
+    background: transparent;
+}
+.assessment-header h1 {
+    font-size: 1.5em; /* Adjust the font size here */
+}
+</style>

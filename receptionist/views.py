@@ -1,6 +1,5 @@
 from django.http import JsonResponse
 from django.shortcuts import render
-
 from doctor.models import Department, Doctor, Account
 
 def receptionist_home(request):

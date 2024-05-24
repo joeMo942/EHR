@@ -100,8 +100,10 @@ def login(request):
                 return redirect('doctor_home')
             elif user.type == 'receptionist':
                 return redirect('receptionist_home')
-            else:
+            elif user.type == 'patient':
                 return redirect('patient_home')
+            elif user.type == 'nurse':
+                return redirect('nurse_home')
         else:
             messages.error(request,"Invalid login Email or Password")
             return redirect('login')

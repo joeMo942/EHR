@@ -27,5 +27,5 @@ urlpatterns = [
     path('patient/',include('patient.urls')),
     path('doctor/',include('doctor.urls')),
     path('receptionist/',include('receptionist.urls')),
-
+    path('nurse/',include('nurse.urls')),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
