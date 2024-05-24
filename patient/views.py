@@ -120,3 +120,9 @@ def appointment(request):
 def patient_home(request):
     return render(request, 'patient/index.html')
 
+def booked_appointment(request):
+    return render(request, 'patient/booked-appointment.html')
+
+def test_results(request):
+    return render(request, 'patient/test-results.html')
+
