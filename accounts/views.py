@@ -1,4 +1,6 @@
 from django.shortcuts import render
+
+from doctor.models import Doctor
 from .forms import RegistrationForm
 from .models import Account
 from django.shortcuts import redirect
@@ -133,8 +135,10 @@ def registerstaff(request):
                                             gender=gender,type=type,password=password)
             user.is_staff=True
             user.is_active=True
-
             user.save()
+
+            # if user.type == 'doctor':
+            #     Doctor.objects.create(user=user)
             messages.success(request,"The account has been created")
             return redirect('registerstaff')
     else:

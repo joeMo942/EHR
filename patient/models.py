@@ -105,3 +105,83 @@ class Appointment(models.Model):
 
     def __str__(self):
         return f"Appointment for {self.patient_no.user.first_name} with {self.doctor} at {self.availability_time}"
+
+# lookups
+class Symptomslu(models.Model):
+    severity_cohices = [
+        ('mild', 'Mild'),
+        ('moderate', 'Moderate'),
+        ('severe', 'Severe'),
+    ]
+    symptomsname=models.CharField( max_length=100, unique=True )
+    frequency=models.IntegerField(default=0)
+    duration=models.CharField(max_length=50,blank=True, null=True)
+    severity=models.CharField(max_length=50,choices=severity_cohices ,blank=True, null=True)
+    def __str__(self):
+        return self.symptomsname
+    
+class Diagnosislu(models.Model):
+    diagnosisname=models.CharField(max_length=100, unique=True)
+    icd_code=models.IntegerField(default=0 ,unique=True)
+    description=models.CharField(max_length=500,blank=True, null=True)
+    diagnositc_criteria=models.CharField(max_length=500,blank=True, null=True)
+    treatment_option = models.CharField(max_length=200, blank=True, null=True)
+    category = models.CharField(max_length=100, blank=True, null=True)
+
+
+    def __str__(self):
+        return self.diagnosisname
+    
+class Medicationlu(models.Model):
+    medicationname = models.CharField(max_length=255, unique=True)
+    genericname = models.CharField(max_length=255, blank=True, null=True)
+    frequency = models.IntegerField(default=0)
+
+    strength = models.CharField(max_length=50, blank=True, null=True)
+    avdosage = models.IntegerField(default=0, blank=True, null=True)
+    routeofadministration = models.CharField(max_length=100, blank=True, null=True)
+    package = models.CharField(max_length=100, blank=True, null=True)
+    brand = models.CharField(max_length=255, blank=True, null=True)
+    lactation = models.IntegerField(blank=True, null=True)
+    interaction = models.TextField(blank=True, null=True)
+    pregnancy = models.BooleanField(blank=True, null=True)
+    indication = models.TextField(blank=True, null=True)
+    children = models.BooleanField(default=True, blank=True, null=True)
+    effectondrive = models.TextField(blank=True, null=True)
+    overdose = models.TextField(blank=True, null=True)
+    sideeffects = models.TextField(blank=True, null=True)
+    contraindications = models.TextField(blank=True, null=True)
+    composition = models.TextField(blank=True, null=True)
+    storage = models.TextField(blank=True, null=True)
+    pharmaceuticalform = models.TextField(blank=True, null=True)
+    shelflife = models.CharField(max_length=50, blank=True, null=True)
+    warningandprecautions = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return self.medicationname
+
+# end lookups
+
+class Encounters(models.Model):
+
+    patient= models.ForeignKey(Patient, on_delete=models.CASCADE)
+    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
+    symptoms = models.ManyToManyField(Symptomslu)
+    diagnosis = models.ManyToManyField(Diagnosislu)
+    medication = models.ManyToManyField(Medicationlu)
+    appointment= models.OneToOneField(Appointment,on_delete=models.CASCADE)
+    notes = models.CharField(max_length=600, blank=True, null=True)
+
+    crearated_at = models.DateTimeField(auto_now_add=True)
+
+    # e_time = models.TimeField(blank=True, null=True)
+    # visit = models.ForeignKey('Visit', models.DO_NOTHING, blank=True, null=True)
+    treatment_type = models.CharField(max_length=100, blank=True, null=True)
+    # room_no = models.ForeignKey('Room', models.DO_NOTHING, db_column='room_no', blank=True, null=True)
+
+
+    def __str__(self):
+        return f"Encounter for {self.patient.user.first_name} with {self.doctor} "
+
+
+ 
