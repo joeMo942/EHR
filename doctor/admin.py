@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Department,Doctor
+from .models import Department,Doctor,AvailabilityTime,DoctorAvailability
 
 
 class DepartmentAdmin(admin.ModelAdmin):
@@ -14,3 +14,5 @@ class DoctorAdmin(admin.ModelAdmin):
 
 admin.site.register(Department, DepartmentAdmin)
 admin.site.register(Doctor, DoctorAdmin)
+admin.site.register(AvailabilityTime)
+admin.site.register(DoctorAvailability)

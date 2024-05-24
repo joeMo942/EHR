@@ -1,5 +1,6 @@
 from django.db import models
 from accounts.models import Account
+from doctor.models import Department, Doctor, DoctorAvailability
 
 
 
@@ -79,3 +80,25 @@ class CurrentMedication(models.Model):
 
     class Meta:
         unique_together = (('history_no', 'name'),)
+
+    
+class Appointment(models.Model):
+    Status_Choices = [
+        ('Pending', 'Pending'),
+        ('Confirmed', 'Confirmed'),
+        ('Declined', 'Declined'),
+        ('Not Paid', 'Not Paid'),
+        ('Completed', 'Completed'),
+    ]
+    patient_no = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE)
+    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
+    availability_time = models.ForeignKey(DoctorAvailability, on_delete=models.CASCADE)
+    status = models.CharField(max_length=50, choices=Status_Choices, default='Pending')
+    price= models.IntegerField(default=0)
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"Appointment for {self.patient_no.user.first_name} with {self.doctor} at {self.availability_time}"
