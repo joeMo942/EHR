@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Encounter Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #f4f4f4;
+    }
+    .container {
+      width: 1100px;
+      padding: 20px;
+    }
+    .box {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #333;
+      font-size: 28px;
+      text-transform: uppercase;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+    input[type="text"], button, textarea {
+      margin-bottom: 15px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    input[type="text"] {
+      font-size: 16px;
+    }
+    button {
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      padding: 8px 12px;
+      font-size: 14px;
+      width: 200px;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .symptoms-container label {
+      display: inline-block;
+      margin-right: 15px;
+      margin-bottom: 8px;
+      cursor: pointer;
+    }
+    .symptoms-container input[type="checkbox"] {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      width: 16px;
+      height: 16px;
+      border: 1px solid #aaa;
+      background-color: #fff;
+      position: relative;
+      vertical-align: middle;
+    }
+    .symptoms-container input[type="checkbox"]:checked {
+      background-color: #007bff;
+      border-color: #007bff;
+    }
+    .symptoms-container input[type="checkbox"] + label {
+      position: relative;
+      padding-left: 25px;
+      vertical-align: middle;
+      cursor: pointer;
+    }
+    .symptoms-container input[type="checkbox"] + label:before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 12px;
+      height: 12px;
+      border-radius: 2px;
+      background-color: transparent;
+    }
+    .symptoms-container input[type="checkbox"]:checked + label:before {
+      background-color: #007bff;
+    }
+    h3 {
+      margin-bottom: 15px;
+    }
+    label[for="patientName"], label[for="patientID"], label[for="reasonForVisit"] {
+      font-weight: bold;
+    }
+    select {
+      position: relative;
+      display: inline-block;
+    }
+    select + * {
+      margin-left: 10px;
+      margin-bottom: 10px;
+    }
+    form > * {
+      margin-bottom: 7px;
+      padding: 10px;
+    }
+    #referralNeeded {
+      width: 90px;
+    }
+    button[type="submit"] {
+      margin: 0 auto;
+      display: block;
+    }
+    .other-symptom-input {
+      display: none;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="box">
+      <h2>Encounter Form</h2>
+      <form id="encounterForm">
+        <label for="patientName">Patient Name</label>
+        <input type="text" id="patientName" placeholder="Patient Name" value="John Doe">
+        
+        <label for="patientID">Patient ID</label>
+        <input type="text" id="patientID" placeholder="Patient ID" value="123456">
+        
+        <label for="reasonForVisit">Reason of Visit</label>
+        <input type="text" id="reasonForVisit" placeholder="Reason for Visit" value="Routine Checkup">
+        
+        <h3>Symptoms</h3>
+        <div class="symptoms-container" id="symptomsContainer">
+          <label><input type="checkbox" name="symptom" value="Fever"> Fever</label>
+          <label><input type="checkbox" name="symptom" value="Cough"> Cough</label>
+          <label><input type="checkbox" name="symptom" value="Headache"> Headache</label>
+        </div>
+        
+        <button type="button" id="addSymptom">Add Other Symptom</button>
+        
+        <h3>Diagnosis</h3>
+        <div id="diagnosisFields">
+          <div class="diagnosis-field">
+            <label for="diagnosisName">Name</label>
+            <input type="text" class="diagnosisName" placeholder="Name">
+            <label for="diagnosisICD">ICD Code</label>
+            <input type="text" class="diagnosisICD" placeholder="ICD Code">
+          </div>
+        </div>
+        <button type="button" id="addDiagnosis">Add Diagnosis</button>
+        
+        <h3>Prescription</h3>
+        <div id="prescriptionFields">
+          <div class="prescription-field">
+            <label for="prescriptionName">Name</label>
+            <input type="text" class="prescriptionName" placeholder="Name">
+            <label for="prescriptionDosage">Dosage</label>
+            <input type="text" class="prescriptionDosage" placeholder="Dosage">
+            <label for="prescriptionType">Type</label>
+            <select class="prescriptionType">
+              <option value="Tablet">Tablet</option>
+              <option value="Gel">Gel</option>
+              <option value="Cream">Cream</option>
+            </select>
+            <label for="prescriptionFrequency">Frequency</label>
+            <input type="text" class="prescriptionFrequency" placeholder="Frequency">
+            <label for="prescriptionDuration">Duration</label>
+            <input type="text" class="prescriptionDuration" placeholder="Duration">
+          </div>
+        </div>
+        <button type="button" id="addPrescription">Add Prescription</button>
+        
+        <h3>Test Required</h3>
+        <div class="testSection">
+          <label for="requireTest">Does the patient require a test?</label>
+          <select id="requireTest">
+            <option value="No" selected>No</option>
+            <option value="Yes">Yes</option>
+          </select>
+          <div class="testOptions" style="display: none;">
+            <div class="testNames">
+              <div class="testName">
+                <label for="testType">Test Type:</label>
+                <select class="testTypeSelect">
+                  <option value="Blood Test">Blood Test</option>
+                  <option value="X-ray">X-ray</option>
+                </select>
+                <label for="testName">Test Name:</label>
+                <input type="text" class="testNameInput" placeholder="Test Name">
+              </div>
+            </div>
+            <button type="button" id="addTest">Add Test</button>
+          </div>
+        </div>
+
+        <h3>Referral</h3>
+        <label for="referralNeeded">Does the patient need to be referred?</label>
+        <select id="referralNeeded">
+          <option value="No" selected>No</option>
+          <option value="Yes">Yes</option>
+        </select>
+        <div class="referralSection" style="display: none;">
+          <div id="referralLocationSection" style="display: none;">
+            <label for="referralLocation">Referral Location:</label>
+            <select id="referralLocation">
+              <option value="" selected disabled>Select location</option>
+              <option value="Within Hospital">Within Hospital</option>
+              <option value="Outside of Hospital">Outside of Hospital</option>
+            </select>
+            <div id="withinHospitalDetails" style="display: none;">
+              <label for="referralDepartment">Department:</label>
+              <input type="text" id="referralDepartment" placeholder="Department">
+            </div>
+            <div id="outsideHospitalDetails" style="display: none;">
+              <label for="referralOutsideDetails">Referral Details:</label>
+              <input type="text" id="referralOutsideDetails" placeholder="Provide details"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <h3>Notes</h3>
+        <label for="notes">Additional Notes:</label>
+        <textarea id="notes" rows="4" placeholder="Enter any additional notes here"></textarea>
+        
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const addSymptomBtn = document.getElementById('addSymptom');
+      const symptomsContainer = document.getElementById('symptomsContainer');
+      const addDiagnosisBtn = document.getElementById('addDiagnosis');
+      const diagnosisFields = document.getElementById('diagnosisFields');
+      const addPrescriptionBtn = document.getElementById('addPrescription');
+      const prescriptionFields = document.getElementById('prescriptionFields');
+      const requireTestSelect = document.getElementById('requireTest');
+      const testOptions = document.querySelector('.testOptions');
+      const addTestBtn = document.getElementById('addTest');
+      const testNames = document.querySelector('.testNames');
+      const referralNeededSelect = document.getElementById('referralNeeded');
+      const referralSection = document.querySelector('.referralSection');
+      const referralLocationSelect = document.getElementById('referralLocation');
+      const withinHospitalDetails = document.getElementById('withinHospitalDetails');
+      const outsideHospitalDetails = document.getElementById('outsideHospitalDetails');
+      const referralLocationSection = document.getElementById('referralLocationSection');
+
+      addSymptomBtn.addEventListener('click', function() {
+        const otherSymptomInput = document.createElement('div');
+        otherSymptomInput.classList.add('other-symptom-input');
+        otherSymptomInput.innerHTML = `
+          <input type="text" name="otherSymptom" class="otherSymptomInput" placeholder="Type other symptom">
+        `;
+        symptomsContainer.appendChild(otherSymptomInput);
+        otherSymptomInput.style.display = 'block';
+      });
+
+      addDiagnosisBtn.addEventListener('click', function() {
+        const newDiagnosis = document.createElement('div');
+        newDiagnosis.classList.add('diagnosis-field');
+        newDiagnosis.innerHTML = `
+          <label for="diagnosisName">Name</label>
+          <input type="text" class="diagnosisName" placeholder="Name">
+          <label for="diagnosisICD">ICD Code</label>
+          <input type="text" class="diagnosisICD" placeholder="ICD Code">
+        `;
+        diagnosisFields.appendChild(newDiagnosis);
+      });
+
+      addPrescriptionBtn.addEventListener('click', function() {
+        const newPrescription = document.createElement('div');
+        newPrescription.classList.add('prescription-field');
+        newPrescription.innerHTML = `
+          <label for="prescriptionName">Name</label>
+          <input type="text" class="prescriptionName" placeholder="Name">
+          <label for="prescriptionDosage">Dosage</label>
+          <input type="text" class="prescriptionDosage" placeholder="Dosage">
+          <label for="prescriptionType">Type</label>
+          <select class="prescriptionType">
+            <option value="Tablet">Tablet</option>
+            <option value="Gel">Gel</option>
+            <option value="Cream">Cream</option>
+          </select>
+          <label for="prescriptionFrequency">Frequency</label>
+          <input type="text" class="prescriptionFrequency" placeholder="Frequency">
+          <label for="prescriptionDuration">Duration</label>
+          <input type="text" class="prescriptionDuration" placeholder="Duration">
+        `;
+        prescriptionFields.appendChild(newPrescription);
+      });
+
+      requireTestSelect.addEventListener('change', function() {
+        if (requireTestSelect.value === 'Yes') {
+          testOptions.style.display = 'block';
+        } else {
+          testOptions.style.display = 'none';
+        }
+      });
+
+      addTestBtn.addEventListener('click', function() {
+        const newTest = document.createElement('div');
+        newTest.classList.add('testName');
+        newTest.innerHTML = `
+          <label for="testType">Test Type:</label>
+          <select class="testTypeSelect">
+            <option value="Blood Test">Blood Test</option>
+            <option value="X-ray">X-ray</option>
+          </select>
+          <label for="testName">Test Name:</label>
+          <input type="text" class="testNameInput" placeholder="Test Name">
+        `;
+        testNames.appendChild(newTest);
+      });
+
+      referralNeededSelect.addEventListener('change', function() {
+        if (referralNeededSelect.value === 'Yes') {
+          referralSection.style.display = 'block';
+          referralLocationSection.style.display = 'block';
+        } else {
+          referralSection.style.display = 'none';
+          referralLocationSection.style.display = 'none';
+          withinHospitalDetails.style.display = 'none';
+          outsideHospitalDetails.style.display = 'none';
+        }
+      });
+
+      referralLocationSelect.addEventListener('change', function() {
+        if (referralLocationSelect.value === 'Within Hospital') {
+          withinHospitalDetails.style.display = 'block';
+          outsideHospitalDetails.style.display = 'none';
+        } else if (referralLocationSelect.value === 'Outside of Hospital') {
+          withinHospitalDetails.style.display = 'none';
+          outsideHospitalDetails.style.display = 'block';
+        } else {
+          withinHospitalDetails.style.display = 'none';
+          outsideHospitalDetails.style.display = 'none';
+        }
+      });
+
+      const form = document.getElementById('encounterForm');
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        alert('Form submitted!');
+      });
+    });
+  </script>
+</body>
+</html>

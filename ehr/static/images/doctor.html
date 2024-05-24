@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>patient dashboard </title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="vendors/feather/feather.css">
+  <link rel="stylesheet" href="vendors/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="vendors/ti-icons/css/themify-icons.css">
+  <link rel="stylesheet" href="vendors/typicons/typicons.css">
+  <link rel="stylesheet" href="vendors/simple-line-icons/css/simple-line-icons.css">
+  <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
+  <!-- endinject -->
+  <!-- Plugin css for this page -->
+  <link rel="stylesheet" href="vendors/datatables.net-bs4/dataTables.bootstrap4.css">
+  <link rel="stylesheet" href="js/select.dataTables.min.css">
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="css/vertical-layout-light/style.css">
+  <!-- endinject -->
+  <link rel="icon" href="alpha-g-circle.svg" type="image/svg+xml">
+</head>
+<body>
+  <script>
+    var username = "Doctor ";
+  </script>
+  <div class="container-scroller"> 
+    <!-- partial:partials/_navbar.html -->
+    <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex align-items-top flex-row">
+      <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
+        <div class="me-3">
+          <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-bs-toggle="minimize">
+            <span class="icon-menu"></span>
+          </button>
+        </div>
+        <div>
+          <a class="navbar-brand brand-logo" href="doctor.html">
+            <img src="images/logo.svg" alt="logo" />
+          </a>
+          <a class="navbar-brand brand-logo-mini" href="doctor.html">
+            <img src="alpha-g-circle.svg" alt="logo" /> 
+          <!--minilogo-->
+          </a>
+        </div>
+      </div>
+      <div class="navbar-menu-wrapper d-flex align-items-top"> 
+        <ul class="navbar-nav">
+          <li class="nav-item font-weight-semibold d-none d-lg-block ms-0">
+            <h1 class="welcome-text">Good Morning, <span class="text-black fw-bold" id="usernameSpan"></span></h1>
+            <h3 class="welcome-sub-text">Welcome to your dashboard</h3>
+          </li>
+        </ul>
+        <script>
+          document.getElementById("usernameSpan").innerText = username;
+       </script>
+        <ul class="navbar-nav ms-auto">
+          
+          <li class="nav-item d-none d-lg-block">
+            <div id="datepicker-popup" class="input-group date datepicker navbar-date-picker">
+              <span class="input-group-addon input-group-prepend border-right">
+                <span class="icon-calendar input-group-text calendar-icon"></span>
+              </span>
+              <input type="text" class="form-control">
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link count-indicator" id="notificationDropdown" href="#" data-bs-toggle="dropdown">
+              <i class="icon-mail icon-lg"></i>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0" aria-labelledby="notificationDropdown">
+              <a class="dropdown-item py-3 border-bottom">
+                <p class="mb-0 font-weight-medium float-left">You have 4 new notifications </p>
+                <span class="badge badge-pill badge-primary float-right">View all</span>
+              </a>
+              <a class="dropdown-item preview-item py-3">
+                <div class="preview-thumbnail">
+                  <i class="mdi mdi-alert m-auto text-primary"></i>
+                </div>
+                <div class="preview-item-content">
+                  <h6 class="preview-subject fw-normal text-dark mb-1">Application Error</h6>
+                  <p class="fw-light small-text mb-0"> Just now </p>
+                </div>
+              </a>
+              <a class="dropdown-item preview-item py-3">
+                <div class="preview-thumbnail">
+                  <i class="mdi mdi-settings m-auto text-primary"></i>
+                </div>
+                <div class="preview-item-content">
+                  <h6 class="preview-subject fw-normal text-dark mb-1">Settings</h6>
+                  <p class="fw-light small-text mb-0"> Private message </p>
+                </div>
+              </a>
+              <a class="dropdown-item preview-item py-3">
+                <div class="preview-thumbnail">
+                  <i class="mdi mdi-airballoon m-auto text-primary"></i>
+                </div>
+                <div class="preview-item-content">
+                  <h6 class="preview-subject fw-normal text-dark mb-1">New user registration</h6>
+                  <p class="fw-light small-text mb-0"> 2 days ago </p>
+                </div>
+              </a>
+            </div>
+          </li>
+          <li class="nav-item dropdown"> 
+            <a class="nav-link count-indicator" id="countDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="icon-bell"></i>
+              <span class="count"></span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0" aria-labelledby="countDropdown">
+              <a class="dropdown-item py-3">
+                <p class="mb-0 font-weight-medium float-left"> </p>
+                <span class="badge badge-pill badge-primary float-right">View all</span>
+              </a>
+              
+          </li>
+          <li class="nav-item dropdown d-none d-lg-block user-dropdown">
+            <a class="nav-link" id="UserDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+              <img class="img-xs rounded-circle" src="images/faces/face8.jpg" alt="Profile image"> </a>
+            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
+              <div class="dropdown-header text-center">
+                <img class="img-md rounded-circle" src="images/faces/face8.jpg" alt="Profile image">
+                <p class="mb-1 mt-3 font-weight-semibold">Allen Moreno</p>
+                <p class="fw-light text-muted mb-0">allenmoreno@gmail.com</p>
+              </div>
+              <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-account-outline text-primary me-2"></i> My Profile <span class="badge badge-pill badge-danger">1</span></a>
+              <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-message-text-outline text-primary me-2"></i> Messages</a>
+              <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-calendar-check-outline text-primary me-2"></i> Activity</a>
+              <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-help-circle-outline text-primary me-2"></i> FAQ</a>
+              <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-power text-primary me-2"></i>Sign Out</a>
+            </div>
+          </li>
+        </ul>
+        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-bs-toggle="offcanvas">
+          <span class="mdi mdi-menu"></span>
+        </button>
+      </div>
+    </nav>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:partials/_settings-panel.html -->
+      <div class="theme-setting-wrapper">
+        <div id="settings-trigger"><i class="ti-settings"></i></div>
+        <div id="theme-settings" class="settings-panel">
+          <i class="settings-close ti-close"></i>
+          <p class="settings-heading">SIDEBAR SKINS</p>
+          <div class="sidebar-bg-options selected" id="sidebar-light-theme"><div class="img-ss rounded-circle bg-light border me-3"></div>Light</div>
+          <div class="sidebar-bg-options" id="sidebar-dark-theme"><div class="img-ss rounded-circle bg-dark border me-3"></div>Dark</div>
+          <p class="settings-heading mt-2">HEADER SKINS</p>
+          <div class="color-tiles mx-0 px-4">
+            <div class="tiles success"></div>
+            <div class="tiles warning"></div>
+            <div class="tiles danger"></div>
+            <div class="tiles info"></div>
+            <div class="tiles dark"></div>
+            <div class="tiles default"></div>
+          </div>
+        </div>
+      </div>
+      <div id="right-sidebar" class="settings-panel">
+        <i class="settings-close ti-close"></i>
+        <ul class="nav nav-tabs border-top" id="setting-panel" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" id="todo-tab" data-bs-toggle="tab" href="#todo-section" role="tab" aria-controls="todo-section" aria-expanded="true">TO DO LIST</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="chats-tab" data-bs-toggle="tab" href="#chats-section" role="tab" aria-controls="chats-section">CHATS</a>
+          </li>
+        </ul>
+        <div class="tab-content" id="setting-content">
+          <div class="tab-pane fade show active scroll-wrapper" id="todo-section" role="tabpanel" aria-labelledby="todo-section">
+            <div class="add-items d-flex px-3 mb-0">
+              <form class="form w-100">
+                <div class="form-group d-flex">
+                  <input type="text" class="form-control todo-list-input" placeholder="Add To-do">
+                  <button type="submit" class="add btn btn-primary todo-list-add-btn" id="add-task">Add</button>
+                </div>
+              </form>
+            </div>
+            <div class="list-wrapper px-3">
+              <ul class="d-flex flex-column-reverse todo-list">
+                <li>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input class="checkbox" type="checkbox">
+                      Team review meeting at 3.00 PM
+                    </label>
+                  </div>
+                  <i class="remove ti-close"></i>
+                </li>
+                <li>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input class="checkbox" type="checkbox">
+                      Prepare for presentation
+                    </label>
+                  </div>
+                  <i class="remove ti-close"></i>
+                </li>
+                <li>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input class="checkbox" type="checkbox">
+                      Resolve all the low priority tickets due today
+                    </label>
+                  </div>
+                  <i class="remove ti-close"></i>
+                </li>
+                <li class="completed">
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input class="checkbox" type="checkbox" checked>
+                      Schedule meeting for next week
+                    </label>
+                  </div>
+                  <i class="remove ti-close"></i>
+                </li>
+                <li class="completed">
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input class="checkbox" type="checkbox" checked>
+                      Project review
+                    </label>
+                  </div>
+                  <i class="remove ti-close"></i>
+                </li>
+              </ul>
+            </div>
+            <h4 class="px-3 text-muted mt-5 fw-light mb-0">Events</h4>
+            <div class="events pt-4 px-3">
+              <div class="wrapper d-flex mb-2">
+                <i class="ti-control-record text-primary me-2"></i>
+                <span>Feb 11 2018</span>
+              </div>
+              <p class="mb-0 font-weight-thin text-gray">Creating component page build a js</p>
+              <p class="text-gray mb-0">The total number of sessions</p>
+            </div>
+            <div class="events pt-4 px-3">
+              <div class="wrapper d-flex mb-2">
+                <i class="ti-control-record text-primary me-2"></i>
+                <span>Feb 7 2018</span>
+              </div>
+              <p class="mb-0 font-weight-thin text-gray">Meeting with Alisa</p>
+              <p class="text-gray mb-0 ">Call Sarah Graves</p>
+            </div>
+          </div>
+          <!-- To do section tab ends -->
+          <div class="tab-pane fade" id="chats-section" role="tabpanel" aria-labelledby="chats-section">
+            <div class="d-flex align-items-center justify-content-between border-bottom">
+              <p class="settings-heading border-top-0 mb-3 pl-3 pt-0 border-bottom-0 pb-0">Friends</p>
+              <small class="settings-heading border-top-0 mb-3 pt-0 border-bottom-0 pb-0 pr-3 fw-normal">See All</small>
+            </div>
+            <ul class="chat-list">
+              <li class="list active">
+                <div class="profile"><img src="images/faces/face1.jpg" alt="image"><span class="online"></span></div>
+                <div class="info">
+                  <p>Thomas Douglas</p>
+                  <p>Available</p>
+                </div>
+                <small class="text-muted my-auto">19 min</small>
+              </li>
+              <li class="list">
+                <div class="profile"><img src="images/faces/face2.jpg" alt="image"><span class="offline"></span></div>
+                <div class="info">
+                  <div class="wrapper d-flex">
+                    <p>Catherine</p>
+                  </div>
+                  <p>Away</p>
+                </div>
+                <div class="badge badge-success badge-pill my-auto mx-2">4</div>
+                <small class="text-muted my-auto">23 min</small>
+              </li>
+              <li class="list">
+                <div class="profile"><img src="images/faces/face3.jpg" alt="image"><span class="online"></span></div>
+                <div class="info">
+                  <p>Daniel Russell</p>
+                  <p>Available</p>
+                </div>
+                <small class="text-muted my-auto">14 min</small>
+              </li>
+              <li class="list">
+                <div class="profile"><img src="images/faces/face4.jpg" alt="image"><span class="offline"></span></div>
+                <div class="info">
+                  <p>James Richardson</p>
+                  <p>Away</p>
+                </div>
+                <small class="text-muted my-auto">2 min</small>
+              </li>
+              <li class="list">
+                <div class="profile"><img src="images/faces/face5.jpg" alt="image"><span class="online"></span></div>
+                <div class="info">
+                  <p>Madeline Kennedy</p>
+                  <p>Available</p>
+                </div>
+                <small class="text-muted my-auto">5 min</small>
+              </li>
+              <li class="list">
+                <div class="profile"><img src="images/faces/face6.jpg" alt="image"><span class="online"></span></div>
+                <div class="info">
+                  <p>Sarah Graves</p>
+                  <p>Available</p>
+                </div>
+                <small class="text-muted my-auto">47 min</small>
+              </li>
+            </ul>
+          </div>
+          <!-- chat tab ends -->
+        </div>
+      </div>
+      <!-- partial -->
+      <!-- partial:partials/_sidebar.html -->
+      <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link" href="doctor.html">
+              <i class="mdi mdi-grid-large menu-icon"></i>
+              <span class="menu-title">Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-item nav-category">Appointments</li>
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
+              <i class="menu-icon mdi mdi-card-text-outline"></i>
+              <span class="menu-title">Appointments</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="form-elements">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"><a class="nav-link" href="pages\D_forms\Appointments.html">assigned Appointments</a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item nav-category">patients</li>
+            <li class="nav-item">
+              <a class="nav-link" data-bs-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
+                <i class="menu-icon mdi mdi-card-text-outline"></i>
+                <span class="menu-title">patients</span>
+                <i class="menu-arrow"></i>
+              </a>
+              <div class="collapse" id="form-elements">
+                <ul class="nav flex-column sub-menu">
+                  <li class="nav-item"><a class="nav-link" href="pages\D_forms\patient_info.html">patient info</a></li>
+                </ul>
+              </div>
+            </li>
+        </ul>
+      </nav>
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="home-tab">
+                <div class="d-sm-flex align-items-center justify-content-between border-bottom"></div>
+                <div class="tab-content tab-content-basic">
+                  <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview"> 
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <div class="statistics-details d-flex align-items-center justify-content-between">
+                          <div>
+                            <div class="col-sm-6 col-md-4 col-lg-3">
+                              <h3 class="mdi mdi-human-handsdown"></h3> 
+                            </div>
+                            <p class="statistics-title">Total patients</p>
+                            <h4 class="rate-percentage">400</h4>
+                            <p class="text-danger d-flex"><i class="mdi mdi-menu-down"></i><span>-0.5%</span></p>
+                          </div>
+                          <div>
+                            <div class="col-sm-6 col-md-4 col-lg-3">
+                              <h3 class="mdi mdi-bookmark-check"></h3>
+                            </div>
+                            <p class="statistics-title">Appointments</p>
+                            <h4 class="rate-percentage">100</h4>
+                            <p class="text-success d-flex"><i class="mdi mdi-menu-up"></i><span>+0.1%</span></p>
+                          </div>
+                          <div>
+                            <div>
+                              <a>
+                                <img src="images/download.png" style="width: 50px; height: 50px;" />
+                              </a>
+                              
+                            </div>
+                            <p class="statistics-title">New Patients</p>
+                            <h3 class="rate-percentage">50</h3>
+                            <p class="text-success d-flex"><i class="mdi mdi-menu-up"></i><span>+2.3%</span></p>
+                          </div>
+                          <div>
+                            <div>
+                              <h4>
+                                <img src="images\icons8-surgery-50.png " style="width: 40px; height: 40px;"  />
+                              </h4>
+                            </div>
+                            <p class="statistics-title">Surgeries</p>
+                            <h3 class="rate-percentage">20</h3>
+                            <p class="text-danger d-flex"><i class="mdi mdi-menu-down"></i><span>-1.2%</span></p>
+                          </div>
+                          <div>
+                            <div class="col-sm-6 col-md-4 col-lg-3">
+                              <h3 class="mdi mdi-stethoscope"></h3> 
+                            </div>
+                            <p class="statistics-title">Follow-ups</p>
+                            <h3 class="rate-percentage">150</h3>
+                            <p class="text-success d-flex"><i class="mdi mdi-menu-up"></i><span>+0.8%</span></p>
+                          </div>
+                          <div>
+                            <div class="col-sm-6 col-md-4 col-lg-3">
+                              <h3 class="mdi mdi-send"></h3> 
+                            </div>
+                            <p class="statistics-title">Referrals</p>
+                            <h3 class="rate-percentage">30</h3>
+                            <p class="text-danger d-flex"><i class="mdi mdi-menu-down"></i><span>-0.3%</span></p>
+                          </div>
+                          <div>
+                            <div class="col-sm-6 col-md-4 col-lg-3">
+                              <h3 class="mdi mdi-test-tube"></h3> 
+                            </div>
+                            <p class="statistics-title">Lab Tests</p>
+                            <h3 class="rate-percentage">200</h3>
+                            <p class="text-success d-flex"><i class="mdi mdi-menu-up"></i><span>+1.5%</span></p>
+                          </div>
+                          <div>
+                            
+                            <div class="col-sm-6 col-md-4 col-lg-3">
+                              <h2 class="mdi mdi-hospital-building"></h2> 
+                            </div>
+                            <p class="statistics-title">Emergency Visits</p>
+                            <h3 class="rate-percentage">45</h3>
+                            <p class="text-success d-flex"><i class="mdi mdi-menu-up"></i><span>+1.0%</span></p>
+                          </div>
+                        </div>
+                        </div>
+                      </div>
+                      
+                      <div class="row">
+                        <div class="col-lg-8 d-flex flex-column">
+                          <div class="row flex-grow">
+                            <div class="col-12 col-lg-4 col-lg-12 grid-margin stretch-card">
+                              <div class="card card-rounded">
+                                <div class="card-body">
+                                  <div class="d-sm-flex justify-content-between align-items-start">
+                                    <div>
+                                     <h4 class="card-title card-title-dash">Performance Line Chart</h4>
+                                     <h5 class="card-subtitle card-subtitle-dash">number of appointments</h5>
+                                    </div>
+                                    <div id="performance-line-legend"></div>
+                                  </div>
+                                  <div class="chartjs-wrapper mt-5">
+                                    <canvas id="performaneLine"></canvas>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-4 d-flex flex-column">
+                          <div class="row flex-grow">
+                            <div class="col-md-6 col-lg-12 grid-margin stretch-card">
+                              <div class="card bg-primary card-rounded">
+                                <div class="card-body pb-0">
+                                  <h4 class="card-title card-title-dash text-white mb-4">Status Summary</h4>
+                                  <div class="row">
+                                    <div class="col-sm-4">
+                                      <p class="status-summary-ight-white mb-1">Closed Value</p>
+                                      <h2 class="text-info">357</h2>
+                                    </div>
+                                    <div class="col-sm-8">
+                                      <div class="status-summary-chart-wrapper pb-4">
+                                        <canvas id="status-summary"></canvas>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-6 col-lg-12 grid-margin stretch-card">
+                              <div class="card card-rounded">
+                                <div class="card-body">
+                                  <div class="row">
+                                    <div class="col-sm-6">
+                                      <div class="d-flex justify-content-between align-items-center mb-2 mb-sm-0">
+                                        <div class="circle-progress-width">
+                                          <div id="totalVisitors" class="progressbar-js-circle pr-2"></div>
+                                        </div>
+                                        <div>
+                                          <p class="text-small mb-2">Total patients</p>
+                                          <h4 class="mb-0 fw-bold">26.80%</h4>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                      <div class="d-flex justify-content-between align-items-center">
+                                        <div class="circle-progress-width">
+                                          <div id="visitperday" class="progressbar-js-circle pr-2"></div>
+                                        </div>
+                                        <div>
+                                          <p class="text-small mb-2">patients per day</p>
+                                          <h4 class="mb-0 fw-bold">15</h4>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div> <script>
+                        // Data for the chart
+                        const data = {
+                          labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+                          datasets: [{
+                            label: 'Appointments',
+                            data: [65, 59, 80, 81, 56, 55, 40],
+                            fill: false,
+                            borderColor: 'rgb(75, 192, 192)',
+                            tension: 0.1
+                          }]
+                        };
+                      
+                        // Config for the chart
+                        const config = {
+                          type: 'line',
+                          data: data,
+                          options: {
+                            responsive: true,
+                            plugins: {
+                              legend: {
+                                display: true,
+                              },
+                              title: {
+                                display: true,
+                                text: 'Performance Line Chart'
+                              }
+                            }
+                          }
+                        };
+                      
+                        // Initialize the chart
+                        window.onload = function() {
+                          const ctx = document.getElementById('performaneLine').getContext('2d');
+                          new Chart(ctx, config);
+                        };
+                        let myLineChart;
+
+window.onload = function() {
+  const ctx = document.getElementById('performaneLine').getContext('2d');
+  myLineChart = new Chart(ctx, config);
+};
+
+function updateChart(newData) {
+  myLineChart.data.datasets[0].data = newData;
+  myLineChart.update();
+}
+
+// Example usage: update the chart with new data
+const newChartData = [70, 65, 85, 88, 60, 80, 45];
+updateChart(newChartData);
+                      </script>
+                      
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:partials/_footer.html -->
+        
+        <!-- partial -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+  <style>
+    :root {
+--primary-clr: #b38add;
+}
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+font-family: "Poppins", sans-serif;
+}
+.dropbtn {
+background-color: #3498DB;
+color: white;
+padding: 16px;
+font-size: 16px;
+border: none;
+cursor: pointer;
+width: 100%;
+}
+
+.dropbtn:hover, .dropbtn:focus {
+background-color: #2980B9;
+}
+
+.dropdown {
+position: relative;
+display: inline-block;
+width: 100%;
+}
+
+.dropdown-content {
+display: none;
+position: absolute;
+background-color: #f1f1f1;
+max-height: 50px; /* Limit the height for scrolling */
+overflow-y: auto;
+width: 100%;
+box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+z-index: 1;
+}
+
+.dropdown-content a {
+color: black;
+padding: 10px 70px;
+text-decoration: none;
+display: block;
+}
+
+.dropdown a:hover {
+background-color: #ddd;
+padding: 10px 15px;
+}
+
+.show {
+display: block;
+}
+
+.add-event-input {
+margin-bottom: 0px;
+}
+
+.add-event-btn {
+background-color: #3498DB;
+color: white;
+padding: 5px 10px;
+border: none;
+cursor: pointer;
+font-size: 16px;
+}
+
+.add-event-btn:hover {
+background-color: #2980B9;
+}
+
+.add-event {
+background-color: #3498DB;
+color: white;
+padding: 10px;
+border: none;
+cursor: pointer;
+font-size: 16px;
+display: inline-block;
+margin-top: 20px;
+}
+
+.add-event i {
+margin-right: 10px;
+}
+
+/* nice scroll bar */
+::-webkit-scrollbar {
+width: 5px;
+}
+::-webkit-scrollbar-track {
+background: #f5f5f5;
+border-radius: 50px;
+}
+::-webkit-scrollbar-thumb {
+background: var(--primary-clr);
+border-radius: 50px;
+}
+
+body {
+position: relative;
+min-height: 100vh;
+display: flex;
+align-items: center;
+justify-content: center;
+padding-bottom: 0px;
+background-color: #e2e1dc;
+}
+.container {
+position: relative;
+width: 1200px;
+min-height: 850px;
+margin: 0 auto;
+padding: 5px;
+color: #fff;
+display: flex;
+
+border-radius: 10px;
+background-color: #373c4f;
+}
+.left {
+width: 60%;
+padding: 20px;
+}
+.calendar {
+position: relative;
+width: 100%;
+height: 100%;
+display: flex;
+flex-direction: column;
+flex-wrap: wrap;
+justify-content: space-between;
+color: #878895;
+border-radius: 5px;
+background-color: #fff;
+}
+/* set after behind the main element */
+.calendar::before,
+.calendar::after {
+content: "";
+position: absolute;
+top: 50%;
+left: 100%;
+width: 12px;
+height: 97%;
+border-radius: 0 5px 5px 0;
+background-color: #d3d4d6d7;
+transform: translateY(-50%);
+}
+.calendar::before {
+height: 94%;
+left: calc(100% + 12px);
+background-color: rgb(153, 153, 153);
+}
+.calendar .month {
+width: 100%;
+height: 150px;
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding: 0 50px;
+font-size: 1.2rem;
+font-weight: 500;
+text-transform: capitalize;
+}
+.calendar .month .prev,
+.calendar .month .next {
+cursor: pointer;
+}
+.calendar .month .prev:hover,
+.calendar .month .next:hover {
+color: var(--primary-clr);
+}
+.calendar .weekdays {
+width: 100%;
+height: 100px;
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding: 0 20px;
+font-size: 1rem;
+font-weight: 500;
+text-transform: capitalize;
+}
+.weekdays div {
+width: 14.28%;
+height: 100%;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.calendar .days {
+width: 100%;
+display: flex;
+flex-wrap: wrap;
+justify-content: space-between;
+padding: 0 20px;
+font-size: 1rem;
+font-weight: 500;
+margin-bottom: 20px;
+}
+.calendar .days .day {
+width: 14.28%;
+height: 90px;
+display: flex;
+align-items: center;
+justify-content: center;
+cursor: pointer;
+color: var(--primary-clr);
+border: 1px solid #f5f5f5;
+}
+.calendar .days .day:nth-child(7n + 1) {
+border-left: 2px solid #f5f5f5;
+}
+.calendar .days .day:nth-child(7n) {
+border-right: 2px solid #f5f5f5;
+}
+.calendar .days .day:nth-child(-n + 7) {
+border-top: 2px solid #f5f5f5;
+}
+.calendar .days .day:nth-child(n + 29) {
+border-bottom: 2px solid #f5f5f5;
+}
+
+.calendar .days .day:not(.prev-date, .next-date):hover {
+color: #fff;
+background-color: var(--primary-clr);
+}
+.calendar .days .prev-date,
+.calendar .days .next-date {
+color: #b3b3b3;
+}
+.calendar .days .active {
+position: relative;
+font-size: 2rem;
+color: #fff;
+background-color: var(--primary-clr);
+}
+.calendar .days .active::before {
+content: "";
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+box-shadow: 0 0 10px 2px var(--primary-clr);
+}
+.calendar .days .today {
+font-size: 2rem;
+}
+.calendar .days .event {
+position: relative;
+}
+.calendar .days .event::after {
+content: "";
+position: absolute;
+bottom: 10%;
+left: 50%;
+width: 75%;
+height: 6px;
+border-radius: 30px;
+transform: translateX(-50%);
+background-color: var(--primary-clr);
+}
+.calendar .days .day:hover.event::after {
+background-color: #fff;
+}
+.calendar .days .active.event::after {
+background-color: #fff;
+bottom: 20%;
+}
+.calendar .days .active.event {
+padding-bottom: 10px;
+}
+.calendar .goto-today {
+width: 100%;
+height: 50px;
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 5px;
+padding: 0 20px;
+margin-bottom: 20px;
+color: var(--primary-clr);
+}
+.calendar .goto-today .goto {
+display: flex;
+align-items: center;
+border-radius: 5px;
+overflow: hidden;
+border: 1px solid var(--primary-clr);
+}
+.calendar .goto-today .goto input {
+width: 100%;
+height: 30px;
+outline: none;
+border: none;
+border-radius: 5px;
+padding: 0 20px;
+color: var(--primary-clr);
+border-radius: 5px;
+}
+.calendar .goto-today button {
+padding: 5px 10px;
+border: 1px solid var(--primary-clr);
+border-radius: 5px;
+background-color: transparent;
+cursor: pointer;
+color: var(--primary-clr);
+}
+.calendar .goto-today button:hover {
+color: #fff;
+background-color: var(--primary-clr);
+}
+.calendar .goto-today .goto button {
+border: none;
+border-left: 1px solid var(--primary-clr);
+border-radius: 0;
+}
+.container .right {
+position: relative;
+width: 40%;
+min-height: 100%;
+padding: 20px 0;
+}
+
+.right .today-date {
+width: 100%;
+height: 50px;
+display: flex;
+flex-wrap: wrap;
+gap: 10px;
+align-items: center;
+justify-content: space-between;
+padding: 0 40px;
+padding-left: 70px;
+margin-top: 50px;
+margin-bottom: 20px;
+text-transform: capitalize;
+}
+.right .today-date .event-day {
+font-size: 2rem;
+font-weight: 500;
+}
+.right .today-date .event-date {
+font-size: 1rem;
+font-weight: 400;
+color: #878895;
+}
+.events {
+width: 100%;
+height: 100%;
+max-height: 600px;
+overflow-x: hidden;
+overflow-y: auto;
+display: flex;
+flex-direction: column;
+padding-left: 4px;
+}
+.events .event {
+position: relative;
+width: 95%;
+min-height: 70px;
+display: flex;
+justify-content: center;
+flex-direction: column;
+gap: 5px;
+padding: 0 20px;
+padding-left: 50px;
+color: #fff;
+background: linear-gradient(90deg, #3f4458, transparent);
+cursor: pointer;
+}
+/* even event */
+.events .event:nth-child(even) {
+background: transparent;
+}
+.events .event:hover {
+background: linear-gradient(90deg, var(--primary-clr), transparent);
+}
+.events .event .title {
+display: flex;
+align-items: center;
+pointer-events: none;
+}
+.events .event .title .event-title {
+font-size: 1rem;
+font-weight: 400;
+margin-left: 20px;
+}
+.events .event i {
+color: var(--primary-clr);
+font-size: 0.5rem;
+}
+.events .event:hover i {
+color: #fff;
+}
+.events .event .event-time {
+font-size: 0.8rem;
+font-weight: 400;
+color: #878895;
+margin-left: 15px;
+pointer-events: none;
+}
+.events .event:hover .event-time {
+color: #fff;
+}
+/* add tick in event after */
+.events .event::after {
+content: "✓";
+position: absolute;
+top: 50%;
+right: 0;
+font-size: 3rem;
+line-height: 1;
+display: none;
+align-items: center;
+justify-content: center;
+opacity: 0.3;
+color: var(--primary-clr);
+transform: translateY(-50%);
+}
+.events .event:hover::after {
+display: flex;
+}
+.add-event {
+position: absolute;
+bottom: 30px;
+right: 30px;
+width: 40px;
+height: 40px;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 1rem;
+color: #878895;
+border: 2px solid #878895;
+opacity: 0.5;
+border-radius: 50%;
+background-color: transparent;
+cursor: pointer;
+}
+.add-event:hover {
+opacity: 1;
+}
+.add-event i {
+pointer-events: none;
+}
+.events .no-event {
+width: 100%;
+height: 100%;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 1.5rem;
+font-weight: 500;
+color: #878895;
+}
+.add-event-wrapper {
+position: absolute;
+bottom: 100px;
+left: 50%;
+width: 90%;
+max-height: 0;
+overflow: hidden;
+border-radius: 5px;
+background-color: #fff;
+transform: translateX(-50%);
+transition: max-height 0.5s ease;
+}
+.add-event-wrapper.active {
+max-height: 300px;
+}
+.add-event-header {
+width: 100%;
+height: 50px;
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding: 0 20px;
+color: #373c4f;
+border-bottom: 1px solid #f5f5f5;
+}
+.add-event-header .close {
+font-size: 1.5rem;
+cursor: pointer;
+}
+.add-event-header .close:hover {
+color: var(--primary-clr);
+}
+.add-event-header .title {
+font-size: 1.2rem;
+font-weight: 500;
+}
+.add-event-body {
+width: 100%;
+height: 100%;
+display: flex;
+flex-direction: column;
+gap: 5px;
+padding: 20px;
+}
+.add-event-body .add-event-input {
+width: 100%;
+height: 40px;
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 10px;
+}
+.add-event-body .add-event-input input {
+width: 100%;
+height: 100%;
+outline: none;
+border: none;
+border-bottom: 1px solid #f5f5f5;
+padding: 0 10px;
+font-size: 1rem;
+font-weight: 400;
+color: #373c4f;
+}
+.add-event-body .add-event-input input::placeholder {
+color: #a5a5a5;
+}
+.add-event-body .add-event-input input:focus {
+border-bottom: 1px solid var(--primary-clr);
+}
+.add-event-body .add-event-input input:focus::placeholder {
+color: var(--primary-clr);
+}
+.add-event-footer {
+display: flex;
+align-items: center;
+justify-content: center;
+padding: 20px;
+}
+.add-event-footer .add-event-btn {
+height: 40px;
+font-size: 1rem;
+font-weight: 500;
+outline: none;
+border: none;
+color: #fff;
+background-color: var(--primary-clr);
+border-radius: 5px;
+cursor: pointer;
+padding: 5px 10px;
+border: 1px solid var(--primary-clr);
+}
+.add-event-footer .add-event-btn:hover {
+background-color: transparent;
+color: var(--primary-clr);
+}
+
+/* media queries */
+
+@media screen and (max-width: 1000px) {
+body {
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.container {
+  min-height: 100vh;
+  flex-direction: column;
+  border-radius: 0;
+}
+.container .left {
+  width: 100%;
+  height: 100%;
+  padding: 20px 0;
+}
+.container .right {
+  width: 100%;
+  height: 100%;
+  padding: 20px 0;
+}
+.calendar::before,
+.calendar::after {
+  top: 100%;
+  left: 50%;
+  width: 97%;
+  height: 12px;
+  border-radius: 0 0 5px 5px;
+  transform: translateX(-50%);
+}
+.calendar::before {
+  width: 94%;
+  top: calc(100% + 12px);
+}
+.events {
+  padding-bottom: 340px;
+}
+.add-event-wrapper {
+  bottom: 100px;
+}
+}
+@media screen and (max-width: 500px) {
+.calendar .month {
+  height: 75px;
+}
+.calendar .weekdays {
+  height: 50px;
+}
+.calendar .days .day {
+  height: 40px;
+  font-size: 0.8rem;
+}
+.calendar .days .day.active,
+.calendar .days .day.today {
+  font-size: 1rem;
+}
+.right .today-date {
+  padding: 20px;
+}
+}
+
+  </style>
+  <!-- plugins:js -->
+  <script src="vendors/js/vendor.bundle.base.js"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page -->
+  <script src="vendors/chart.js/Chart.min.js"></script>
+  <script src="vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+  <script src="vendors/progressbar.js/progressbar.min.js"></script>
+
+  <!-- End plugin js for this page -->
+  <!-- inject:js -->
+  <script src="js/off-canvas.js"></script>
+  <script src="js/hoverable-collapse.js"></script>
+  <script src="js/template.js"></script>
+  <script src="js/settings.js"></script>
+  <script src="js/todolist.js"></script>
+  <!-- endinject -->
+  <!-- Custom js for this page-->
+  <script src="js/dashboard.js"></script>
+  <script src="js/Chart.roundedBarCharts.js"></script>
+  <!-- End custom js for this page-->
+</body>
+
+</html>
+

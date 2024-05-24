@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-{% include "includes/head.html" %}
+{% include "includes/head-patient.html" %}
 
 <div class="container-scroller">
     <!-- partial:partials/_navbar.html -->
@@ -18,7 +18,7 @@
                     <img src="{% static 'images/logo.svg'%}" alt="logo" />
                 </a>
                 <a class="navbar-brand brand-logo-mini" href="patient.html">
-                    <img src="alpha-g-circle.svg" alt="logo" />
+                    <img src="{% static 'alpha-g-circle.svg' %}" alt="logo" />
                     <!--minilogo-->
                 </a>
             </div>
@@ -108,7 +108,7 @@
                             alt="Profile image"> </a>
                     <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
                         <div class="dropdown-header text-center">
-                            <img class="img-md rounded-circle" src="images/faces/face8.jpg" alt="Profile image">
+                            <img class="img-md rounded-circle" src="{% static 'images/faces/face8.jpg'%}" alt="Profile image">
                             <p class="mb-1 mt-3 font-weight-semibold">Allen Moreno</p>
                             <p class="fw-light text-muted mb-0">allenmoreno@gmail.com</p>
                         </div>
@@ -393,7 +393,7 @@
     <!-- page-body-wrapper ends -->
 </div>
 
-{% include "includes/footer.html" %}
+{% include "includes/footer-patient.html" %}
 
 </body>
 

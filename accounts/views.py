@@ -4,7 +4,7 @@ from .models import Account
 from django.shortcuts import redirect
 from django.contrib import messages, auth
 from django.contrib.auth.decorators import login_required
-from patient.models import Patient
+from patient.models import Patient  
 
 # Activation Email
 from django.core.mail import EmailMessage
@@ -30,7 +30,7 @@ def register(request):
             gender=form.cleaned_data['gender']
 
             user=Account.objects.create_user(first_name=first_name,last_name=last_name,email=email,ssn=ssn,birth_date=birth_date,contact_no=contact_no,
-                                             gender=gender,password=password)
+                                            gender=gender,password=password)
             user.save()
             messages.success(request,"yesssss")
             # return redirect('register')
@@ -92,15 +92,17 @@ def login(request):
         email=request.POST['email']
         password=request.POST['password']
 
-
         user=auth.authenticate(email=email,password=password)
         if user is not None:
             auth.login(request,user)
             print(user.type)
-            return redirect('patient_home')
+            if user.type == 'doctor':
+                return redirect('doctor_home')
+            else:
+                return redirect('patient_home')
         else:
             messages.error(request,"Invalid login Email or Password")
-            return redirect('patient_home')
+            return redirect('login')
 
     return render(request, 'accounts/login.html')
 
@@ -128,7 +130,7 @@ def registerstaff(request):
 
 
             user=Account.objects.create_user(first_name=first_name,last_name=last_name,email=email,ssn=ssn,birth_date=birth_date,contact_no=contact_no,
-                                             gender=gender,type=type,password=password)
+                                            gender=gender,type=type,password=password)
             user.is_staff=True
             user.is_active=True
 
