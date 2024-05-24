@@ -1,13 +1,15 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views.decorators.csrf import csrf_protect
 from django.http import HttpResponse
-from .models import Patient, MedicalHis, Vaccination, Disease, Illness, PrevSurgery, Allergies, CurrentMedication
+from .models import Patient, MedicalHis, Vaccination, Disease, Illness, PrevSurgery, Allergies, CurrentMedication, Appointment
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth.decorators import login_required
-from .models import Patient, MedicalHis, Vaccination, Disease, Illness, PrevSurgery, Allergies, CurrentMedication
-from doctor.models import Department
+# from .models import Patient, MedicalHis, Vaccination, Disease, Illness, PrevSurgery, Allergies, CurrentMedication
+from doctor.models import Department , Doctor, DoctorAvailability
+from django.http import JsonResponse
+
 
 
 @login_required
@@ -111,12 +113,55 @@ def save_medical_history(request):
             'current_medications': current_medications,
         }
         return render(request, 'patient/history.html', context)
-    
+
+@login_required
 def appointment(request):
+    user = request.user
+    patient= get_object_or_404(Patient, user=user)
+    print(user)
+    if request.method == 'POST':
+        doctor_id = request.POST.get('doctor')
+        availability_id = request.POST.get('availableAppointments')
+        print(availability_id)
+        patient = patient
+        doctor = get_object_or_404(Doctor, id=doctor_id)
+        availability = get_object_or_404(DoctorAvailability, id=availability_id)
+        department = doctor.department
+        price = department.fees
+        appointment = Appointment.objects.create(
+            patient_no=patient,
+            doctor=doctor,
+            department=department,
+            availability_time=availability,
+            price=price,
+            status='Pending'
+        )
+        messages.success(request, "Your appointment has been scheduled successfully")
+        return redirect('appointment')
     departments = Department.objects.all()
     print(departments)
     return render(request, 'patient/appointment.html',{'departments': departments})
 
 def patient_home(request):
     return render(request, 'patient/index.html')
+
+
+def get_doctors_by_department(request):
+    department_id = request.GET.get('department_id')
+    if department_id:
+        doctors = Doctor.objects.filter(department_id=department_id).values('id', 'user__first_name', 'user__last_name')
+        return JsonResponse({'doctors': list(doctors)})
+    return JsonResponse({'doctors': []})
+
+def get_availability_by_doctor(request):
+    doctor_id = request.GET.get('doctor_id')
+    if doctor_id:
+        availabilities = DoctorAvailability.objects.filter(doctor_id=doctor_id).values('id', 'availability__day_of_week', 'availability__start_time', 'availability__end_time')
+        doctor = Doctor.objects.get(id=doctor_id)
+        department_price = doctor.department.fees
+        return JsonResponse({'availabilities': list(availabilities), 'price': department_price})
+    return JsonResponse({'availabilities': [], 'price': 0})
+
+
+    
 
