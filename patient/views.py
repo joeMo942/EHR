@@ -128,16 +128,29 @@ def appointment(request):
         availability = get_object_or_404(DoctorAvailability, id=availability_id)
         department = doctor.department
         price = department.fees
-        appointment = Appointment.objects.create(
+
+        existing_appointment = Appointment.objects.filter(
             patient_no=patient,
             doctor=doctor,
-            department=department,
-            availability_time=availability,
-            price=price,
-            status='Pending'
-        )
-        messages.success(request, "Your appointment has been scheduled successfully")
-        return redirect('appointment')
+            availability_time=availability
+        ).exists()
+
+        if existing_appointment:
+            messages.error(request, "You already have an appointment at this time.")
+            return redirect('appointment')
+        else:
+            appointment = Appointment.objects.create(
+                patient_no=patient,
+                doctor=doctor,
+                department=department,
+                availability_time=availability,
+                price=price,
+                status='Pending'
+            )
+            
+            messages.success(request, "Your appointment has been scheduled successfully")
+            return redirect('appointment')
+        
     departments = Department.objects.all()
     print(departments)
     return render(request, 'patient/appointment.html',{'departments': departments})
@@ -164,9 +177,12 @@ def get_availability_by_doctor(request):
 
 
     
-
+@login_required
 def booked_appointment(request):
-    return render(request, 'patient/booked-appointment.html')
+    user=request.user
+    patient= get_object_or_404(Patient, user=user)
+    appointments = Appointment.objects.filter(patient_no=patient)
+    return render(request, 'patient/booked-appointment.html', {'appointments': appointments})
 
 def test_results(request):
     return render(request, 'patient/test-results.html')

@@ -50,7 +50,7 @@ class AvailabilityTime(models.Model):
 
 class DoctorAvailability(models.Model):
     availability = models.ForeignKey(AvailabilityTime, on_delete=models.CASCADE)
-    doctor = models.OneToOneField(Doctor, on_delete=models.CASCADE)
+    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
 
     class Meta:
         unique_together = (('doctor', 'availability'),)

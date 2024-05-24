@@ -100,5 +100,8 @@ class Appointment(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        unique_together = (('patient_no', 'availability_time'),)
+
     def __str__(self):
         return f"Appointment for {self.patient_no.user.first_name} with {self.doctor} at {self.availability_time}"

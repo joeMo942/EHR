@@ -25,7 +25,39 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <!-- Dynamic content will be inserted here -->
+                                    {% for appointment in appointments %}
+                                    <tr>
+                                        <td>{{ appointment.doctor.user.first_name }}
+                                            {{ appointment.doctor.user.last_name }}</td>
+                                        <td>{{ appointment.department.name }}</td>
+                                        <td>{{ appointment.availability_time.availability.day_of_week }}</td>
+                                        <td>{{ appointment.availability_time.availability.start_time }} -
+                                            {{ appointment.availability_time.availability.end_time }} </td>
+                                        {% if appointment.status == "Pending" %}
+                                        <td>
+                                            <label class="badge badge-warning">{{  appointment.status }}</label>
+                                        </td>
+                                        {% elif appointment.status == "Confirmed" %}
+                                        <td>
+                                            <label class="badge badge-info">{{  appointment.status }}</label>
+                                        </td>
+                                        {% elif appointment.status == "Declined" %}
+                                        <td>
+                                            <label class="badge badge-warning">{{  appointment.status }}</label>
+                                        </td>
+                                        {% elif appointment.status == "Not Paid" %}
+                                        <td>
+                                            <label class="badge badge-info">{{  appointment.status }}</label>
+                                        </td>
+                                        {% elif appointment.status == "Completed" %}
+                                        <td>
+                                            <label class="badge badge-success">{{  appointment.status }}</label>
+                                        </td>
+                                        {% endif %}
+                                        <td>Canceling 1</td>
+                                    </tr>
+                                    {% endfor %}
+                                    <!-- Add more rows as needed -->
                                 </tbody>
                             </table>
                         </div>
