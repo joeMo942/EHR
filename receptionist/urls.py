@@ -8,4 +8,7 @@ urlpatterns = [
     path('api/doctors/', views.get_doctors_by_department, name='get_doctors_by_department'),
     path('get-full-name/', views.get_full_name, name='get_full_name'),
     path('patients-bills/', views.patients_bills, name='patients_bills'),
+    path('update-appointment-status/', views.update_appointment_status, name='update_appointment_status'),
+    path('create-appointment/', views.book_appointment, name='create_appointment'),
+
 ]

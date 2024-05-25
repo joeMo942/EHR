@@ -10,7 +10,7 @@
                     <div class="card-body">
                         <h4 class="card-title">Default form</h4>
                         {% include "includes/alerts.html" %}
-                        <form id="historyForm" class="forms-sample" onsubmit="handleSubmit(event)" method="POST">
+                        <form id="historyForm" class="forms-sample" action="{% url "appointment" %}" method="POST">
                             {% csrf_token %}
                             <div class="form-group">
                                 <label>Department</label>

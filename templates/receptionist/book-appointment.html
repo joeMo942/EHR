@@ -1,20 +1,27 @@
 {% extends "includes/base-receptionist.html" %}
 {% load static %}
 {% block content %}
-
+<style>
+    .slect {
+        background-color:
+            #e9ecef border-color: #dee2e6 border-radius: 4px border-style: solid border-width: 0.8px color: #212529 font-size: 14px line-height: 14px padding: 14px 22px
+    }
+</style>
 <div class="main-panel">
     <div class="content-wrapper">
         <div class="row">
             <div class="col-md-6 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Default form</h4>
+                        <h4 class="card-title">Appointment Form</h4>
                         {% include "includes/alerts.html" %}
-                        <form id="historyForm" class="forms-sample" onsubmit="handleSubmit(event)" method="POST">
+                        <form id="historyForm" class="forms-sample" method="POST"
+                            action="{% url 'create_appointment' %}">
                             {% csrf_token %}
                             <div class="form-group">
                                 <label>SSN</label>
-                                <input type="text" class="form-control" id="patientSSN" name="ssn" placeholder="Enter SSN">
+                                <input type="text" class="form-control" id="patientSSN" name="ssn"
+                                    placeholder="Enter SSN">
                             </div>
                             <div class="form-group">
                                 <label>Full Name</label>
@@ -22,8 +29,8 @@
                             </div>
                             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
                             <script type="text/javascript">
-                                $(document).ready(function() {
-                                    $('#patientSSN').on('blur', function() {
+                                $(document).ready(function () {
+                                    $('#patientSSN').on('blur', function () {
                                         var ssn = $(this).val();
                                         $.ajax({
                                             url: '{% url "get_full_name" %}',
@@ -38,7 +45,7 @@
                                     });
                                 });
                             </script>
-                            <div class="form-group">    
+                            <div class="form-group">
                                 <button type="button" class="btn btn-primary" onclick="searchPatient()">Search</button>
                             </div>
                             <div class="form-group">
@@ -72,10 +79,12 @@
                                     </div>
                                 </div>
                             </div>
+                            <input type="hidden" name="status" value="Pending">
                             <div>
                                 <button type="submit" class="btn btn-primary me-2">Submit</button>
                                 <button type="button" class="btn btn-light">Cancel</button>
                             </div>
+
                         </form>
 
                         <script>
@@ -169,5 +178,8 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}

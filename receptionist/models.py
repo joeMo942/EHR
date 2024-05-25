@@ -4,8 +4,10 @@ from accounts.models import Account
 
 class Receptionist(models.Model):  
 
-    user = models.ForeignKey(Account, on_delete=models.CASCADE)
+    user = models.models.OneToOneField(Account,on_delete=models.CASCADE)
 
-    class Meta:
-        
-        unique_together = (('receptionist_id', 'user'),)
+
+    def __str__(self):
+        return self.user.first_name + ' ' + self.user.last_name
+    
+
