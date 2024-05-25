@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+  {% include "includes/head-patient.html" %}
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Encounter Form</title>
@@ -202,9 +203,16 @@
         <input type="text" id="reasonForVisit" name="reasonForVisit" placeholder="Reason for Visit"
           value="Routine Checkup">
 
+        <div class="form-group">
+          <label>Department</label>
+          <select class="js-example-basic-single w-100" name="department" id="departmentSelect">
+            <option value="">Select Department</option>
+          </select>
+        </div>
+
         <h3>Symptoms</h3>
         <div id="symptomsContainer">
-          <div class="symptoms-field">
+          <div class="js-example-basic-single w-100">
             <input type="text" class="symptomInput" name="symptoms[]" placeholder="Start typing symptom..."
               oninput="searchSymptom(this)">
             <div class="diagnosisResults symptomResults"></div>
@@ -401,7 +409,7 @@
 
     function addSymptomField() {
       const newSymptomField = document.createElement('div');
-      newSymptomField.classList.add('symptoms-field');
+      newSymptomField.classList.add('form-group');
       newSymptomField.innerHTML = `
         <input type="text" class="symptomInput" placeholder="Start typing symptom..." oninput="searchSymptom(this)">
         <div class="diagnosisResults symptomResults"></div>
@@ -516,5 +524,6 @@
 
 
 </body>
+{% include "includes/footer-patient.html" %}
 
 </html>
