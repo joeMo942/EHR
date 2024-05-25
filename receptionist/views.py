@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from doctor.models import Department, Doctor, DoctorAvailability
@@ -12,8 +12,23 @@ from django.contrib import messages
 
 
 def receptionist_home(request):
+    now = datetime.now()
+    current_time = now.strftime("%Y-%m-%d %H:%M")
+    print("Current Time =", current_time)
 
-    return render(request, 'receptionist/index.html')
+    total_patients = Patient.objects.count()
+    total_appointments = Appointment.objects.filter(created_at__startswith=current_time[:10]).count()
+    print(total_appointments)
+
+    # Filter accounts added on the current day
+    total_accounts_added = Account.objects.filter(date_joined__startswith=current_time[:10]).count()
+
+    context = {
+        'total_patients': total_patients,
+        'total_appointments': total_appointments,
+        'total_accounts_added': total_accounts_added,
+    }
+    return render(request, 'receptionist/index.html', context)
 
 def current_appointments(request):
     appointments = Appointment.objects.select_related('patient_no__user', 'doctor__user', 'availability_time__availability').all()

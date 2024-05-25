@@ -1,5 +1,53 @@
-  {% extends "includes/base-receptionist.html" %}
-  {% load static %}
-  {% block content %}
+{% extends "includes/base-receptionist.html" %}
+{% load static %}
+{% block content %}
+<!-- partial -->
+<div class="main-panel">
+<div class="content-wrapper">
+<div class="row">
+<div class="col-sm-12">
+<div class="home-tab">
+<div class="d-sm-flex align-items-center justify-content-between border-bottom"></div>
+<div class="tab-content tab-content-basic">
+<div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview"> 
+<div class="row">
+<div class="col-sm-12">
+  <div class="statistics-details d-flex align-items-center justify-content-between">
+    <div>
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <h3 class="mdi mdi-human-handsdown"></h3> 
+      </div>
+      <p class="statistics-title">Total patients</p>
+        <h4 class="rate-percentage">{{ total_patients }}</h4>
+    </div>
+    <div>
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <h3 class="mdi mdi-bookmark-check"></h3>
+      </div>
+      <p class="statistics-title">Appointments</p>
+      <h4 class="rate-percentage">{{ total_appointments }}</h4>
+    </div>
+    <div>
+      <div>
+        <a>
+          <img src="{% static 'images/download.png' %}" style="width: 50px; height: 50px;" />
+        </a>
+        
+      </div>
+      <p class="statistics-title">New Patients</p>
+      <h3 class="rate-percentage">{{ total_accounts_added }}</h3>
+    </div>
+    <div>
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <h3 class="mdi mdi-test-tube"></h3> 
+      </div>
+      <p class="statistics-title">Lab Tests</p>
+      <h3 class="rate-percentage">NAN</h3>
+    </div>
+    <div>
+  </div>
+  </div>
+</div>
 
-  {% endblock %}
+
+{% endblock %}
