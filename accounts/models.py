@@ -47,7 +47,7 @@ class MyAccountManager(BaseUserManager):
 
 class Account(AbstractBaseUser):
     user_id = models.AutoField(primary_key=True,auto_created=True)
-    ssn = models.CharField(max_length=15)  # Field name made lowercase.
+    ssn = models.CharField(max_length=15,unique=True)  # Field name made lowercase.
     password = models.CharField(max_length=128)
     contact_no = models.CharField(max_length=15)
     birth_date = models.DateField(blank=True, null=True)

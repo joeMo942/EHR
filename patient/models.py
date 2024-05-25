@@ -160,6 +160,10 @@ class Medicationlu(models.Model):
     def __str__(self):
         return self.medicationname
 
+
+
+
+
 # end lookups
 
 class Encounters(models.Model):
@@ -184,4 +188,11 @@ class Encounters(models.Model):
         return f"Encounter for {self.patient.user.first_name} with {self.doctor} "
 
 
- 
+class Note(models.Model):
+    patient = models.ForeignKey(Encounters, on_delete=models.CASCADE)
+    content = models.TextField()
+    
+class Test(models.Model):
+    patient = models.ForeignKey(Encounters, on_delete=models.CASCADE)
+    test_type = models.CharField(max_length=100)
+    test_name = models.CharField(max_length=200)

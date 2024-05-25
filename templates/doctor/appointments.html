@@ -33,9 +33,10 @@
                     <td>{{appointment.patient_no.user.first_name}} {{appointment.patient_no.user.last_name}}</td>
                     <td>{{appointment.availability_time.availability.day_of_week}}</td>
                     <td>{{appointment.availability_time.availability.start_time}}</td>
-                    <td><a href="{% url 'encounter' %}" class="btn btn-primary"
-                        onclick="checkAvailability()">Encounter</a></td>
-                    <td><a href="medical-history-page.html" class="btn btn-primary">Medical History</a></td>
+                    <td><a href="{% url 'encounter' appointment.id appointment.patient_no.user.pk %}"
+                        class="btn btn-primary" onclick="checkAvailability()">Encounter</a></td>
+                    <td><a href=" {% url "patients_history" appointment.patient_no.pk %} "
+                        class="btn btn-primary">Medical History</a></td>
                     <td><a href="initial-assessment-page.html" class="btn btn-primary">Initial Assessment</a></td>
                     {% comment %} <td><label class="badge badge-danger">canceled</label></td> {% endcomment %}
                   </tr>

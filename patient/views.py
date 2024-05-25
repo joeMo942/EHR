@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views.decorators.csrf import csrf_protect
 from django.http import HttpResponse
-from .models import Patient, MedicalHis, Vaccination, Disease, Illness, PrevSurgery, Allergies, CurrentMedication, Appointment
+from .models import Patient, MedicalHis, Vaccination, Disease, Illness, PrevSurgery, CurrentMedication, Appointment,Allergies
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_protect
@@ -186,4 +186,6 @@ def booked_appointment(request):
 
 def test_results(request):
     return render(request, 'patient/test-results.html')
+
+
 
