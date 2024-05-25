@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-  {% include "includes/head-patient.html" %}
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Encounter Form</title>
@@ -190,31 +189,21 @@
   <div class="container">
     <div class="box">
       <h2>Encounter Form</h2>
-      <form acttion={% url "encounter"  appointment.id patient.user.pk %} method="POST">
-        {% csrf_token %}
+      <form method="GET">
         <label for="patientName">Patient Name</label>
-        <input type="text" id="patientName" name="patientName" placeholder="Patient Name"
-          value="{{patient.user.first_name}}" readonly>
+        <input type="text" id="patientName" placeholder="Patient Name" value="John Doe" readonly>
 
         <label for="patientID">Patient ID</label>
-        <input type="text" id="patientID" name="patientID" placeholder="Patient ID" value="1" readonly>
+        <input type="text" id="patientID" placeholder="Patient ID" value="123456" readonly>
 
         <label for="reasonForVisit">Reason of Visit</label>
-        <input type="text" id="reasonForVisit" name="reasonForVisit" placeholder="Reason for Visit"
-          value="Routine Checkup">
-
-        <div class="form-group">
-          <label>Department</label>
-          <select class="js-example-basic-single w-100" name="department" id="departmentSelect">
-            <option value="">Select Department</option>
-          </select>
-        </div>
+        <input type="text" id="reasonForVisit" placeholder="Reason for Visit" value="Routine Checkup">
 
         <h3>Symptoms</h3>
         <div id="symptomsContainer">
-          <div class="js-example-basic-single w-100">
-            <input type="text" class="symptomInput" name="symptoms[]" placeholder="Start typing symptom..."
-              oninput="searchSymptom(this)">
+          <div class="symptoms-field">
+            <input type="text" class="symptomInput" placeholder="Start typing symptom..." oninput="searchSymptom(this)"
+              name="tt">
             <div class="diagnosisResults symptomResults"></div>
           </div>
         </div>
@@ -224,11 +213,11 @@
         <div id="diagnosisFields">
           <div class="diagnosis-field">
             <label for="diagnosisName">Name</label>
-            <input type="text" class="diagnosisName" name="diagnosisName[]" placeholder="Start typing diagnosis..."
+            <input type="text" class="diagnosisName" placeholder="Start typing diagnosis..."
               oninput="searchDiagnosis(this)">
             <div class="diagnosisResults"></div>
             <label for="diagnosisICD">ICD Code</label>
-            <input type="text" class="diagnosisICD" name="diagnosisICD[]" placeholder="ICD Code" readonly>
+            <input type="text" class="diagnosisICD" placeholder="ICD Code" readonly>
           </div>
         </div>
         <button type="button" id="addDiagnosis">Add Diagnosis</button>
@@ -237,15 +226,15 @@
         <div id="prescriptionFields">
           <div class="prescription-field">
             <label for="prescriptionName">Name</label>
-            <input type="text" class="prescriptionName" name="prescriptionName[]"
-              placeholder="Start typing prescription..." oninput="searchPrescription(this)">
+            <input type="text" class="prescriptionName" placeholder="Start typing prescription..."
+              oninput="searchPrescription(this)">
             <div class="diagnosisResults prescriptionResults"></div>
             <label for="prescriptionDosage">Dosage</label>
-            <input type="text" class="prescriptionDosage" name="prescriptionDosage[]" placeholder="Dosage">
+            <input type="text" class="prescriptionDosage" placeholder="Dosage">
             <label for="prescriptionFrequency">Frequency</label>
-            <input type="text" class="prescriptionFrequency" name="prescriptionFrequency[]" placeholder="Frequency">
+            <input type="text" class="prescriptionFrequency" placeholder="Frequency">
             <label for="prescriptionDuration">Duration</label>
-            <input type="text" class="prescriptionDuration" name="prescriptionDuration[]" placeholder="Duration">
+            <input type="text" class="prescriptionDuration" placeholder="Duration">
           </div>
         </div>
         <button type="button" id="addPrescription">Add Prescription</button>
@@ -253,45 +242,43 @@
         <h3>Test Required</h3>
         <div class="testSection">
           <label for="requireTest">Does the patient require a test?</label>
-          <select id="requireTest" name="requireTest">
+          <select id="requireTest">
             <option value="No" selected>No</option>
             <option value="Yes">Yes</option>
           </select>
           <div class="testOptions" style="display: none;">
-            <div id="testNamesContainer">
+            <div class="testNames">
               <div class="testName">
                 <label for="testType">Test Type:</label>
-                <select class="testTypeSelect" name="testType[]">
+                <select class="testTypeSelect">
                   <option value="Blood Test">Blood Test</option>
                   <option value="X-ray">X-ray</option>
                 </select>
                 <label for="testName">Test Name:</label>
-                <input type="text" class="testNameInput" name="testName[]" placeholder="Test Name">
+                <input type="text" class="testNameInput" placeholder="Test Name">
               </div>
             </div>
             <button type="button" id="addTest">Add Test</button>
           </div>
         </div>
 
-
-
-        {% comment %} <h3>Referral</h3>
+        <h3>Referral</h3>
         <label for="referralNeeded">Does the patient need to be referred?</label>
-        <select id="referralNeeded" name="referralNeeded">
+        <select id="referralNeeded">
           <option value="No" selected>No</option>
           <option value="Yes">Yes</option>
         </select>
         <div class="referralSection" style="display: none;">
           <div id="referralLocationSection" style="display: none;">
             <label for="referralLocation">Referral Location:</label>
-            <select id="referralLocation" name="referralLocation">
+            <select id="referralLocation">
               <option value="" selected disabled>Select location</option>
               <option value="Within Hospital">Within Hospital</option>
               <option value="Outside of Hospital">Outside of Hospital</option>
             </select>
             <div id="withinHospitalDetails" style="display: none;">
               <label for="referralDepartment">Department:</label>
-              <select id="referralDepartment" name="referralDepartment">
+              <select id="referralDepartment">
                 <option value="" selected disabled>Select department</option>
                 <option value="Cardiology">Cardiology</option>
                 <option value="Dermatology">Dermatology</option>
@@ -302,15 +289,14 @@
             </div>
             <div id="outsideHospitalDetails" style="display: none;">
               <label for="referralOutsideDetails">Referral Details:</label>
-              <input type="text" id="referralOutsideDetails" name="referralOutsideDetails"
-                placeholder="Provide details">
+              <input type="text" id="referralOutsideDetails" placeholder="Provide details">
             </div>
           </div>
-        </div> {% endcomment %}
+        </div>
 
         <h3>Notes</h3>
         <label for="notes">Additional Notes:</label>
-        <textarea id="notes" name="notes" rows="4" placeholder="Enter any additional notes here"></textarea>
+        <textarea id="notes" rows="4" placeholder="Enter any additional notes here"></textarea>
 
         <button type="submit">Submit</button>
       </form>
@@ -366,40 +352,6 @@
       await fetchDiagnoses();
       await fetchSymptoms();
       await fetchPrescriptions();
-
-      const requireTestSelect = document.getElementById('requireTest');
-      const testOptionsDiv = document.querySelector('.testOptions');
-      const addTestButton = document.getElementById('addTest');
-      const testNamesContainer = document.getElementById('testNamesContainer');
-
-      requireTestSelect.addEventListener('change', function () {
-        if (requireTestSelect.value === 'Yes') {
-          testOptionsDiv.style.display = 'block';
-        } else {
-          testOptionsDiv.style.display = 'none';
-        }
-      });
-
-      // Initial check to handle page reload scenario
-      if (requireTestSelect.value === 'Yes') {
-        testOptionsDiv.style.display = 'block';
-      }
-
-      // Function to add new test fields
-      addTestButton.addEventListener('click', function () {
-        const newTestField = document.createElement('div');
-        newTestField.classList.add('testName');
-        newTestField.innerHTML = `
-            <label for="testType">Test Type:</label>
-            <select class="testTypeSelect" name="testType[]">
-                <option value="Blood Test">Blood Test</option>
-                <option value="X-ray">X-ray</option>
-            </select>
-            <label for="testName">Test Name:</label>
-            <input type="text" class="testNameInput" name="testName[]" placeholder="Test Name">
-        `;
-        testNamesContainer.appendChild(newTestField);
-      });
     });
 
     // Event listeners for adding fields
@@ -409,7 +361,7 @@
 
     function addSymptomField() {
       const newSymptomField = document.createElement('div');
-      newSymptomField.classList.add('form-group');
+      newSymptomField.classList.add('symptoms-field');
       newSymptomField.innerHTML = `
         <input type="text" class="symptomInput" placeholder="Start typing symptom..." oninput="searchSymptom(this)">
         <div class="diagnosisResults symptomResults"></div>
@@ -524,6 +476,5 @@
 
 
 </body>
-{% include "includes/footer-patient.html" %}
 
 </html>
