@@ -5,17 +5,17 @@ from django.contrib.auth.models import AbstractBaseUser,BaseUserManager
 class MyAccountManager(BaseUserManager):
     def create_user(self,first_name,last_name,email,ssn,contact_no,birth_date,gender,type='patient',password=None):
         if not email:
-             raise ValueError("User Must Have Email Address")
+                raise ValueError("User Must Have Email Address")
         
         user =self.model(
-             email=self.normalize_email(email),
-             first_name=first_name,
-             last_name=last_name,
-             ssn=ssn,
-             contact_no=contact_no,
-             birth_date=birth_date,
-             type=type,
-             gender=gender,
+                email=self.normalize_email(email),
+                first_name=first_name,
+                last_name=last_name,
+                ssn=ssn,
+                contact_no=contact_no,
+                birth_date=birth_date,
+                type=type,
+                gender=gender,
 
         )
         user.set_password(password)
@@ -41,8 +41,6 @@ class MyAccountManager(BaseUserManager):
         user.is_active = True
         user.save(using=self._db)
         return user
-    
-
 
 
 class Account(AbstractBaseUser):
@@ -54,7 +52,7 @@ class Account(AbstractBaseUser):
     email = models.CharField(max_length=100,unique=True)  # Field name made lowercase.
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
-
+    
     date_joined =models.DateTimeField(auto_now_add=True)
     last_login=models.DateTimeField(auto_now_add=True)
     is_admin=models.BooleanField(default=False)
@@ -78,11 +76,6 @@ class Account(AbstractBaseUser):
     type = models.CharField(max_length=20, blank=True, null=True,choices=USER_TYPES, default='patient')  # Field name made lowercase.
     gender = models.CharField( max_length=10,choices=GENDER_CHOICES, blank=True, null=True)  # Field name made lowercase.
 
-    # class Meta:
-    #     # managed = False
-    #     db_table = 'person'
-
-     
     USERNAME_FIELD ='email'
     REQUIRED_FIELDS=['first_name','last_name']
 

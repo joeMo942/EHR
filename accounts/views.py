@@ -106,6 +106,8 @@ def login(request):
                 return redirect('patient_home')
             elif user.type == 'nurse':
                 return redirect('nurse_home')
+            elif user.type == 'admin':
+                return redirect('manager_home')
         else:
             messages.error(request,"Invalid login Email or Password")
             return redirect('login')

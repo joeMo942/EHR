@@ -1,0 +1,88 @@
+{% extends "includes/base-manager.html" %}
+{% load static %}
+{% block content %}
+<!-- partial -->
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="home-tab">
+                    <div class="d-sm-flex align-items-center justify-content-between border-bottom"></div>
+                    <div class="tab-content tab-content-basic">
+                        <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="statistics-details d-flex align-items-center justify-content-between">
+                                        <div>
+                                            <div class="col-sm-6 col-md-4 col-lg-3 mx-auto">
+                                                <h3 class="mdi mdi-account-group"></h3>
+                                            </div>
+                                            <p class="statistics-title text-center">Patients Today</p>
+                                            <h4 class="rate-percentage text-center">{{total_patients}}</h4>
+                                        </div>
+                                        <div>
+                                            <div class="col-sm-6 col-md-4 col-lg-3 mx-auto">
+                                                <h3 class="mdi mdi-doctor"></h3>
+                                            </div>
+                                            <p class="statistics-title text-center">Doctors</p>
+                                            <h4 class="rate-percentage text-center">{{total_doctors}}</h4>
+                                        </div>
+                                        <div>
+                                            <div class="col-sm-6 col-md-4 col-lg-3 mx-auto">
+                                                <h3 class="mdi mdi-human-handsdown"></h3>
+                                            </div>
+                                            <p class="statistics-title text-center">Patients Added Today</p>
+                                            <h4 class="rate-percentage text-center">{{total_patients_added_today}}</h4>
+                                        </div>
+                                        <div>
+                                            <div class="col-sm-6 col-md-4 col-lg-3 mx-auto">
+                                                <h3 class="mdi mdi-bookmark-check"></h3>
+                                            </div>
+                                            <p class="statistics-title text-center">Appointments Today</p>
+                                            <h4 class="rate-percentage text-center">{{total_appointments}}</h4>
+                                        </div>
+                                        <div>
+                                            <div class="col-sm-6 col-md-4 col-lg-3 mx-auto">
+                                                <h3 class="mdi mdi-test-tube"></h3>
+                                            </div>
+                                            <p class="statistics-title text-center">Lab Tests</p>
+                                            <h3 class="rate-percentage text-center">NAN</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-7 d-flex flex-column">
+                                    <div class="row flex-grow">
+                                        <div class="col-12 col-lg-2 col-lg-12 grid-margin stretch-card">
+                                            <div class="card card-rounded">
+                                                <div class="card-body">
+                                                    <div class="d-sm-flex justify-content-between align-items-start">
+                                                        <div>
+                                                            <!-- Embed the chat using an iframe -->
+                                                            <iframe src="http://localhost:8501/#chat-with-mysql" style="width:600px; height: 500px; border: none;"></iframe>
+                                                        </div>
+                                                        <div id="performance-line-legend"></div>
+                                                    </div>
+                                                    <!-- Chart canvas removed here -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+        <!-- content-wrapper ends -->
+        <!-- partial:partials/_footer.html -->
+        
+        <!-- partial -->
+    </div>
+    <!-- main-panel ends -->
+{% endblock %}

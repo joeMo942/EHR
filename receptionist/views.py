@@ -15,19 +15,15 @@ from django.contrib.auth.decorators import login_required
 def receptionist_home(request):
     now = datetime.now()
     current_time = now.strftime("%Y-%m-%d %H:%M")
-    print("Current Time =", current_time)
 
     total_patients = Patient.objects.count()
     total_appointments = Appointment.objects.filter(created_at__startswith=current_time[:10]).count()
-    print(total_appointments)
-
-    # Filter accounts added on the current day
-    total_accounts_added = Account.objects.filter(date_joined__startswith=current_time[:10]).count()
+    total_patients_added_today = Account.objects.filter(date_joined__startswith=current_time[:10]).count()
 
     context = {
         'total_patients': total_patients,
         'total_appointments': total_appointments,
-        'total_accounts_added': total_accounts_added,
+        'total_patients_added_today': total_patients_added_today,
     }
     return render(request, 'receptionist/index.html', context)
 
