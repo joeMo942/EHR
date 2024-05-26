@@ -1,0 +1,142 @@
+{% extends "includes/base-manager.html" %}
+{% load static %}
+{% block content %}
+
+<style>
+    .custom-margin {
+        margin-top: 50px; /* Adjust the value to get the desired space */
+    }
+</style>
+
+<div class="col-lg-5 grid-margin stretch-card" style="width: 1300px">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">All Doctors</h4>
+            <div class="table-responsive" style="max-height: 550px; overflow-y: auto;">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Department</th>
+                            <th>SSN</th>
+                            <th>Operation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Jacob</td>
+                            <td>Photoshop</td>
+                            <td class="text-danger">28.76% <i class="ti-arrow-down"></i></td>
+                            <td>
+                                <button class="btn btn-danger">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Emma</td>
+                            <td>Design</td>
+                            <td class="text-success">45.21% <i class="ti-arrow-up"></i></td>
+                            <td>
+                                <button class="btn btn-danger">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Liam</td>
+                            <td>Development</td>
+                            <td class="text-warning">12.34% <i class="ti-arrow-down"></i></td>
+                            <td>
+                                <button class="btn btn-danger">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Ava</td>
+                            <td>Marketing</td>
+                            <td class="text-success">67.89% <i class="ti-arrow-up"></i></td>
+                            <td>
+                                <button class="btn btn-danger">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>James</td>
+                            <td>Support</td>
+                            <td class="text-danger">9.76% <i class="ti-arrow-down"></i></td>
+                            <td>
+                                <button class="btn btn-danger">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>James</td>
+                            <td>Support</td>
+                            <td class="text-danger">9.76% <i class="ti-arrow-down"></i></td>
+                            <td>
+                                <button class="btn btn-danger">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>James</td>
+                            <td>Support</td>
+                            <td class="text-danger">9.76% <i class="ti-arrow-down"></i></td>
+                            <td>
+                                <button class="btn btn-danger">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>James</td>
+                            <td>Support</td>
+                            <td class="text-danger">9.76% <i class="ti-arrow-down"></i></td>
+                            <td>
+                                <button class="btn btn-danger">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>James</td>
+                            <td>Support</td>
+                            <td class="text-danger">9.76% <i class="ti-arrow-down"></i></td>
+                            <td>
+                                <button class="btn btn-danger">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>James</td>
+                            <td>Support</td>
+                            <td class="text-danger">9.76% <i class="ti-arrow-down"></i></td>
+                            <td>
+                                <button class="btn btn-danger">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>James</td>
+                            <td>Support</td>
+                            <td class="text-danger">9.76% <i class="ti-arrow-down"></i></td>
+                            <td>
+                                <button class="btn btn-danger">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="form-group custom-margin">
+                <h4>Link Department with Doctor</h4>
+                <label>Doctor</label>
+                <select class="js-example-basic-single w-100">
+                    <option value="AL">Alabama</option>
+                    <option value="WY">Wyoming</option>
+                    <option value="AM">America</option>
+                    <option value="CA">Canada</option>
+                    <option value="RU">Russia</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Department</label>
+                <select class="js-example-basic-single w-100">
+                    <option value="AL">Alabama</option>
+                    <option value="WY">Wyoming</option>
+                    <option value="AM">America</option>
+                    <option value="CA">Canada</option>
+                    <option value="RU">Russia</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
