@@ -2,6 +2,7 @@
 {% load static %}
 {% block content %}
 
+
 <script>
     function viewDetails(testName, details) {
         const newWindow = window.open("", "_blank");
@@ -40,6 +41,7 @@
         newWindow.focus();
     }
 </script>
+
 
 <div class="container-fluid">
     <div class="row">
@@ -94,18 +96,7 @@
                                     {% endif %}
                                 </tr>
                                 {% endfor %}
-                                <tr>
-                                    <td>test_with_pdf</td>
-                                    <td>20 July 2019</td>
-                                    <td><label class="badge badge-info">Available</label></td>
-                                    <td>
-                                        <button class="btn btn-info btn-sm" onclick="viewPDF('test.pdf')">View</button>
-                                        <button class="btn btn-primary btn-sm"
-                                            onclick="printPDF('test.pdf')">Print</button>
-                                        <a class="btn btn-success btn-sm" href="test.pdf"
-                                            download="test_with_pdf_result.pdf">Download</a>
-                                    </td>
-                                </tr>
+
                                 <!-- Add more rows as needed -->
                             </tbody>
                         </table>
