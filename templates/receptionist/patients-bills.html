@@ -1,111 +1,142 @@
 {% extends "includes/base-receptionist.html" %}
 {% load static %}
 {% block content %}
-      <!-- partial -->
-      <div class="main-panel">
-        <div class="content-wrapper">
-          <div class="row">
+<!-- partial -->
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="row">
             <div class="col-sm-12">
-              <div class="home-tab">
-                <section id="patients">
-                    <h2>Patients Bills</h2>
-                    <div class="search-container">
-                        <input type="text" id="searchSSN" placeholder="Search by Patient SSN" oninput="searchPatients()">
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Patient Name</th>
-                                    <th>Patient SSN</th>
-                                    <th>Department</th>
-                                    <th>Insurance</th>
-                                    <th>Bill</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody id="patientsTableBody">
-                                <!-- Patient data will be dynamically added here -->
-                            </tbody>
-                        </table>
-                    </div>
-              </div>
+                <div class="home-tab">
+                    <section id="patients">
+                        <h2>Patients Bills</h2>
+                        <div class="table-responsive">
+                            {% include "includes/alerts.html" %}
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Patient Name</th>
+                                        <th>Patient SSN</th>
+                                        <th>Department</th>
+                                        <th>Insurance</th>
+                                        <th>Bill</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="patientsTableBody">
+                                    <tr>
+                                        {% for appointment in appointments %}
+                                        <td>{{appointment.patient_no.user.first_name}}</td>
+                                        <td>{{appointment.patient_no.user.ssn}}</td>
+                                        <td>{{appointment.doctor.department}}</td>
+                                        <td>{{appointment.price}}</td>
+                                        <td>{{appointment.price}}</td>
+                                        <td><a href="{% url "patients_bills_confirm" appointment.id %}"
+                                                class="btn-manage btn-paid">Paid</a>
+                                        </td>
+                                        {% endfor %}
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-      <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-        section {
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-        }
-        h2 {
-            color: #333;
-        }
-        .search-container {
-            margin-bottom: 20px;
-        }
-        input[type="text"] {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        input[type="text"]:focus {
-            outline: none;
-        }
-        .btn-manage {
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 15px; /* Rounded corners */
-            cursor: pointer;
-        }
-        .btn-paid {
-            background-color: #28a745; /* Green */
-        }
-        .btn-paid:hover {
-            background-color: #218838;
-        }
-        .btn-not-paid {
-            background-color: #dc3545; /* Red */
-        }
-        .btn-not-paid:hover {
-            background-color: #c82333;
-        }
-        .table-responsive {
-            margin-top: 20px;
-        }
-        .table th, .table td {
-            padding: 15px;
-            vertical-align: middle;
-        }
-        .table th {
-            background-color: #f2f2f2;
-        }
-    </style>
+    </div>
+</div>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
 
+    section {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+    }
 
-    <script>
-        // Example patient data
-        const patients = [
-            { name: 'John Doe', ssn: '123-45-6789', department: 'Department 1', insurance: 'Yes', bill: '100 EGY' },
-            // More patients...
-        ];
+    h2 {
+        color: #333;
+    }
 
-        // Function to populate patient data
-        function populatePatients() {
-            const patientsTableBody = document.getElementById('patientsTableBody');
-            patientsTableBody.innerHTML = '';
-            patients.forEach((patient, index) => {
-                const row = `
+    .search-container {
+        margin-bottom: 20px;
+    }
+
+    input[type="text"] {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    input[type="text"]:focus {
+        outline: none;
+    }
+
+    .btn-manage {
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 15px;
+        /* Rounded corners */
+        cursor: pointer;
+    }
+
+    .btn-paid {
+        background-color: #28a745;
+        /* Green */
+    }
+
+    .btn-paid:hover {
+        background-color: #218838;
+    }
+
+    .btn-not-paid {
+        background-color: #dc3545;
+        /* Red */
+    }
+
+    .btn-not-paid:hover {
+        background-color: #c82333;
+    }
+
+    .table-responsive {
+        margin-top: 20px;
+    }
+
+    .table th,
+    .table td {
+        padding: 15px;
+        vertical-align: middle;
+    }
+
+    .table th {
+        background-color: #f2f2f2;
+    }
+</style>
+
+{% comment %}
+<script>
+    // Example patient data
+    const patients = [{
+            name: 'John Doe',
+            ssn: '123-45-6789',
+            department: 'Department 1',
+            insurance: 'Yes',
+            bill: '100 EGY'
+        },
+        // More patients...
+    ];
+
+    // Function to populate patient data
+    function populatePatients() {
+        const patientsTableBody = document.getElementById('patientsTableBody');
+        patientsTableBody.innerHTML = '';
+        patients.forEach((patient, index) => {
+            const row = `
                     <tr>
                         <td>${patient.name}</td>
                         <td>${patient.ssn}</td>
@@ -118,18 +149,18 @@
                         </td>
                     </tr>
                 `;
-                patientsTableBody.innerHTML += row;
-            });
-        }
+            patientsTableBody.innerHTML += row;
+        });
+    }
 
-        // Function to search patients by SSN
-        function searchPatients() {
-            const searchSSN = document.getElementById('searchSSN').value.trim().toLowerCase();
-            const filteredPatients = patients.filter(patient => patient.ssn.toLowerCase().includes(searchSSN));
-            const patientsTableBody = document.getElementById('patientsTableBody');
-            patientsTableBody.innerHTML = '';
-            filteredPatients.forEach((patient, index) => {
-                const row = `
+    // Function to search patients by SSN
+    function searchPatients() {
+        const searchSSN = document.getElementById('searchSSN').value.trim().toLowerCase();
+        const filteredPatients = patients.filter(patient => patient.ssn.toLowerCase().includes(searchSSN));
+        const patientsTableBody = document.getElementById('patientsTableBody');
+        patientsTableBody.innerHTML = '';
+        filteredPatients.forEach((patient, index) => {
+            const row = `
                     <tr>
                         <td>${patient.name}</td>
                         <td>${patient.ssn}</td>
@@ -143,37 +174,37 @@
 
                     </tr>
                 `;
-                patientsTableBody.innerHTML += row;
-            });
-        }
-        // Function to handle marking a bill as paid
-        function markAsPaid(ssn) {
-            // Here you can perform actions like updating the backend with the bill information
-            alert(`Bill for patient with SSN ${ssn} marked as Paid.`);
-        }
+            patientsTableBody.innerHTML += row;
+        });
+    }
+    // Function to handle marking a bill as paid
+    function markAsPaid(ssn) {
+        // Here you can perform actions like updating the backend with the bill information
+        alert(`Bill for patient with SSN ${ssn} marked as Paid.`);
+    }
 
-        // Function to handle marking a bill as not paid
-        function markAsNotPaid(ssn) {
-            // Here you can perform actions like updating the backend with the bill information
-            alert(`Bill for patient with SSN ${ssn} marked as Not Paid.`);
-        }
+    // Function to handle marking a bill as not paid
+    function markAsNotPaid(ssn) {
+        // Here you can perform actions like updating the backend with the bill information
+        alert(`Bill for patient with SSN ${ssn} marked as Not Paid.`);
+    }
 
-        // Populate patients table when the page loads
-        window.onload = function() {
-            populatePatients();
-        };
-    </script>       
-        
-        
-        
-        
-        <!-- content-wrapper ends -->
-        <!-- partial:../../partials/_footer.html -->
+    // Populate patients table when the page loads
+    window.onload = function () {
+        populatePatients();
+    };
+</script> {% endcomment %}
 
-        <!-- partial -->
-      
-      <!-- main-panel ends -->
-    </div>
-    <!-- page-body-wrapper ends -->
-  </div>
+
+
+
+<!-- content-wrapper ends -->
+<!-- partial:../../partials/_footer.html -->
+
+<!-- partial -->
+
+<!-- main-panel ends -->
+</div>
+<!-- page-body-wrapper ends -->
+</div>
 {% endblock %}
