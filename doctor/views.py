@@ -1,9 +1,10 @@
 from django.http import HttpResponse, JsonResponse
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 from doctor.models import Doctor
-from patient.models import Allergies, CurrentMedication, Disease, Encounters, Illness, MedicalHis, Note, Patient,Appointment,Diagnosislu, PrevSurgery,Symptomslu,Medicationlu, Test, Vaccination
+from patient.models import Allergies, CurrentMedication, Disease, Encounters, Illness, MedicalHis, Patient,Appointment,Diagnosislu, PrevSurgery,Symptomslu,Medicationlu, Vaccination,Prescription,Testlu,Test
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib import messages
 
 
 def doctor_home(request):
@@ -49,33 +50,39 @@ def get_prescriptions(request):
 
 
 @csrf_exempt
-def submit_form(request , appointment, user):
-    patient= get_object_or_404(Patient, user=user)
-    appointment = get_object_or_404(Appointment, id=appointment)
+def submit_form(request , appointmentid, userid):
+    print(userid)
+    patient= get_object_or_404(Patient, user=userid)
+    appointment = get_object_or_404(Appointment, id=appointmentid)
     if request.method == 'POST':
         # Extract form data
         
-        patient_id = request.POST.get('patientID')
-        reason_for_visit = request.POST.get('reasonForVisit')
+        patient_id = patient.pk
         appointment_id = appointment.id
 
         # Extract Symptoms
         symptoms = request.POST.getlist('symptoms[]')
+        print(symptoms)
 
         # Extract Diagnoses
         diagnosis_names = request.POST.getlist('diagnosisName[]')
+        print(diagnosis_names)
         diagnosis_icds = request.POST.getlist('diagnosisICD[]')
+        print(diagnosis_icds)
 
         # Extract Prescriptions
         prescription_names = request.POST.getlist('prescriptionName[]')
         prescription_dosages = request.POST.getlist('prescriptionDosage[]')
         prescription_frequencies = request.POST.getlist('prescriptionFrequency[]')
         prescription_durations = request.POST.getlist('prescriptionDuration[]')
+        print(prescription_names)
 
         # Extract Test Requirement
         require_test = request.POST.get('requireTest')
         test_types = request.POST.getlist('testType[]')
         test_names = request.POST.getlist('testName[]')
+        print(test_names)
+        print(test_types)
 
         # Extract Notes
         notes = request.POST.get('notes')
@@ -86,44 +93,75 @@ def submit_form(request , appointment, user):
         appointment = get_object_or_404(Appointment, pk=appointment_id)
 
         # Create and save encounter record
-        encounter = Encounters.objects.create(
+        if Encounters.objects.filter(patient=patient, doctor=appointment.doctor, appointment=appointment).exists():
+            Encounters.objects.filter(patient=patient, doctor=appointment.doctor, appointment=appointment).delete()
+        
+        encounter = Encounters.objects.get_or_create(
             patient=patient,
             doctor=appointment.doctor,
             appointment=appointment,
-            notes=notes,
-            treatment_type=reason_for_visit
         )
-
+        
+        encounter=get_object_or_404(Encounters, patient=patient, doctor=appointment.doctor, appointment=appointment)
         # Save symptoms
         for symptom_name in symptoms:
             if symptom_name:
-                symptom = get_object_or_404(Symptomslu, symptomsname=symptom_name)
-                encounter.symptoms.add(symptom)
+                try:
+                    symptom = Symptomslu.objects.get(symptomsname=symptom_name)
+                    encounter.symptoms.add(symptom)
+                    print(encounter)
+                except Symptomslu.DoesNotExist:
+                    messages.error(request,f"Symptom '{symptom_name}' not found in the database.")
+                    return redirect('encounter', appointmentid, userid)
+                
 
         # Save diagnoses
         for name, icd in zip(diagnosis_names, diagnosis_icds):
             if name and icd:
-                diagnosis = get_object_or_404(Diagnosislu, diagnosisname=name, icd_code=icd)
-                encounter.diagnosis.add(diagnosis)
+                try:
+                    diagnosis = Diagnosislu.objects.get(diagnosisname=name, icd_code=icd)
+                    encounter.diagnosis.add(diagnosis)
+                except Diagnosislu.DoesNotExist:
+                    messages.error(request,f"Diagnosis '{name}' with ICD code '{icd}' not found in the database.")
+                    return redirect('encounter', appointmentid, userid)
+
 
         # Save prescriptions
         for name, dosage, frequency, duration in zip(prescription_names, prescription_dosages, prescription_frequencies, prescription_durations):
             if name and dosage and frequency and duration:
-                medication = get_object_or_404(Medicationlu, medicationname=name)
-                # Note: Here we should handle the actual logic of saving the prescription to the encounter
-                # Since the original model doesn't include a prescription model, you might need to create one.
+                try:
+                    medication = Medicationlu.objects.get(medicationname=name)
+                except Medicationlu.DoesNotExist:
+                    messages.error(f"Medication '{name}' not found in the database.")
+                    return redirect('encounter', appointmentid, userid)
+
+                if Prescription.objects.filter(medication=medication, dosage=dosage, frequency=frequency, duration=duration).exists() :
+                    encounter.prescription.add(Prescription.objects.get(medication=medication, dosage=dosage, frequency=frequency, duration=duration))
+                else:
+                    prescription =Prescription.objects.create(medication=medication, dosage=dosage, frequency=frequency, duration=duration)
+                    encounter.prescription.add(prescription)
+
 
         # Save tests if required
         if require_test == 'Yes':
             for test_type, test_name in zip(test_types, test_names):
                 if test_type and test_name:
-                    Test.objects.create(patient=encounter, test_type=test_type, test_name=test_name)
+                    try:
+                        test = Testlu.objects.get(testname=test_name, type=test_type)
+                        test=Test.objects.create(test=test, patient=patient,appointment=appointment)
+                        appointment.price += test.test.price
+                        encounter.tests.add(test)
+                    except Testlu.DoesNotExist:
+                        messages.error(request,f"Test '{test_name}' of type '{test_type}' not found in the database.")
+                        return redirect('encounter', appointmentid, userid)
 
         # Save additional notes
         if notes:
-            Note.objects.create(patient=encounter, content=notes)
+            encounter.notes = notes
 
-        return HttpResponse('Form submitted successfully.')
+        encounter.save()
+        messages.success(request, 'Encounter saved successfully.')
+        return redirect('encounter', appointmentid, userid)
     else:
         context = {
             'appointment': appointment,

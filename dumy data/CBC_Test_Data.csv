@@ -1,0 +1,12 @@
+id,Measuring Unit,Field Name,Upper Limit,Lower Limit,Short Name
+1,cells/microliter,White Blood Cell Count,11000,4500,WBC
+2,million cells/microliter,Red Blood Cell Count,6.1,4.2,RBC
+3,g/dL,Hemoglobin,17.2,12.1,Hgb
+4,%,Hematocrit,50.3,36.1,Hct
+5,fL,Mean Corpuscular Volume,96,80,MCV
+6,pg,Mean Corpuscular Hemoglobin,33,27,MCH
+7,g/dL,Mean Corpuscular Hemoglobin Concentration,36,32,MCHC
+8,%,Red Cell Distribution Width,14.5,11.5,RDW
+9,cells/microliter,Platelet Count,450000,150000,PLT
+10,%,Platelet Distribution Width,17,9,PDW
+11,fL,Mean Platelet Volume,10.4,7.4,MPV

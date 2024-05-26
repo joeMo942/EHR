@@ -9,8 +9,9 @@ import json
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
-
+@login_required
 def receptionist_home(request):
     now = datetime.now()
     current_time = now.strftime("%Y-%m-%d %H:%M")
@@ -138,5 +139,16 @@ def get_full_name(request):
     return JsonResponse(data)
 
 def patients_bills(request):
-    return render(request, 'receptionist/patients-bills.html')
 
+    appointments = Appointment.objects.filter(status='Not Paid')
+    context = {
+        'appointments': appointments
+    }
+    return render(request, 'receptionist/patients-bills.html', context)
+
+def patients_bills_confirm(request, appointment):
+    appointments = get_object_or_404(Appointment, id=appointment)
+    appointments.status = 'Paid'
+    appointments.save()
+    messages.success(request, "Payment has been confirmed")
+    return redirect('patients_bills')

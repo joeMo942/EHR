@@ -160,19 +160,74 @@ class Medicationlu(models.Model):
     def __str__(self):
         return self.medicationname
 
+class Testfiled(models.Model):
+    mesureunit=models.CharField(max_length=100, blank=True, null=True)
+    shortname=models.CharField(max_length=100, blank=True, null=True)
+    name=models.CharField(max_length=100, blank=True, null=True)
+    refrance_range_up=models.IntegerField(default=0)
+    refrance_range_down=models.IntegerField(default=0)
+
+    class Meta:
+        unique_together = (('name', 'mesureunit'),)
+
+    def __str__(self):
+        return self.name
 
 
+class Testlu(models.Model):
+    testname = models.CharField(max_length=100, unique=True)
+    testfileds = models.ManyToManyField(Testfiled)
+    type = models.CharField(max_length=100, blank=True, null=True)
+    price = models.IntegerField(default=0)
 
+    class Meta:
+        unique_together = (('testname', 'type'),)
+
+    def __str__(self):
+        return self.testname
 
 # end lookups
+
+
+class Prescription(models.Model):
+    medication = models.ForeignKey(Medicationlu, on_delete=models.CASCADE)
+    dosage = models.CharField(max_length=100)
+    frequency = models.CharField(max_length=100)
+    duration = models.CharField(max_length=100)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.medication.medicationname} {self.dosage} {self.frequency} {self.duration} prescription"
+
+class Test(models.Model):
+    status_choices = [
+        ('Pending', 'Pending'),
+        ('Completed', 'Completed'),
+        ('Not Paid', 'Not Paid'),
+    ]
+    patient = models.ForeignKey(Patient ,on_delete=models.CASCADE)
+    test = models.ForeignKey(Testlu, on_delete=models.CASCADE, blank=True, null=True)
+    status = models.CharField(max_length=100,choices=status_choices, default='Not Paid')
+    result = models.FileField(upload_to='test_results/', blank=True, null=True)
+    appointment = models.ForeignKey(Appointment, on_delete=models.CASCADE, blank=True, null=True)
+
+    created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.test.testname} test for {self.patient.user.first_name} {self.patient.user.last_name}"
+
+    
+
 
 class Encounters(models.Model):
 
     patient= models.ForeignKey(Patient, on_delete=models.CASCADE)
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
-    symptoms = models.ManyToManyField(Symptomslu)
-    diagnosis = models.ManyToManyField(Diagnosislu)
-    medication = models.ManyToManyField(Medicationlu)
+    symptoms = models.ManyToManyField(Symptomslu, blank=True, null=True)
+    diagnosis = models.ManyToManyField(Diagnosislu, blank=True, null=True)
+    prescription = models.ManyToManyField(Prescription, blank=True, null=True)
+    tests = models.ManyToManyField(Test, blank=True, null=True)
     appointment= models.OneToOneField(Appointment,on_delete=models.CASCADE)
     notes = models.CharField(max_length=600, blank=True, null=True)
 
@@ -187,12 +242,4 @@ class Encounters(models.Model):
     def __str__(self):
         return f"Encounter for {self.patient.user.first_name} with {self.doctor} "
 
-
-class Note(models.Model):
-    patient = models.ForeignKey(Encounters, on_delete=models.CASCADE)
-    content = models.TextField()
     
-class Test(models.Model):
-    patient = models.ForeignKey(Encounters, on_delete=models.CASCADE)
-    test_type = models.CharField(max_length=100)
-    test_name = models.CharField(max_length=200)

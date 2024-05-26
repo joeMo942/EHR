@@ -147,6 +147,7 @@ MEDIA_ROOT  = BASE_DIR /'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+handler404 = 'views.custom_404'
 
 MESSAGE_TAGS = {
     messages.ERROR: "danger",

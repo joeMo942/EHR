@@ -2,42 +2,46 @@
 {% load static %}
 {% block content %}
 
-      <script>
-        function viewDetails(testName, details) {
-            const newWindow = window.open("", "_blank");
-            newWindow.document.write(`<h2>${testName} Details</h2><p>${details}</p>`);
-            newWindow.document.close();
-        }
-        function printPDF(pdfPath) {
-    const newWindow = window.open(pdfPath, "_blank");
-    newWindow.onload = function() {
-        newWindow.print();
-    };
-}
+<script>
+    function viewDetails(testName, details) {
+        const newWindow = window.open("", "_blank");
+        newWindow.document.write(`<h2>${testName} Details</h2><p>${details}</p>`);
+        newWindow.document.close();
+    }
 
-        function printResults(testName, date, details) {
-            const newWindow = window.open("", "_blank");
-            newWindow.document.write(`<h2>${testName} - ${date}</h2><p>${details}</p>`);
-            newWindow.document.close();
+    function printPDF(pdfPath) {
+        const newWindow = window.open(pdfPath, "_blank");
+        newWindow.onload = function () {
             newWindow.print();
-        }
+        };
+    }
 
-        function downloadResultDetails(testName, details) {
-            const element = document.createElement('a');
-            const file = new Blob([`${testName} Details\n\n${details.replace(/<br>/g, '\n')}`], {type: 'text/plain'});
-            element.href = URL.createObjectURL(file);
-            element.download = `${testName}_Details.txt`;
-            document.body.appendChild(element); // Required for Firefox
-            element.click();
-            document.body.removeChild(element);
-        }
+    function printResults(testName, date, details) {
+        const newWindow = window.open("", "_blank");
+        newWindow.document.write(`<h2>${testName} - ${date}</h2><p>${details}</p>`);
+        newWindow.document.close();
+        newWindow.print();
+    }
 
-        function viewPDF(pdfPath) {
-            const newWindow = window.open(pdfPath, "_blank");
-            newWindow.focus();
-        }
-    </script>
+    function downloadResultDetails(testName, details) {
+        const element = document.createElement('a');
+        const file = new Blob([`${testName} Details\n\n${details.replace(/<br>/g, '\n')}`], {
+            type: 'text/plain'
+        });
+        element.href = URL.createObjectURL(file);
+        element.download = `${testName}_Details.txt`;
+        document.body.appendChild(element); // Required for Firefox
+        element.click();
+        document.body.removeChild(element);
+    }
+
+    function viewPDF(pdfPath) {
+        const newWindow = window.open(pdfPath, "_blank");
+        newWindow.focus();
+    }
+</script>
 </head>
+
 <body>
     <div class="container-fluid">
         <div class="row">
@@ -51,7 +55,6 @@
                                 <thead>
                                     <tr>
                                         <th>Test Name</th>
-                                        <th>Test Number</th>
                                         <th>Date</th>
                                         <th>Status</th>
                                         <th>Action</th>
@@ -59,26 +62,49 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>cbc</td>
-                                        <td>53275531</td>
-                                        <td>12 May 2017</td>
-                                        <td><label class="badge badge-danger">Pending</label></td>
+                                        {% for test in tests %}
+                                        <td>{{test.test.testname}}</td>
+                                        <td>{{ test.created_at|date:"F d, Y" }}</td>
                                         <td>
-                                            <button class="btn btn-info btn-sm" onclick="viewDetails('cbc', 'Hemoglobin (Hbg): 14.0 g/dL<br>Hematocrit (Hct): 42%<br>Mean Corpuscular Volume (MCV): 90 fL<br>Mean Corpuscular Hemoglobin (MCH): 30 pg<br>Mean Corpuscular Hemoglobin Concentration (MCHC): 33 g/dL<br>Red Cell Distribution Width (RDW): 13%<br>Platelet Count (PC): 250,000/µL<br>Mean Platelet Volume (MPV): 10 fL<br>White Blood Cell Count (WBC): 5,000/µL')">View</button>
-                                            <button class="btn btn-primary btn-sm" onclick="printResults('cbc', '12 May 2017', 'Hemoglobin (Hbg): 14.0 g/dL<br>Hematocrit (Hct): 42%<br>Mean Corpuscular Volume (MCV): 90 fL<br>Mean Corpuscular Hemoglobin (MCH): 30 pg<br>Mean Corpuscular Hemoglobin Concentration (MCHC): 33 g/dL<br>Red Cell Distribution Width (RDW): 13%<br>Platelet Count (PC): 250,000/µL<br>Mean Platelet Volume (MPV): 10 fL<br>White Blood Cell Count (WBC): 5,000/µL')">Print</button>
-                                            <button class="btn btn-success btn-sm" onclick="downloadResultDetails('cbc', 'Hemoglobin (Hbg): 14.0 g/dL<br>Hematocrit (Hct): 42%<br>Mean Corpuscular Volume (MCV): 90 fL<br>Mean Corpuscular Hemoglobin (MCH): 30 pg<br>Mean Corpuscular Hemoglobin Concentration (MCHC): 33 g/dL<br>Red Cell Distribution Width (RDW): 13%<br>Platelet Count (PC): 250,000/µL<br>Mean Platelet Volume (MPV): 10 fL<br>White Blood Cell Count (WBC): 5,000/µL')">Download</button>
+                                            {% if test.status == 'Pending' %}
+                                            <span class="badge badge-warning">{{ test.status }}</span>
                                         </td>
+                                        <td>
+                                            <button class="btn btn-info btn-sm" disabled>View</button>
+                                            <button class="btn btn-primary btn-sm" disabled>Print</button>
+                                            <button class="btn btn-success btn-sm" disabled>Download</button>
+                                        </td>
+                                        {% elif test.status == 'Completed' %}
+                                        <span class="badge badge-success">{{ test.status }}</span>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-info btn-sm">View</button>
+                                            <button class="btn btn-primary btn-sm">Print</button>
+                                            <button class="btn btn-success btn-sm">Download</button>
+                                        </td>
+                                        {% elif test.status == 'Not Paid' %}
+                                        <span class="badge badge-danger">{{ test.status }}</span>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-info btn-sm" disabled>View</button>
+                                            <button class="btn btn-primary btn-sm" disabled>Print</button>
+                                            <button class="btn btn-success btn-sm" disabled>Download</button>
+                                        </td>
+                                        {% endif %}
+
+                                        {% endfor %}
                                     </tr>
-                                    
-                                        <td>test_with_pdf</td>
-                                        <td>73275533</td>
-                                        <td>20 July 2019</td>
-                                        <td><label class="badge badge-info">Available</label></td>
-                                        <td>
-                                            <button class="btn btn-info btn-sm" onclick="viewPDF('test.pdf')">View</button>
-                                            <button class="btn btn-primary btn-sm" onclick="printPDF('test.pdf')">Print</button>
-                                            <a class="btn btn-success btn-sm" href="test.pdf" download="test_with_pdf_result.pdf">Download</a>
-                                        </td>
+
+                                    <td>test_with_pdf</td>
+                                    <td>20 July 2019</td>
+                                    <td><label class="badge badge-info">Available</label></td>
+                                    <td>
+                                        <button class="btn btn-info btn-sm" onclick="viewPDF('test.pdf')">View</button>
+                                        <button class="btn btn-primary btn-sm"
+                                            onclick="printPDF('test.pdf')">Print</button>
+                                        <a class="btn btn-success btn-sm" href="test.pdf"
+                                            download="test_with_pdf_result.pdf">Download</a>
+                                    </td>
                                     </tr>
                                     <!-- Add more rows as needed -->
                                 </tbody>
@@ -89,4 +115,4 @@
             </div>
         </div>
     </div>
-{% endblock %}
+    {% endblock %}
