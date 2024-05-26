@@ -4,7 +4,8 @@
 
 <style>
     .custom-margin {
-        margin-top: 50px; /* Adjust the value to get the desired space */
+        margin-top: 50px;
+        /* Adjust the value to get the desired space */
     }
 </style>
 
@@ -23,118 +24,43 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {% for doctor in doctors %}
                         <tr>
-                            <td>Jacob</td>
-                            <td>Photoshop</td>
-                            <td class="text-danger">28.76% <i class="ti-arrow-down"></i></td>
+                            <td>{{doctor.user.first_name}}{{ doctor.user.last_name }}</td>
+                            <td>{{doctor.department}}</td>
+                            <td> {{doctor.user.ssn}} </td>
                             <td>
-                                <button class="btn btn-danger">Delete</button>
+                                <a href="{% url "delete_doctor" doctor.pk %}" class="btn btn-danger">Delete</a>
                             </td>
                         </tr>
-                        <tr>
-                            <td>Emma</td>
-                            <td>Design</td>
-                            <td class="text-success">45.21% <i class="ti-arrow-up"></i></td>
-                            <td>
-                                <button class="btn btn-danger">Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Liam</td>
-                            <td>Development</td>
-                            <td class="text-warning">12.34% <i class="ti-arrow-down"></i></td>
-                            <td>
-                                <button class="btn btn-danger">Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Ava</td>
-                            <td>Marketing</td>
-                            <td class="text-success">67.89% <i class="ti-arrow-up"></i></td>
-                            <td>
-                                <button class="btn btn-danger">Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>James</td>
-                            <td>Support</td>
-                            <td class="text-danger">9.76% <i class="ti-arrow-down"></i></td>
-                            <td>
-                                <button class="btn btn-danger">Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>James</td>
-                            <td>Support</td>
-                            <td class="text-danger">9.76% <i class="ti-arrow-down"></i></td>
-                            <td>
-                                <button class="btn btn-danger">Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>James</td>
-                            <td>Support</td>
-                            <td class="text-danger">9.76% <i class="ti-arrow-down"></i></td>
-                            <td>
-                                <button class="btn btn-danger">Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>James</td>
-                            <td>Support</td>
-                            <td class="text-danger">9.76% <i class="ti-arrow-down"></i></td>
-                            <td>
-                                <button class="btn btn-danger">Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>James</td>
-                            <td>Support</td>
-                            <td class="text-danger">9.76% <i class="ti-arrow-down"></i></td>
-                            <td>
-                                <button class="btn btn-danger">Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>James</td>
-                            <td>Support</td>
-                            <td class="text-danger">9.76% <i class="ti-arrow-down"></i></td>
-                            <td>
-                                <button class="btn btn-danger">Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>James</td>
-                            <td>Support</td>
-                            <td class="text-danger">9.76% <i class="ti-arrow-down"></i></td>
-                            <td>
-                                <button class="btn btn-danger">Delete</button>
-                            </td>
+                        {% endfor %}
+
                         </tr>
                     </tbody>
                 </table>
             </div>
-            <div class="form-group custom-margin">
-                <h4>Link Department with Doctor</h4>
-                <label>Doctor</label>
-                <select class="js-example-basic-single w-100">
-                    <option value="AL">Alabama</option>
-                    <option value="WY">Wyoming</option>
-                    <option value="AM">America</option>
-                    <option value="CA">Canada</option>
-                    <option value="RU">Russia</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Department</label>
-                <select class="js-example-basic-single w-100">
-                    <option value="AL">Alabama</option>
-                    <option value="WY">Wyoming</option>
-                    <option value="AM">America</option>
-                    <option value="CA">Canada</option>
-                    <option value="RU">Russia</option>
-                </select>
-            </div>
+            <form action="{% url "doctor_operations" %}" method="POST">
+                {% include "includes/alerts.html" %}
+                {% csrf_token %}
+                <div class="form-group custom-margin">
+                    <h4>Link Department with Doctor</h4>
+                    <label>Doctor</label>
+                    <select class="js-example-basic-single w-100" name="doctor">
+                        {% for doctor in doctors %}
+                        <option value="{{ doctor.pk }}">{{doctor.user.first_name}} {{doctor.user.last_name}} </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Department</label>
+                    <select class="js-example-basic-single w-100" name="department">
+                        {% for department in departments %}
+                        <option value="{{department.pk}}">{{department.name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-success">Add</button>
+            </form>
         </div>
     </div>
 </div>

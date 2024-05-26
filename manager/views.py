@@ -1,7 +1,9 @@
 from datetime import datetime
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from accounts.models import Account
+from doctor.models import Department, Doctor
 from patient.models import Appointment, Patient
+from django.contrib import messages
 
 def manager_home(request):
     now = datetime.now()
@@ -20,6 +22,38 @@ def manager_home(request):
     return render(request, 'manager/index.html', context)
 
 def doctor_operations(request):
+    if request.method == 'POST':
+        doctor_id = request.POST.get('doctor')
+        department_id = request.POST.get('department')
+        print(doctor_id, department_id)
+        doctor = Doctor.objects.get(id=doctor_id)
+        department = Department.objects.get(id=department_id)
+        doctor.department = department
+        doctor.save()
+        messages.success(request, 'Doctor assigned to department successfully')
+        return redirect('doctor_operations')
+    else:
+        context={
+            'doctors': Doctor.objects.all(),
+            'departments': Department.objects.all(),
+        }
+        return render(request, 'manager/doctor-operations.html', context)
+
+
+def assign_department(request):
+    if request.method == 'POST':
+        doctor_id = request.POST.get('doctor')
+        department_id = request.POST.get('department')
+        print(doctor_id, department_id)
+        doctor = Doctor.objects.get(id=doctor_id)
+        department = Department.objects.get(id=department_id)
+        doctor.department = department
+        doctor.save()
+    return render(request, 'manager/doctor-operations.html')
+
+def delete_doctor(request, doctor_id):
+    doctor = Doctor.objects.get(id=doctor_id)
+    doctor.delete()
     return render(request, 'manager/doctor-operations.html')
 
 def doctor_add(request):
