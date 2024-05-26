@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views.decorators.csrf import csrf_protect
 from django.http import HttpResponse
-from .models import Patient, MedicalHis, Vaccination, Disease, Illness, PrevSurgery, CurrentMedication, Appointment,Allergies
+from .models import Patient, MedicalHis, Vaccination, Disease, Illness, PrevSurgery, CurrentMedication, Appointment,Allergies,Test
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_protect
@@ -155,17 +155,18 @@ def appointment(request):
     print(departments)
     return render(request, 'patient/appointment.html',{'departments': departments})
 
+@login_required
 def patient_home(request):
     return render(request, 'patient/index.html')
 
-
+@login_required
 def get_doctors_by_department(request):
     department_id = request.GET.get('department_id')
     if department_id:
         doctors = Doctor.objects.filter(department_id=department_id).values('id', 'user__first_name', 'user__last_name')
         return JsonResponse({'doctors': list(doctors)})
     return JsonResponse({'doctors': []})
-
+@login_required
 def get_availability_by_doctor(request):
     doctor_id = request.GET.get('doctor_id')
     if doctor_id:
@@ -184,8 +185,15 @@ def booked_appointment(request):
     appointments = Appointment.objects.filter(patient_no=patient)
     return render(request, 'patient/booked-appointment.html', {'appointments': appointments})
 
+@login_required
 def test_results(request):
-    return render(request, 'patient/test-results.html')
+    user=request.user
+    tests=Test.objects.filter(patient__user=user)
+    # print(tests[0].test.testname)
+    context={
+        'tests':tests
+    }
+    return render(request, 'patient/test-results.html', context)
 
 
 

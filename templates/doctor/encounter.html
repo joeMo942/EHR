@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% comment %} {% include "includes/head-patient.html" %} {% endcomment %}
   <title>Encounter Form</title>
 
   <style>
@@ -297,7 +298,7 @@
 
         <h3>Notes</h3>
         <label for="notes">Additional Notes:</label>
-        <textarea id="notes" rows="4" name="notes" placeholder="Enter any additional notes here"></textarea>
+        <input id="notes" rows="4" name="notes" placeholder="Enter any additional notes here"></input>
 
         <button type="submit">Submit</button>
       </form>

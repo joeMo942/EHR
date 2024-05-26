@@ -211,6 +211,12 @@ class Test(models.Model):
     status = models.CharField(max_length=100,choices=status_choices, default='Not Paid')
     result = models.FileField(upload_to='test_results/', blank=True, null=True)
     appointment = models.ForeignKey(Appointment, on_delete=models.CASCADE, blank=True, null=True)
+
+    created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.test.testname} test for {self.patient.user.first_name} {self.patient.user.last_name}"
+
     
 
 
