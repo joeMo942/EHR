@@ -4,12 +4,48 @@
 
 <style>
     .custom-margin {
-        margin-top: 50px;
-        /* Adjust the value to get the desired space */
+        margin-top: 50px; /* Adjust the value to get the desired space */
+    }
+    .card {
+        margin-bottom: 20px; /* Space between cards */
+    }
+    .content-container {
+        display: flex;
+        flex-direction: column; /* Ensure cards are stacked vertically */
+        width: 100%;
     }
 </style>
 
-<div class="col-lg-5 grid-margin stretch-card" style="width: 1300px">
+<div class="content-container">
+    <!-- Card for Selector -->
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Link Department with Doctor</h4>
+            <form action="{% url "doctor_operations" %}" method="POST">
+                {% include "includes/alerts.html" %}
+                {% csrf_token %}
+                <div class="form-group custom-margin">
+                    <label>Doctor</label>
+                    <select class="js-example-basic-single w-100" name="doctor">
+                        {% for doctor in doctors %}
+                        <option value="{{ doctor.pk }}">{{doctor.user.first_name}} {{doctor.user.last_name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Department</label>
+                    <select class="js-example-basic-single w-100" name="department">
+                        {% for department in departments %}
+                        <option value="{{department.pk}}">{{department.name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Add</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Card for Table -->
     <div class="card">
         <div class="card-body">
             <h4 class="card-title">All Doctors</h4>
@@ -26,44 +62,19 @@
                     <tbody>
                         {% for doctor in doctors %}
                         <tr>
-                            <td>{{doctor.user.first_name}}{{ doctor.user.last_name }}</td>
-                            <td>{{doctor.department}}</td>
-                            <td> {{doctor.user.ssn}} </td>
+                            <td>{{ doctor.user.first_name }} {{ doctor.user.last_name }}</td>
+                            <td>{{ doctor.department }}</td>
+                            <td>{{ doctor.user.ssn }}</td>
                             <td>
                                 <a href="{% url "delete_doctor" doctor.pk %}" class="btn btn-danger">Delete</a>
                             </td>
                         </tr>
                         {% endfor %}
-
-                        </tr>
                     </tbody>
                 </table>
             </div>
-            <form action="{% url "doctor_operations" %}" method="POST">
-                {% include "includes/alerts.html" %}
-                {% csrf_token %}
-                <div class="form-group custom-margin">
-                    <h4>Link Department with Doctor</h4>
-                    <label>Doctor</label>
-                    <select class="js-example-basic-single w-100" name="doctor">
-                        {% for doctor in doctors %}
-                        <option value="{{ doctor.pk }}">{{doctor.user.first_name}} {{doctor.user.last_name}} </option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Department</label>
-                    <select class="js-example-basic-single w-100" name="department">
-                        {% for department in departments %}
-                        <option value="{{department.pk}}">{{department.name}}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-success">Add</button>
-            </form>
         </div>
     </div>
-    
 </div>
 
 {% endblock %}

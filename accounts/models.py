@@ -68,6 +68,7 @@ class Account(AbstractBaseUser):
             ('patient', 'Patient'),
             ('doctor', 'Doctor'),
             ('nurse', 'Nurse'),
+            ('lab', 'Lab')
         )
     GENDER_CHOICES = (
         ('male','Male'),

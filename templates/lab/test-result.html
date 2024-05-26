@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Test Result</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f8f8;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 2px solid #eee;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        .lab-info {
+            font-size: 0.9em;
+            color: #555;
+        }
+
+        h2 {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+            color: #333;
+        }
+
+        p {
+            margin: 5px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        thead {
+            background-color: #f9f9f9;
+        }
+
+        .comments, .clinical-significance, .quality-control, .verification {
+            margin-bottom: 20px;
+        }
+
+        .comments textarea, .clinical-significance textarea, .quality-control textarea, .verification textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #eee;
+            background: #f9f9f9;
+            resize: vertical;
+        }
+
+        input[type="text"], input[type="date"], input[type="number"], input[type="time"], select {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .buttons {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .buttons button {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 1em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .buttons button.print {
+            background-color: #2196F3;
+            color: white;
+        }
+
+        .buttons button.submit {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .notification {
+            display: none;
+            background-color: #f44336;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+    </style>
+    <script>
+        function printPage() {
+            window.print();
+        }
+
+        function validateForm() {
+            const inputs = document.querySelectorAll('input, textarea, select');
+            for (let input of inputs) {
+                if (input.value.trim() === "") {
+                    document.querySelector('.notification').style.display = 'block';
+                    return false;
+                }
+            }
+            document.querySelector('.notification').style.display = 'none';
+            return true;
+        }
+
+        function submitForm() {
+            if (validateForm()) {
+                alert('Data saved successfully');
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Medical Test Result</h1>
+            <div class="lab-info">
+                <p><strong>Lab Name:</strong> <input type="text" required></p>
+                <p><strong>Contact:</strong> <input type="text" required></p>
+            </div>
+        </header>
+
+        <div class="notification">Please fill in all fields before submitting.</div>
+
+        <section class="patient-info">
+            <h2>Patient Information</h2>
+            <p><strong>Name:</strong> <input type="text" required></p>
+            <p><strong>Date of Birth:</strong> <input type="date" required></p>
+            <p><strong>Gender:</strong>
+                <select required>
+                    <option value="">Select Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </select>
+            </p>
+            <p><strong>Patient ID:</strong> <input type="text" required></p>
+        </section>
+
+        <section class="test-details">
+            <h2>Test Details</h2>
+            <p><strong>Test Name:</strong> <input type="text" required></p>
+            <p><strong>Sample Collected:</strong> <input type="date" required> <input type="time" required></p>
+            <p><strong>Test Processed:</strong> <input type="date" required> <input type="time" required></p>
+        </section>
+
+        <section class="results">
+            <h2>Results</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Test Component</th>
+                        <th>Result</th>
+                        <th>Units</th>
+                        <th>Reference Range</th>
+                        <th>Interpretation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Hemoglobin (Hgb)</td>
+                        <td><input type="number" required></td>
+                        <td><input type="text" required></td>
+                        <td><input type="text" required></td>
+                        <td><input type="text" required></td>
+                    </tr>
+                    <tr>
+                        <td>Hematocrit (Hct)</td>
+                        <td><input type="number" required></td>
+                        <td><input type="text" required></td>
+                        <td><input type="text" required></td>
+                        <td><input type="text" required></td>
+                    </tr>
+                    <tr>
+                        <td>Mean corpuscular volume (MCV)</td>
+                        <td><input type="number" required></td>
+                        <td><input type="text" required></td>
+                        <td><input type="text" required></td>
+                        <td><input type="text" required></td>
+                    </tr>
+                    <tr>
+                        <td>Mean corpuscular hemoglobin (MCH)</td>
+                        <td><input type="number" required></td>
+                        <td><input type="text" required></td>
+                        <td><input type="text" required></td>
+                        <td><input type="text" required></td>
+                    </tr>
+                    <tr>
+                        <td>Mean corpuscular hemoglobin concentration (MCHC)</td>
+                        <td><input type="number" required></td>
+                        <td><input type="text" required></td>
+                        <td><input type="text" required></td>
+                        <td><input type="text" required></td>
+                    </tr>
+                    <tr>
+                        <td>Red cell distribution width (RDW)</td>
+                        <td><input type="number" required></td>
+                        <td><input type="text" required></td>
+                        <td><input type="text" required></td>
+                        <td><input type="text" required></td>
+                    </tr>
+                    <tr>
+                        <td>Platelet count (PC)</td>
+                        <td><input type="number" required></td>
+                        <td><input type="text" required></td>
+                        <td><input type="text" required></td>
+                        <td><input type="text" required></td>
+                    </tr>
+                    <tr>
+                        <td>Mean platelet volume (MPV)</td>
+                        <td><input type="number" required></td>
+                        <td><input type="text" required></td>
+                        <td><input type="text" required></td>
+                        <td><input type="text" required></td>
+                    </tr>
+                    <tr>
+                        <td>WBC (white blood cell)</td>
+                        <td><input type="number" required></td>
+                        <td><input type="text" required></td>
+                        <td><input type="text" required></td>
+                        <td><input type="text" required></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="comments">
+            <h2>Comments/Notes</h2>
+            <textarea rows="4" required></textarea>
+        </section>
+
+        <section class="clinical-significance">
+            <h2>Clinical Significance</h2>
+            <textarea rows="4" required></textarea>
+        </section>
+
+        <section class="quality-control">
+            <h2>Quality Control</h2>
+            <textarea rows="4" required></textarea>
+        </section>
+
+        <section class="verification">
+            <h2>Verification</h2>
+            <p><strong>Reviewed by:</strong> <input type="text" required></p>
+            <p><strong>Date:</strong> <input type="date" required></p>
+        </section>
+
+        <div class="buttons">
+            <button class="print" onclick="printPage()">Print</button>
+            <button class="submit" onclick="submitForm()">Submit</button>
+        </div>
+    </div>
+</body>
+</html>
+
+
+

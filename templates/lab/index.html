@@ -1,0 +1,47 @@
+{% extends "includes/base-lab.html" %}
+{% load static %}
+{% block content %}
+<section id="testResultsSection">
+    <h2>Test Results Section</h2>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-24 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Requested Tests Results</h4>
+                        <p class="card-description">Tests <code>.table</code></p>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Patient Name</th>
+                                        <th>Patient SSN</th>
+                                        <th>Doctor Name</th>
+                                        <th>Test Type</th>
+                                        <th>Medical History</th>
+                                        <th>Request Date</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="requestedTestsTableBody">
+                                    <tr>
+                                        <td>John Doe</td>
+                                        <td>123-45-6789</td>
+                                        <td>Dr. Smith</td>
+                                        <td>CBC</td>
+                                        <td>Patient has a history of high blood pressure.</td>
+                                        <td>2024-05-12</td>
+                                        <td>Pending</td>
+                                        <td><button class="btn btn-info btn-sm" onclick="window.location.href='{% url 'test_result' %}'">Result Test</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
