@@ -58,3 +58,9 @@ def delete_doctor(request, doctor_id):
 
 def doctor_add(request):
     return render(request, 'manager/doctor-add.html')
+
+def doctor_time_operations(request):
+    return render(request, 'manager/doctor-time-operations.html')
+
+def hospital_time_operations(request):
+    return render(request, 'manager/hospital-time-operations.html')
