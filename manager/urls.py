@@ -10,4 +10,6 @@ urlpatterns = [
     path('hospital-time-operations/', views.hospital_time_operations, name='hospital_time_operations'),
     path('delete-doctor/<int:doctor_id>/', views.delete_doctor, name='delete_doctor'),
     path('assign-department/', views.assign_department, name='assign_department'),
+    path('delete-available-time/<int:time_id>/', views.delete_available_time, name='delete_available_time'),
+   path('delete-doctor-time/<int:drtime_id>/', views.delete_doctor_time, name='delete_dcotor_time'),
 ]

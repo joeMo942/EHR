@@ -4,14 +4,19 @@
 
 <style>
     .custom-margin {
-        margin-top: 50px; /* Adjust the value to get the desired space */
+        margin-top: 50px;
+        /* Adjust the value to get the desired space */
     }
+
     .card {
-        margin-bottom: 20px; /* Space between cards */
+        margin-bottom: 20px;
+        /* Space between cards */
     }
+
     .content-container {
         display: flex;
-        flex-direction: column; /* Ensure cards are stacked vertically */
+        flex-direction: column;
+        /* Ensure cards are stacked vertically */
         width: 100%;
     }
 </style>
@@ -20,93 +25,68 @@
     <!-- Card for Selector -->
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title">Link Department with Doctor</h4>
-            <div class="form-group">
-                <label>Doctor</label>
-                <select class="js-example-basic-single w-100">
-                    <option value="AL">Alabama</option>
-                    <option value="WY">Wyoming</option>
-                    <option value="AM">America</option>
-                    <option value="CA">Canada</option>
-                    <option value="RU">Russia</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Department</label>
-                <select class="js-example-basic-single w-100">
-                    <option value="AL">Alabama</option>
-                    <option value="WY">Wyoming</option>
-                    <option value="AM">America</option>
-                    <option value="CA">Canada</option>
-                    <option value="RU">Russia</option>
-                </select>
-            </div>
-            <button class="btn btn-primary">Add</button>
+            {% include "includes/alerts.html" %}
+            <h4 class="card-title">Link Doctor with AvailabilityTime</h4>
+            <form action="{% url "doctor_time_operations" %}" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label>Doctor</label>
+                    <select class="js-example-basic-single w-100" name="doctor">
+                        {% for doctor in doctors %}
+                        <option value="{{doctor.pk}}">{{ doctor.user.first_name }} {{ doctor.user.last_name }} </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>AvailabilityTimes</label>
+                    <select class="js-example-basic-single w-100" name="time">
+                        {% for time in availabilityTimes %}
+                        <option value="{{time.pk}}">{{time.day_of_week}} {{time.start_time}} - {{time.end_time}}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Add</button>
+            </form>
         </div>
     </div>
 </div>
 
-    <!-- Card for Table -->
-    <div class="card">
-        <div class="card-body">
-            <h4 class="card-title">All Doctors</h4>
-            <div class="table-responsive" style="max-height: 550px; overflow-y: auto;">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Department</th>
-                            <th>SSN</th>
-                            <th>Operation</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Jacob</td>
-                            <td>Photoshop</td>
-                            <td class="text-danger">28.76% <i class="ti-arrow-down"></i></td>
-                            <td>
-                                <button class="btn btn-danger">Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Emma</td>
-                            <td>Design</td>
-                            <td class="text-success">45.21% <i class="ti-arrow-up"></i></td>
-                            <td>
-                                <button class="btn btn-danger">Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Liam</td>
-                            <td>Development</td>
-                            <td class="text-warning">12.34% <i class="ti-arrow-down"></i></td>
-                            <td>
-                                <button class="btn btn-danger">Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Ava</td>
-                            <td>Marketing</td>
-                            <td class="text-success">67.89% <i class="ti-arrow-up"></i></td>
-                            <td>
-                                <button class="btn btn-danger">Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>James</td>
-                            <td>Support</td>
-                            <td class="text-danger">9.76% <i class="ti-arrow-down"></i></td>
-                            <td>
-                                <button class="btn btn-danger">Delete</button>
-                            </td>
-                        </tr>
-                        <!-- Additional rows omitted for brevity -->
-                    </tbody>
-                </table>
-            </div>
+<!-- Card for Table -->
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">All Dr.AvailabilityTimes</h4>
+        <div class="table-responsive" style="max-height: 550px; overflow-y: auto;">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>doctor</th>
+                        <th>Day of week</th>
+                        <th>Start time</th>
+                        <th>End time</th>
+                        <th>Operation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for time in doctor_times %}
+                    <tr>
+
+                        <td>{{time.doctor.user.first_name}} {{time.doctor.user.last_name}} </td>
+                        <td>{{ time.availability.day_of_week }}</td>
+                        <td>{{time.availability.start_time}} </td>
+                        <td>{{time.availability.end_time}} </td>
+                        <td>
+                            <a href="{% url "delete_dcotor_time" time.pk %}" class="btn btn-danger">Delete</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tr>
+                    <!-- Additional rows omitted for brevity -->
+                </tbody>
+            </table>
         </div>
     </div>
+</div>
 </div>
 
 {% endblock %}

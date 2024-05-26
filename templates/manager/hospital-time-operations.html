@@ -4,14 +4,19 @@
 
 <style>
     .custom-margin {
-        margin-top: 50px; /* Adjust the value to get the desired space */
+        margin-top: 50px;
+        /* Adjust the value to get the desired space */
     }
+
     .card {
-        margin-bottom: 20px; /* Space between cards */
+        margin-bottom: 20px;
+        /* Space between cards */
     }
+
     .content-container {
         display: flex;
-        flex-direction: column; /* Ensure cards are stacked vertically */
+        flex-direction: column;
+        /* Ensure cards are stacked vertically */
         width: 100%;
     }
 </style>
@@ -20,93 +25,60 @@
     <!-- Card for Selector -->
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title">Link Department with Doctor</h4>
-            <div class="form-group">
-                <label>Doctor</label>
-                <select class="js-example-basic-single w-100">
-                    <option value="AL">Alabama</option>
-                    <option value="WY">Wyoming</option>
-                    <option value="AM">America</option>
-                    <option value="CA">Canada</option>
-                    <option value="RU">Russia</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Department</label>
-                <select class="js-example-basic-single w-100">
-                    <option value="AL">Alabama</option>
-                    <option value="WY">Wyoming</option>
-                    <option value="AM">America</option>
-                    <option value="CA">Canada</option>
-                    <option value="RU">Russia</option>
-                </select>
-            </div>
-            <button class="btn btn-primary">Add</button>
+            <h4 class="card-title">Add Avilabilty Time</h4>
+            <form method="post">
+                {% include "includes/alerts.html" %}
+                {% csrf_token %}
+                <div class="form-group">
+                    <label>Start time</label>
+                    {{ form.start_time }}
+                </div>
+                <div class="form-group">
+                    <label>End Time</label>
+                    {{ form.end_time }}
+                </div>
+                <div class="form-group">
+                    <label>Week Day</label>
+                    {{ form.day_of_week }}
+                </div>
+                <button type="submit" class="btn btn-primary">Add</button>
+            </form>
         </div>
     </div>
 </div>
 
-    <!-- Card for Table -->
-    <div class="card">
-        <div class="card-body">
-            <h4 class="card-title">All Doctors</h4>
-            <div class="table-responsive" style="max-height: 550px; overflow-y: auto;">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Department</th>
-                            <th>SSN</th>
-                            <th>Operation</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Jacob</td>
-                            <td>Photoshop</td>
-                            <td class="text-danger">28.76% <i class="ti-arrow-down"></i></td>
-                            <td>
-                                <button class="btn btn-danger">Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Emma</td>
-                            <td>Design</td>
-                            <td class="text-success">45.21% <i class="ti-arrow-up"></i></td>
-                            <td>
-                                <button class="btn btn-danger">Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Liam</td>
-                            <td>Development</td>
-                            <td class="text-warning">12.34% <i class="ti-arrow-down"></i></td>
-                            <td>
-                                <button class="btn btn-danger">Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Ava</td>
-                            <td>Marketing</td>
-                            <td class="text-success">67.89% <i class="ti-arrow-up"></i></td>
-                            <td>
-                                <button class="btn btn-danger">Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>James</td>
-                            <td>Support</td>
-                            <td class="text-danger">9.76% <i class="ti-arrow-down"></i></td>
-                            <td>
-                                <button class="btn btn-danger">Delete</button>
-                            </td>
-                        </tr>
-                        <!-- Additional rows omitted for brevity -->
-                    </tbody>
-                </table>
-            </div>
+<!-- Card for Table -->
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">Avilabilty Times</h4>
+        <div class="table-responsive" style="max-height: 550px; overflow-y: auto;">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Day</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                        <th>Operation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for time in availabilityTime %}
+                    <tr>
+                        <td>{{time.day_of_week}}</td>
+                        <td>{{time.start_time}}</td>
+                        <td>{{time.end_time}}</td>
+                        <td>
+                            <a href="{% url "delete_available_time" time.pk %}" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                    <!-- Additional rows omitted for brevity -->
+                </tbody>
+            </table>
         </div>
     </div>
+</div>
 </div>
 
 {% endblock %}
