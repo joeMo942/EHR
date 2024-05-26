@@ -15,7 +15,6 @@
                                 <thead>
                                     <tr>
                                         <th>Patient Name</th>
-                                        <th>Patient SSN</th>
                                         <th>Doctor Name</th>
                                         <th>Test Type</th>
                                         <th>Medical History</th>
@@ -25,16 +24,41 @@
                                     </tr>
                                 </thead>
                                 <tbody id="requestedTestsTableBody">
+                                    {% for test in tests %}
                                     <tr>
-                                        <td>John Doe</td>
-                                        <td>123-45-6789</td>
-                                        <td>Dr. Smith</td>
-                                        <td>CBC</td>
+                                        <td>{{ test.patient.user.first_name }} {{ test.patient.user.last_name }} </td>
+                                        <td>{{ test.appointment.doctor.user.first_name }}
+                                            {{ test.appointment.doctor.user.last_name }}</td>
+                                        <td>{{ test.test.testname }}</td>
                                         <td>Patient has a history of high blood pressure.</td>
-                                        <td>2024-05-12</td>
-                                        <td>Pending</td>
-                                        <td><button class="btn btn-info btn-sm" onclick="window.location.href='{% url 'test_result' %}'">Result Test</button></td>
+                                        <td>{{ test.created_at|date:"F d, Y" }}</td>
+                                        <td>
+                                            {% if test.status == 'Pending' %}
+                                            <span class="badge badge-warning">{{ test.status }}</span>
+                                        </td>
+                                        <td><button class="btn btn-info btn-sm"
+                                                onclick="window.location.href='{% url 'test_result' test.pk %}'">Result
+                                                Test</button></td>
+
+                                        {% elif test.status == 'Completed' %}
+                                        <span class="badge badge-success">{{ test.status }}</span>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-info btn-sm"
+                                                onclick="window.location.href='{% url 'test_result' test.pk %}'">Result
+                                                Test</button></td>
+
+                                        {% elif test.status == 'Not Paid' %}
+                                        <span class="badge badge-danger">{{ test.status }}</span>
+                                        </td>
+                                        <td><button class="btn btn-info btn-sm" disabled
+                                                onclick="window.location.href='{% url 'test_result' %}'">Result
+                                                Test</button></td>
+
+                                        {% endif %}
+
                                     </tr>
+                                    {% endfor %}
                                 </tbody>
                             </table>
                         </div>
@@ -44,4 +68,4 @@
         </div>
     </div>
 
-{% endblock %}
+    {% endblock %}

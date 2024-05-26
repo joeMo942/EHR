@@ -200,6 +200,8 @@ class Prescription(models.Model):
     def __str__(self):
         return f"{self.medication.medicationname} {self.dosage} {self.frequency} {self.duration} prescription"
 
+
+
 class Test(models.Model):
     status_choices = [
         ('Pending', 'Pending'),
@@ -208,16 +210,27 @@ class Test(models.Model):
     ]
     patient = models.ForeignKey(Patient ,on_delete=models.CASCADE)
     test = models.ForeignKey(Testlu, on_delete=models.CASCADE, blank=True, null=True)
-    status = models.CharField(max_length=100,choices=status_choices, default='Not Paid')
-    result = models.FileField(upload_to='test_results/', blank=True, null=True)
+    status = models.CharField(max_length=100,choices=status_choices, default='Not Paid')   
     appointment = models.ForeignKey(Appointment, on_delete=models.CASCADE, blank=True, null=True)
+    result = models.FileField(upload_to='test_results/', blank=True, null=True)
+    result_notes = models.CharField(max_length=600, blank=True, null=True)
 
     created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
 
     def __str__(self):
         return f"{self.test.testname} test for {self.patient.user.first_name} {self.patient.user.last_name}"
 
-    
+class TestResultField(models.Model):
+    testfiled = models.ForeignKey(Testfiled, on_delete=models.CASCADE)
+    result = models.IntegerField(default=0)
+    isupnormal = models.BooleanField(default=False)
+    test= models.ForeignKey(Test, on_delete=models.CASCADE ,blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.test.test.testname} test result for {self.test.patient.user.first_name} {self.test.patient.user.last_name} filed {self.testfiled.name}"
+
+
 
 
 class Encounters(models.Model):
