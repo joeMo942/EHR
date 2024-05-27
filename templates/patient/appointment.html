@@ -6,7 +6,7 @@
     <div class="content-wrapper">
         <div class="row">
             <div class="col-md-6 grid-margin stretch-card">
-                
+
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Book Appointment</h4>
@@ -46,7 +46,8 @@
                             </div>
                             <div>
                                 <button type="submit" class="btn btn-primary me-2">Submit</button>
-                                <button type="button" class="btn btn-light" onclick="window.location.href = '{% url 'appointment' %}'">Cancel</button>
+                                <button type="button" class="btn btn-light"
+                                    onclick="window.location.href = '{% url 'appointment' %}'">Cancel</button>
                             </div>
                         </form>
 
@@ -109,7 +110,7 @@
                                                     const option = document.createElement('option');
                                                     option.value = availability.id;
                                                     option.textContent =
-                                                        `${availability.availability__day_of_week} ${availability.availability__start_time} - ${availability.availability__end_time}`;
+                                                        `${availability.date}  ${availability.availability__day_of_week} ${availability.availability__start_time} - ${availability.availability__end_time}  `;
                                                     appointmentSelect.appendChild(option);
                                                 });
                                                 document.getElementById('availableAppointments').style

@@ -1,50 +1,51 @@
 {% extends "includes/base-doctor.html" %}
 {% load static %}
 {% block content %}
-    <div class="row">
-      <div class="col-lg-12">
-        <div class="card">
-          <div class="card-body">
-            <h4 class="card-title">Appointments Registered by Patients</h4>
-            <p class="card-description">
-              List of appointments with patient details and status.
-            </p>
-            <div class="table-responsive">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th>Patient</th>
-                    <th>Date</th>
-                    <th>Time</th>
-                    <th>Encounter</th>
-                    <th>Medical History</th>
-                    <th>Initial Assessment</th>
-                    {% comment %} <th>Status</th> {% endcomment %}
-                  </tr>
-                </thead>
-                <tbody>
-                  {% for appointment in appointments %}
-                  <tr>
-                    <td>{{appointment.patient_no.user.first_name}} {{appointment.patient_no.user.last_name}}</td>
-                    <td>{{appointment.availability_time.availability.day_of_week}}</td>
-                    <td>{{appointment.availability_time.availability.start_time}}</td>
-                    <td><a href="{% url 'encounter' appointment.id appointment.patient_no.user.pk %}"
-                        class="btn btn-primary" onclick="checkAvailability()">Encounter</a></td>
-                    <td><a href=" {% url "patients_history" appointment.patient_no.pk %} "
-                        class="btn btn-primary">Medical History</a></td>
-                    <td><a href="{% url 'patient_assessment' %}" class="btn btn-primary">Initial Assessment</a></td>
-                    <td><button type="button" class="btn btn-success btn-rounded btn-icon">
-                      <i class="mdi mdi-checkbox-marked-outline"></i>
-                    </button>
-                  </td>
-                  </tr>
-                  {% endfor %}
-                </tbody>
-              </table>
-            </div>
-          </div>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Appointments Registered by Patients</h4>
+        <p class="card-description">
+          List of appointments with patient details and status.
+        </p>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Patient</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Encounter</th>
+                <th>Medical History</th>
+                <th>Initial Assessment</th>
+                {% comment %} <th>Status</th> {% endcomment %}
+              </tr>
+            </thead>
+            <tbody>
+              {% for appointment in appointments %}
+              <tr>
+                <td>{{appointment.patient_no.user.first_name}} {{appointment.patient_no.user.last_name}}</td>
+                <td>{{appointment.availability_time.availability.day_of_week}}</td>
+                <td>{{appointment.availability_time.availability.start_time}}</td>
+                <td><a href="{% url 'encounter' appointment.id appointment.patient_no.user.pk %}"
+                    class="btn btn-primary" onclick="checkAvailability()">Encounter</a></td>
+                <td><a href=" {% url "patients_history" appointment.patient_no.pk %} " class="btn btn-primary">Medical
+                    History</a></td>
+                <td><a href="{% url 'patient_assessment' %}" class="btn btn-primary">Initial Assessment</a></td>
+                <td><button onclick="window.location.href='{% url 'finish_appointment' appointment.pk %}'" type="button"
+                    class="btn btn-success btn-rounded btn-icon">
+                    <i class="mdi mdi-checkbox-marked-outline"></i>
+                  </button>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
   </div>
+</div>
+</div>
 {% endblock %}
