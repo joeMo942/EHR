@@ -60,7 +60,7 @@ def test_result(request , testid):
 def get_pdf(context):
     
     # Render the HTML template with the data
-    html = render_to_string('testresulttemplate.html', context)
+    html = render_to_string('test-result-template.html', context)
 
     # Create a file-like buffer to receive PDF data
     buffer = io.BytesIO()
@@ -74,8 +74,3 @@ def get_pdf(context):
     buffer.seek(0)
     pdf_file = ContentFile(buffer.read())
     return pdf_file
-    pdf_name = "test_report.pdf"
-    with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), pdf_name), 'wb') as f:
-        f.write(buffer.read())
-
-    return HttpResponse(f"PDF saved locally: {pdf_name}")
