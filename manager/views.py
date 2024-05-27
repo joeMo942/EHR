@@ -94,7 +94,7 @@ def doctor_time_operations(request):
                 messages.error(request, 'Time already added to doctor')
                 return redirect('doctor_time_operations')
             else:
-                DoctorAvailability.objects.create(doctor=doctor, availability=time)
+                DoctorAvailability.objects.create(doctor=doctor, availability=time , date=datetime.now())
                 messages.success(request, 'Doctor time added successfully')
                 return redirect('doctor_time_operations')
     else:
