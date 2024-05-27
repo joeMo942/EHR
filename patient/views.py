@@ -196,7 +196,7 @@ def patient_home(request):
 @login_required
 def get_doctors_by_department(request):
     user=request.user
-    if user.type not in ['patient','receptionist'] :
+    if user.type != 'patient':
         raise Http404
     department_id = request.GET.get('department_id')
     if department_id:

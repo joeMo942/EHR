@@ -1,65 +1,86 @@
 {% extends "includes/base-doctor.html" %}
 {% load static %}
 {% block content %}
-<!-- partial -->
-<div class="main-panel">
-  <div class="content-wrapper">
-    <div class="container-fluid">
-      <div class="card">
-        <div class="card-body">
-          <h3 class="dashboard-heading">Patient Information</h3>
-          <!-- Search Criteria Dropdown -->
-          <select id="searchCriteria" class="form-control mb-2">
-            <option value="name">Name</option>
-            <option value="ssn">SSN</option>
-            <option value="latestAppointmentDate">Latest Appointment Date</option>
-          </select>
-
-          <!-- Search Input -->
-          <input type="text" id="filterInput" class="form-control mb-2" placeholder="Search...">
-
-          <!-- Submit Button -->
-          <button id="submitButton" class="btn btn-primary mb-2">Submit</button>
-
-          <!-- Patient Table -->
-          <div class="table-responsive">
-            <table id="patientTable" class="table">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>SSN</th>
-                  <th>Gender</th>
-                  <th>Date of birth</th>
-                </tr>
-              </thead>
-              <tbody id="patientTableBody">
-                <!-- Dummy Data -->
-                {% for patient in patients %}
-                <tr>
-                  <td>{{patient.user.first_name}} </td>
-                  <td>{{patient.user.ssn}}</td>
-                  <td>{{patient.user.gender}}</td>
-                  <td>{{patient.user.birth_date|date:'Y-m-d'}}</td>
-                </tr>
-                {% endfor %}
-                <!-- End Dummy Data -->
-              </tbody>
-            </table>
+  <!-- partial -->
+  <div class="main-panel">
+    <div class="content-wrapper">
+      <div class="container-fluid">
+        <div class="card">
+          <div class="card-body">
+            <h3 class="dashboard-heading">Patient Information</h3>
+            <!-- Search Criteria Dropdown -->
+            <select id="searchCriteria" class="form-control mb-2">
+              <option value="name">Name</option>
+              <option value="ssn">SSN</option>
+              <option value="latestAppointmentDate">Latest Appointment Date</option>
+            </select>
+  
+            <!-- Search Input -->
+            <input type="text" id="filterInput" class="form-control mb-2" placeholder="Search...">
+  
+            <!-- Submit Button -->
+            <button id="submitButton" class="btn btn-primary mb-2">Submit</button>
+  
+            <!-- Patient Table -->
+            <div class="table-responsive">
+              <table id="patientTable" class="table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>SSN</th>
+                    <th>Gender</th>
+                    <th>Age</th>
+                    <th>Latest Appointment Date</th>
+                  </tr>
+                </thead>
+                <tbody id="patientTableBody">
+                  <!-- Dummy Data -->
+                  <tr>
+                    <td><a href="#" class="details-btn" onclick="showDetails('details1')">John Doe</a></td>
+                    <td>123-45-6789</td>
+                    <td>Male</td>
+                    <td>35</td>
+                    <td>2024-05-01</td>
+                  </tr>
+                  <tr>
+                    <td><a href="#" class="details-btn" onclick="showDetails('details2')">Jane Smith</a></td>
+                    <td>987-65-4321</td>
+                    <td>Female</td>
+                    <td>28</td>
+                    <td>2024-04-15</td>
+                  </tr>
+                  <tr>
+                    <td><a href="#" class="details-btn" onclick="showDetails('details3')">Alice Johnson</a></td>
+                    <td>456-78-9012</td>
+                    <td>Female</td>
+                    <td>45</td>
+                    <td>2024-05-10</td>
+                  </tr>
+                  <tr>
+                    <td><a href="#" class="details-btn" onclick="showDetails('details4')">Michael Brown</a></td>
+                    <td>789-01-2345</td>
+                    <td>Male</td>
+                    <td>50</td>
+                    <td>2024-05-05</td>
+                  </tr>
+                  <!-- End Dummy Data -->
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
-</div>
-</div>
+  </div>
+  </div>
+  
+    <!-- content-wrapper ends -->
+    <!-- partial:../../partials/_footer.html -->
 
-<!-- content-wrapper ends -->
-<!-- partial:../../partials/_footer.html -->
-
-<!-- partial -->
-</div>
-<!-- main-panel ends -->
+    <!-- partial -->
+  </div>
+  <!-- main-panel ends -->
 </div>
 <!-- page-body-wrapper ends -->
 </div>

@@ -30,6 +30,7 @@ def appointment(request):
     user=request.user
     if user.type != 'doctor':
         raise Http404
+    
     doctor=get_object_or_404(Doctor,user=user)
     
     confirmed_appointments = Appointment.objects.filter(doctor=doctor, status='Confirmed')
@@ -37,16 +38,11 @@ def appointment(request):
     return render(request, 'doctor/appointments.html', context)
 
 @login_required
-def patients_info(request):
+def patients(request):
     user=request.user
     if user.type != 'doctor':
         raise Http404
-    doctor=get_object_or_404(Doctor,user=user)
-
-    patients=Patient.objects.filter(appointment__doctor=doctor).distinct()
-    print(patients)
-    context = {'patients': patients}
-    return render(request, 'doctor/patient-info.html', context)
+    return render(request, 'doctor/patient-info.html')
 
 
 # def encounter(request):
@@ -63,7 +59,6 @@ def get_diagnoses(request):
         diagnoses = Diagnosislu.objects.all().values('diagnosisname', 'icd_code')
         print(diagnoses)
         return JsonResponse({'diagnoses': list(diagnoses)})
-
 @login_required
 def get_symptoms(request):
     user=request.user

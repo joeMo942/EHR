@@ -4,7 +4,7 @@
     <div class="content-wrapper">
         <div class="container">
             <header class="assessment-header">
-
+                
             </header>
             <section>
                 <form method="POST">
@@ -16,44 +16,36 @@
                             {% csrf_token %}
                             <div class="form-group">
                                 <label for="patientSSN">SSN</label>
-                                <input type="text" class="form-control" id="patientSSN" name="ssn"
-                                    placeholder="Enter SSN" value={{patient.user.ssn}} readonly>
+                                <input type="text" class="form-control" id="patientSSN" name="ssn" placeholder="Enter SSN">
                             </div>
                             <div class="form-group">
                                 <label for="patientFullName">Full Name</label>
-                                <input type="text" class="form-control" id="patientFullName" value="{{ full_name }}"
-                                    readonly>
+                                <input type="text" class="form-control" id="patientFullName" value="{{ full_name }}" readonly>
                             </div>
                             <div id="additionalSections">
                                 <div class="form-group">
                                     <label for="temperature">Temperature (°C):</label>
-                                    <input type="number" class="form-control" id="temperature" name="temperature"
-                                        required>
+                                    <input type="number" class="form-control" id="temperature" name="temperature" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="weight">Weight (kg):</label>
-                                    <input type="number" class="form-control" id="weight" name="weight"
-                                        value="{{initialassessment.weight}}" readonly>
+                                    <input type="number" class="form-control" id="weight" name="weight" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="bloodPressure">Blood Pressure:</label>
-                                    <input type="text" class="form-control" id="bloodPressure" name="bloodPressure"
-                                        value="{{initialassessment.blood_pressure}}" readonly required>
+                                    <input type="text" class="form-control" id="bloodPressure" name="bloodPressure" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="reasonOfVisit">Reason of Visit:</label>
-                                    <input type="text" class="form-control" id="reasonOfVisit" name="reasonOfVisit"
-                                        value="{{initialassessment.reason_of_visit}}" readonly>
+                                    <input type="text" class="form-control" id="reasonOfVisit" name="reasonOfVisit" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="height">Height (cm):</label>
-                                    <input type="number" class="form-control" id="height" name="height"
-                                        value="{{initialassessment.height}}" readonly>
+                                    <input type="number" class="form-control" id="height" name="height" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="notes">Notes:</label>
-                                    <input class="form-control" id="notes" name="notes"
-                                        value="{{initialassessment.notes}}" readonly></input>
+                                    <textarea class="form-control" id="notes" name="notes" rows="4"></textarea>
                                 </div>
                             </div>
                         </div>

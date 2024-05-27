@@ -3,7 +3,7 @@ from django.http import Http404, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from doctor.models import Department, Doctor, DoctorAvailability
 from accounts.models import Account
-from patient.models import Patient, Appointment
+from patient.models import Patient, Appointment, Test
 from django.core.serializers import serialize
 import json
 from django.views.decorators.csrf import csrf_exempt
@@ -22,11 +22,13 @@ def receptionist_home(request):
     total_patients = Patient.objects.count()
     total_appointments = Appointment.objects.filter(created_at__startswith=current_time[:10]).count()
     total_patients_added_today = Account.objects.filter(date_joined__startswith=current_time[:10]).count()
+    total_lab_results_done_today = Test.objects.filter(created_at__startswith=current_time[:10], status='Completed').count()
 
     context = {
         'total_patients': total_patients,
         'total_appointments': total_appointments,
         'total_patients_added_today': total_patients_added_today,
+        'total_lab_results_done_today': total_lab_results_done_today,
     }
     return render(request, 'receptionist/index.html', context)
 
