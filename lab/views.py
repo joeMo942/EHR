@@ -3,22 +3,29 @@ from ehr import settings
 from patient.models import Test, TestResultField
 import io
 from django.contrib import messages
-from django.http import HttpResponse
+from django.http import Http404, HttpResponse
 from django.template.loader import render_to_string
 from xhtml2pdf import pisa
 from django.core.files.base import ContentFile
-
-
 import os
+from django.contrib.auth.decorators import login_required
+
+@login_required
 def lab_home(request):
+    user=request.user
+    if user.type!='lab':
+        return Http404
     tests=Test.objects.all()
     context = {
         'tests': tests
     }
     return render(request, 'lab/index.html', context)
 
+@login_required
 def test_result(request , testid):
-
+    user=request.user
+    if user.type!='lab':
+        return Http404
     test=Test.objects.get(id=testid)
     if request.method == 'POST':
         print("hello")
@@ -58,7 +65,6 @@ def test_result(request , testid):
 
 
 def get_pdf(context):
-    
     # Render the HTML template with the data
     html = render_to_string('test-result-template.html', context)
 

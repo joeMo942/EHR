@@ -1,18 +1,27 @@
 from django.shortcuts import render, redirect
-from django.http import JsonResponse
+from django.http import Http404, JsonResponse
 from .models import InitialAssessment
 from .forms import InitialAssessmentForm
 from accounts.models import Account
 from .models import Nurse
 from patient.models import Patient
+from django.contrib.auth.decorators import login_required
 
+
+@login_required
 def nurse_home(request):
+    user = request.user
+    if user.type != 'Nurse':
+        return Http404
     return render(request, 'nurse/index.html')
 
-# def init_assessment(request):
-#     return render(request, 'nurse/initial-assessment.html')
 
+@login_required
 def initial_assessment_view(request):
+    user = request.user
+    if user.type != 'Nurse':
+        return Http404
+
     if request.method == 'POST':
         ssn=request.POST.get('ssn')
         temperature = request.POST.get('temperature')
