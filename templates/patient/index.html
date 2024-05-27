@@ -6,7 +6,8 @@
     <div class="row">
       <div class="col-sm-12">
         <div class="home-tab">
-          <!---->
+          <div class="d-sm-flex align-items-center justify-content-between border-bottom"></div>
+          <div class="tab-content tab-content-basic">
           <div class="row flex-grow">
             <div class="col-12 grid-margin stretch-card">
               <div class="card card-rounded table-darkBGImg">
@@ -31,7 +32,7 @@
                       <div class="row">
                         <div class="col-sm-4">
                           <p class="status-summary-ight-white mb-1">value</p>
-                          <h2 class="text-info">180/90</h2>
+                            <h2 class="text-info">{{ blood_pressure }}</h2>
                         </div>
                         <div class="col-sm-8">
                           <div class="status-summary-chart-wrapper pb-4">
@@ -49,15 +50,15 @@
                 <div class="col-md-6 col-lg-12 grid-margin stretch-card">
                   <div class="card bg-primary card-rounded">
                     <div class="card-body pb-0">
-                      <h4 class="card-title card-title-dash text-white mb-4">heart beat</h4>
+                      <h4 class="card-title card-title-dash text-white mb-4">Temperature</h4>
                       <div class="row">
                         <div class="col-sm-4">
                           <p class="status-summary-ight-white mb-1"> Value</p>
-                          <h2 class="text-info">70</h2>
+                          <h2 class="text-info">{{ temperature }}</h2>
                         </div>
                         <div class="col-sm-8">
                           <div class="status-summary-chart-wrapper pb-4">
-                            <a><img src="{% static 'images/beat-heart-hospital-svgrepo-com.svg'%}" width="50" height="50"></a>
+                            <a><img src="{% static 'images\high-temperature-icon.svg'%}" width="60" height="60"></a>
                           </div>
                         </div>
                       </div>
@@ -75,7 +76,7 @@
                       <div class="row">
                         <div class="col-sm-4">
                           <p class="status-summary-ight-white mb-1">value</p>
-                          <h2 class="text-info">70</h2>
+                          <h2 class="text-info">{{ weight }}</h2>
                         </div>
                         <div class="col-sm-8">
                           <div class="status-summary-chart-wrapper pb-4">

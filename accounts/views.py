@@ -34,7 +34,6 @@ def register(request):
             user=Account.objects.create_user(first_name=first_name,last_name=last_name,email=email,ssn=ssn,birth_date=birth_date,contact_no=contact_no,
                                             gender=gender,password=password)
             user.save()
-            messages.success(request,"yesssss")
             # return redirect('register')
 
 

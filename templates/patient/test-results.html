@@ -49,27 +49,26 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Results</h4>
-                    <p class="card-description">tests <code>.table</code></p>
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>Test Name</th>
-                                    <th>Date</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
+                                    <th class="text-center">Test Name</th>
+                                    <th class="text-center">Date</th>
+                                    <th class="text-center">Status</th>
+                                    <th class="text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for test in tests %}
                                 <tr>
-                                    <td>{{test.test.testname}}</td>
-                                    <td>{{ test.created_at|date:"F d, Y" }}</td>
-                                    <td>
+                                    <td class="text-center">{{test.test.testname}}</td>
+                                    <td class="text-center">{{ test.created_at|date:"F d, Y" }}</td>
+                                    <td class="text-center">
                                         {% if test.status == 'Pending' %}
                                         <span class="badge badge-warning">{{ test.status }}</span>
                                     </td>
-                                    <td>
+                                    <td class="text-center">
                                         <button class="btn btn-info btn-sm" disabled>View</button>
                                         <button class="btn btn-primary btn-sm" disabled>Print</button>
                                         <button class="btn btn-success btn-sm" disabled>Download</button>
@@ -77,7 +76,7 @@
                                     {% elif test.status == 'Completed' %}
                                     <span class="badge badge-success">{{ test.status }}</span>
                                     </td>
-                                    <td>
+                                    <td class="text-center">
                                         <button class="btn btn-info btn-sm"
                                             onclick="viewPDF('{{test.result.url}}')">View</button>
                                         <button class="btn btn-primary btn-sm"
