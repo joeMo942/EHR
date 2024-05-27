@@ -243,5 +243,22 @@ def pattient_history(request, patient):
         }
     return render(request, 'doctor/patient-history.html', context)
 
-def patient_assessment(request):
-    return render(request, 'doctor/patient-assessment.html')
+def patient_assessment(request,patientid):
+    patient=get_object_or_404(Patient,pk=patientid)
+    initialassessment = InitialAssessment.objects.filter(patient=patient).order_by('date').last()
+
+    context={
+        'initialassessment':initialassessment,
+        'patient':patient,
+    }
+
+
+    return render(request, 'doctor/patient-assessment.html',context)
+
+
+def finish_appointment(request,appointmentid):
+    appointment=get_object_or_404(Appointment,pk=appointmentid)
+    appointment.status='Not Paid'
+    appointment.save()
+    messages.success(request, 'Appointment finished successfully.')
+    return redirect('appointments')
