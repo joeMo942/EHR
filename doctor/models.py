@@ -15,7 +15,7 @@ class Department(models.Model):
 
 class Doctor(models.Model):
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
-    user = models.ForeignKey(Account, on_delete=models.CASCADE,unique=True)
+    user = models.OneToOneField(Account, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.user.first_name} {self.user.last_name}"
