@@ -10,4 +10,5 @@ urlpatterns = [
     path('api/availability/', views.get_availability_by_doctor, name='get_availability_by_doctor'),
     path('booked-appointment/', views.booked_appointment, name='booked_appointment'),
     path('test-results/', views.test_results, name='test_results'),
+    path('encounter/<int:appointment_id>', views.encounter, name='encounter_patient'),
 ]
