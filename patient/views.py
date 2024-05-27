@@ -1,3 +1,4 @@
+from datetime import date
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views.decorators.csrf import csrf_protect
 from django.http import Http404, HttpResponse
@@ -209,10 +210,15 @@ def get_availability_by_doctor(request):
         raise Http404
     doctor_id = request.GET.get('doctor_id')
     if doctor_id:
-        availabilities = DoctorAvailability.objects.filter(doctor_id=doctor_id).values('id', 'availability__day_of_week', 'availability__start_time', 'availability__end_time')
+        today = date.today()
+        next_three_availabilities = (DoctorAvailability.objects
+                                 .filter(doctor_id=doctor_id, date__gte=today)
+                                 .order_by('date')[:6]
+                                 .values('id', 'availability__day_of_week', 'availability__start_time', 'availability__end_time', 'date'))
+        
         doctor = Doctor.objects.get(id=doctor_id)
         department_price = doctor.department.fees
-        return JsonResponse({'availabilities': list(availabilities), 'price': department_price})
+        return JsonResponse({'availabilities': list(next_three_availabilities), 'price': department_price})
     return JsonResponse({'availabilities': [], 'price': 0})
 
 

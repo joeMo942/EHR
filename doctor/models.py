@@ -1,7 +1,7 @@
-from django.db import models
+from django.db import IntegrityError, models
 from accounts.models import Account
 from django.core.exceptions import ValidationError
-
+from datetime import timedelta, date
 
 
 class Department(models.Model):
@@ -15,7 +15,7 @@ class Department(models.Model):
 
 class Doctor(models.Model):
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
-    user = models.ForeignKey(Account, on_delete=models.CASCADE,unique=True)
+    user = models.OneToOneField(Account, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.user.first_name} {self.user.last_name}"
@@ -49,12 +49,45 @@ class AvailabilityTime(models.Model):
         return f"{self.day_of_week} {self.start_time} - {self.end_time}"
 
 class DoctorAvailability(models.Model):
+
     availability = models.ForeignKey(AvailabilityTime, on_delete=models.CASCADE)
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
     date=models.DateField(blank=True,null=True)
 
     class Meta:
-        unique_together = (('doctor', 'availability'),)
+        unique_together = (('doctor', 'availability','date'),)
 
     def __str__(self):
         return f"{self.doctor} available at {self.availability}"
+    
+    def save(self, *args, **kwargs):
+        if not self.pk:  # This means the instance is newly created
+            super().save(*args, **kwargs)
+            start_date = date.today()
+            delta_days = timedelta(days=7)
+            for week in range(1, 52):  # Loop for 52 weeks
+                new_date = start_date + week * delta_days
+                try:
+                    DoctorAvailability.objects.create(
+                        availability=self.availability,
+                        doctor=self.doctor,
+                        date=new_date
+                    )
+                except IntegrityError:
+                    # Skip if there's a unique constraint violation
+                    continue
+        else:
+            super().save(*args, **kwargs)
+            start_date = date.today()
+            delta_days = timedelta(days=7)
+            for week in range(1, 52):  # Loop for 52 weeks
+                new_date = start_date + week * delta_days
+                try:
+                    DoctorAvailability.objects.create(
+                        availability=self.availability,
+                        doctor=self.doctor,
+                        date=new_date
+                    )
+                except IntegrityError:
+                    # Skip if there's a unique constraint violation
+                    continue

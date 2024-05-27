@@ -1,5 +1,5 @@
 from datetime import date, datetime
-from django.http import JsonResponse
+from django.http import Http404, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from doctor.models import Department, Doctor, DoctorAvailability
 from accounts.models import Account
@@ -13,6 +13,9 @@ from django.contrib.auth.decorators import login_required
 
 @login_required
 def receptionist_home(request):
+    user=request.user
+    if user.type!='receptionist':
+        return Http404
     now = datetime.now()
     current_time = now.strftime("%Y-%m-%d %H:%M")
 
@@ -27,7 +30,12 @@ def receptionist_home(request):
     }
     return render(request, 'receptionist/index.html', context)
 
+@login_required
 def current_appointments(request):
+    user=request.user
+    if user.type!='receptionist':
+        return Http404
+
     appointments = Appointment.objects.select_related('patient_no__user', 'doctor__user', 'availability_time__availability').all()
     
     # Custom serialization to include related fields
@@ -55,6 +63,9 @@ def current_appointments(request):
 @csrf_exempt  # Only use this for development; in production, properly handle CSRF tokens.
 @require_POST
 def update_appointment_status(request):
+    user=request.user
+    if user.type!='receptionist':
+        return Http404
     appointment_id = request.POST.get('appointment_id')
     status = request.POST.get('status')
 
@@ -71,7 +82,11 @@ def update_appointment_status(request):
     except Exception as e:
         return JsonResponse({'success': False, 'error': str(e)})
 
+@login_required
 def book_appointment(request):
+    user=request.user
+    if user.type!='receptionist':
+        return Http404
     if request.method == 'POST':
         ssn = request.POST.get('ssn')
         try:
@@ -118,14 +133,22 @@ def book_appointment(request):
     }
     return render(request, 'receptionist/book-appointment.html',context)
 
+@login_required
 def get_doctors_by_department(request):
+    user=request.user
+    if user.type!='receptionist':
+        return Http404
     department_id = request.GET.get('department_id')
     if department_id:
         doctors = Doctor.objects.filter(department_id=department_id).values('id', 'user__first_name', 'user__last_name')
         return JsonResponse({'doctors': list(doctors)})
     return JsonResponse({'doctors': []})
 
+@login_required
 def get_full_name(request):
+    user=request.user
+    if user.type!='receptionist':
+        return Http404
     ssn = request.GET.get('ssn', None)
     data = {
         'full_name': 'Not found'
@@ -138,15 +161,22 @@ def get_full_name(request):
             data['full_name'] = 'Not found'
     return JsonResponse(data)
 
+@login_required
 def patients_bills(request):
-
+    user=request.user
+    if user.type!='receptionist':
+        return Http404
     appointments = Appointment.objects.filter(status='Not Paid')
     context = {
         'appointments': appointments
     }
     return render(request, 'receptionist/patients-bills.html', context)
 
+@login_required
 def patients_bills_confirm(request, appointment):
+    user=request.user
+    if user.type!='receptionist':
+        return Http404
     appointments = get_object_or_404(Appointment, id=appointment)
     appointments.status = 'Paid'
     appointments.save()

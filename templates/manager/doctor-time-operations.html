@@ -61,8 +61,8 @@
                 <thead>
                     <tr>
                         <th>doctor</th>
+                        <th>Date</th>
                         <th>Day of week</th>
-                        <th>Start time</th>
                         <th>End time</th>
                         <th>Operation</th>
                     </tr>
@@ -71,10 +71,10 @@
                     {% for time in doctor_times %}
                     <tr>
 
-                        <td>{{time.doctor.user.first_name}} {{time.doctor.user.last_name}} </td>
-                        <td>{{ time.availability.day_of_week }}</td>
-                        <td>{{time.availability.start_time}} </td>
-                        <td>{{time.availability.end_time}} </td>
+                        <td>{{time.doctor.user.first_name}} {{time.doctor.user.last_name}}</td>
+                        <td>{{ time.date|date:'Y-m-d' }}</td>
+                        <td>{{time.availability.day_of_week}} </td>
+                        <td>{{time.availability.start_time}} - {{time.availability.end_time}}</td>
                         <td>
                             <a href="{% url "delete_dcotor_time" time.pk %}" class="btn btn-danger">Delete</button>
                         </td>

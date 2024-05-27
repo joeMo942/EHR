@@ -1,12 +1,21 @@
 from datetime import datetime
+from django.http import Http404
 from django.shortcuts import redirect, render
 from accounts.models import Account
 from doctor.models import AvailabilityTime, Department, Doctor ,DoctorAvailability
 from patient.models import Appointment, Patient
 from django.contrib import messages
 from doctor.froms import AvailabilityTimeForm
+from django.contrib.auth.decorators import login_required
 
+
+
+@login_required
 def manager_home(request):
+    user = request.user
+    if user.type != 'admin':
+        return Http404
+
     now = datetime.now()
     current_time = now.strftime("%Y-%m-%d %H:%M")
     total_patients = Patient.objects.count()
@@ -22,7 +31,11 @@ def manager_home(request):
     }
     return render(request, 'manager/index.html', context)
 
+@login_required
 def doctor_operations(request):
+    user = request.user
+    if user.type != 'admin':
+        return Http404
     if request.method == 'POST':
         doctor_id = request.POST.get('doctor')
         department_id = request.POST.get('department')
@@ -40,8 +53,11 @@ def doctor_operations(request):
         }
         return render(request, 'manager/doctor-operations.html', context)
 
-
+@login_required
 def assign_department(request):
+    user = request.user
+    if user.type != 'admin':
+        return Http404
     if request.method == 'POST':
         doctor_id = request.POST.get('doctor')
         department_id = request.POST.get('department')
@@ -52,16 +68,22 @@ def assign_department(request):
         doctor.save()
     return render(request, 'manager/doctor-operations.html')
 
+@login_required
 def delete_doctor(request, doctor_id):
+    user = request.user
+    if user.type != 'admin':
+        return Http404
     doctor = Doctor.objects.get(id=doctor_id)
     doctor.delete()
     messages.success(request, 'Doctor deleted successfully')
     return render(request, 'manager/doctor-operations.html')
 
-def doctor_add(request):
-    return render(request, 'manager/doctor-add.html')
 
+@login_required
 def doctor_time_operations(request):
+    user = request.user
+    if user.type != 'admin':
+        return Http404
     if request.method == 'POST':
         doctor=request.POST.get('doctor')
         time=request.POST.get('time')
@@ -84,14 +106,22 @@ def doctor_time_operations(request):
             'doctor_times': DoctorAvailability.objects.all(),
         }
         return render(request, 'manager/doctor-time-operations.html', context)
-    
+
+@login_required 
 def delete_doctor_time(request, drtime_id):
+    user = request.user
+    if user.type != 'admin':
+        return Http404
     drtime = DoctorAvailability.objects.get(id=drtime_id)
     drtime.delete()
     messages.success(request, 'Doctor time deleted successfully')
     return redirect('doctor_time_operations')
 
+@login_required
 def hospital_time_operations(request):
+    user = request.user
+    if user.type != 'admin':
+        return Http404
     if request.method == 'POST':
         form = AvailabilityTimeForm(request.POST)
         if form.is_valid():
@@ -115,7 +145,11 @@ def hospital_time_operations(request):
         }
     return render(request, 'manager/hospital-time-operations.html' ,context)
 
+@login_required
 def delete_available_time(request, time_id):
+    user = request.user
+    if user.type != 'admin':
+        return Http404
     time = AvailabilityTime.objects.get(id=time_id)
     time.delete()
     messages.success(request, 'Time deleted successfully')

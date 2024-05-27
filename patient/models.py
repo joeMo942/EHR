@@ -5,20 +5,14 @@ from doctor.models import Department, Doctor, DoctorAvailability
 
 
 class Patient(models.Model):
-    patient_no = models.IntegerField(primary_key=True,auto_created=True,blank=False)  # The composite primary key (patient_no, assessment_id) found, that is not supported. The first column is selected.
-    # assessment = models.ForeignKey(InitialAssessment, models.DO_NOTHING)
-    # nikname=models.CharField(max_length=100)
-    user = models.ForeignKey(Account, on_delete=models.CASCADE, blank=False,unique=True)
+    patient_no = models.IntegerField(primary_key=True,auto_created=True,blank=False) 
+    user = models.OneToOneField(Account, on_delete=models.CASCADE)
     is_active = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.user.first_name} {self.user.last_name}"
 
-
-
-
 class MedicalHis(models.Model):
-    # history_no = models.AutoField(primary_key=True,auto_created=True)
     patient_no = models.ForeignKey(Patient, on_delete=models.CASCADE,blank=False)
     alcohol = models.BooleanField(default=False)
     smoking = models.BooleanField(default=False)
@@ -31,7 +25,7 @@ class MedicalHis(models.Model):
        return f"{self.patient_no.user.first_name} {self.patient_no.user.last_name} medical history" 
 
 class Vaccination(models.Model):
-    vaccination_name = models.CharField(max_length=100)  # The composite primary key (vaccination_name, history_no) found, that is not supported. The first column is selected.
+    vaccination_name = models.CharField(max_length=100)  
     history_no = models.ForeignKey(MedicalHis, on_delete=models.CASCADE)
 
     class Meta:
@@ -209,11 +203,10 @@ class Test(models.Model):
     status_choices = [
         ('Pending', 'Pending'),
         ('Completed', 'Completed'),
-        ('Not Paid', 'Not Paid'),
     ]
     patient = models.ForeignKey(Patient ,on_delete=models.CASCADE)
     test = models.ForeignKey(Testlu, on_delete=models.CASCADE, blank=True, null=True)
-    status = models.CharField(max_length=100,choices=status_choices, default='Not Paid')   
+    status = models.CharField(max_length=100,choices=status_choices, default='Pending')   
     appointment = models.ForeignKey(Appointment, on_delete=models.CASCADE, blank=True, null=True)
     result = models.FileField(upload_to='test_results/', blank=True, null=True)
     result_notes = models.CharField(max_length=600, blank=True, null=True)
@@ -240,10 +233,10 @@ class Encounters(models.Model):
 
     patient= models.ForeignKey(Patient, on_delete=models.CASCADE)
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
-    symptoms = models.ManyToManyField(Symptomslu, blank=True, null=True)
-    diagnosis = models.ManyToManyField(Diagnosislu, blank=True, null=True)
-    prescription = models.ManyToManyField(Prescription, blank=True, null=True)
-    tests = models.ManyToManyField(Test, blank=True, null=True)
+    symptoms = models.ManyToManyField(Symptomslu, blank=True)
+    diagnosis = models.ManyToManyField(Diagnosislu, blank=True)
+    prescription = models.ManyToManyField(Prescription, blank=True)
+    tests = models.ManyToManyField(Test, blank=True)
     appointment= models.OneToOneField(Appointment,on_delete=models.CASCADE)
     notes = models.CharField(max_length=600, blank=True, null=True)
 

@@ -28,7 +28,7 @@
                                             {{ appointment.doctor.user.last_name }}</td>
                                         <td class="text-center">{{ appointment.department.name }}</td>
                                         <td class="text-center">
-                                            {{ appointment.availability_time.availability.day_of_week }}</td>
+                                            {{ appointment.availability_time.date|date:'Y-m-d' }}</td>
                                         <td class="text-center">
                                             {{ appointment.availability_time.availability.start_time }} -
                                             {{ appointment.availability_time.availability.end_time }} </td>
