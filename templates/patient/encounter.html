@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% comment %} {% include "includes/head-patient.html" %} {% endcomment %}
+    <title>Encounter Form</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            width: 1300px;
+            padding: 20px;
+        }
+
+        .box {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            font-size: 28px;
+            text-transform: uppercase;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        input[type="text"],
+        button,
+        textarea {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input[type="text"] {
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            padding: 8px 12px;
+            font-size: 14px;
+            width: 200px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .symptoms-container label {
+            display: inline-block;
+            margin-right: 15px;
+            margin-bottom: 8px;
+            cursor: pointer;
+        }
+
+        h3 {
+            margin-bottom: 15px;
+        }
+
+        label[for="patientName"],
+        label[for="patientID"],
+        label[for="reasonForVisit"] {
+            font-weight: bold;
+        }
+
+        select {
+            position: relative;
+            display: inline-block;
+        }
+
+        select+* {
+            margin-left: 10px;
+            margin-bottom: 10px;
+        }
+
+        form>* {
+            margin-bottom: 7px;
+            padding: 10px;
+        }
+
+        #referralNeeded {
+            width: 90px;
+        }
+
+        button[type="submit"] {
+            margin: 0 auto;
+            display: block;
+        }
+
+        .other-symptom-input {
+            display: none;
+            margin-top: 10px;
+        }
+
+        .diagnosisResults.symptomResults,
+        .diagnosisResults.prescriptionResults {
+            position: absolute;
+            border: none;
+            border-top: none;
+            max-height: 150px;
+            overflow-y: auto;
+            background-color: #fff;
+            z-index: 1000;
+            width: calc(100% - 22px);
+        }
+
+        .diagnosisResults.symptomResults .symptom-option,
+        .diagnosisResults.prescriptionResults .prescription-option {
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .diagnosisResults.symptomResults .symptom-option:hover,
+        .diagnosisResults.prescriptionResults .prescription-option:hover {
+            background-color: #f0f0f0;
+        }
+
+        .diagnosisResults {
+            position: absolute;
+            border: none;
+            border-top: none;
+            max-height: 150px;
+            overflow-y: auto;
+            background-color: #fff;
+            z-index: 1000;
+            width: calc(100% - 22px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            border-radius: 0 0 5px 5px;
+        }
+
+        .diagnosis-option {
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .diagnosis-option:hover {
+            background-color: #f0f0f0;
+        }
+
+        .diagnosis-field {
+            position: relative;
+            margin-bottom: 20px;
+            padding: 10px;
+            border: none;
+        }
+
+        .symptoms-field {
+            position: relative;
+            margin-bottom: 20px;
+            padding: 10px;
+            border: none;
+        }
+
+        .prescription-field {
+            position: relative;
+            margin-bottom: 20px;
+            padding: 10px;
+            border: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="box">
+            <h2>Encounter Form</h2>
+
+            <form action="{% url "booked_appointment"  %}">
+                <label for="patientName">Patient Name</label>
+                <input type="text" id="patientName" placeholder="Patient Name"
+                    value="{{appointment.patient_no.user.first_name}}" readonly>
+
+                <label for="patientID">Patient SSN</label>
+                <input type="text" id="patientID" placeholder="Patient ID" value="{{appointment.patient_no.user.ssn}}"
+                    readonly>
+
+                <h3>Symptoms</h3>
+                <div id="symptomsContainer">
+                    <div class="symptoms-field">
+                        {% for symptom in symptoms %}
+                        <input type="text" class="symptomInput" name="symptoms[]" placeholder="Start typing symptom..."
+                            oninput="searchSymptom(this)" value={{symptom.symptomsname}} readonly>
+                        {% endfor %}
+                        <div class="diagnosisResults symptomResults"></div>
+                    </div>
+                </div>
+
+                <h3>Diagnosis</h3>
+                <div id="diagnosisFields">
+                    {% for diagnosis in diagnosis %}
+                    <div class="diagnosis-field">
+                        <label for="diagnosisName">Name</label>
+                        <input type="text" class="diagnosisName" name="diagnosisName[]"
+                            placeholder="Start typing diagnosis..." oninput="searchDiagnosis(this)"
+                            value={{diagnosis.diagnosisname}} readonly>
+                        <div class="diagnosisResults"></div>
+                        <label for="diagnosisICD">ICD Code</label>
+                        <input type="text" class="diagnosisICD" name="diagnosisICD[]" placeholder="ICD Code"
+                            value={{diagnosis.icd_code}} readonly>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <h3>Prescription</h3>
+                <div id="prescriptionFields">
+                    {% for prescription in prescriptions %}
+                    <div class="prescription-field">
+                        <label for="prescriptionName">Name</label>
+                        <input type="text" class="prescriptionName" placeholder="Start typing prescription..."
+                            oninput="searchPrescription(this)" name="prescriptionName[]"
+                            value={{prescription.medication.medicationname}} readonly>
+                        <div class="diagnosisResults prescriptionResults"></div>
+                        <label for="prescriptionDosage">Dosage</label>
+                        <input type="text" class="prescriptionDosage" name="prescriptionDosage[]" placeholder="Dosage"
+                            value={{prescription.dosage}} readonly>
+                        <label for="prescriptionFrequency">Frequency</label>
+                        <input type="text" class="prescriptionFrequency" name="prescriptionFrequency[]"
+                            placeholder="Frequency" value={{prescription.frequency}} readonly>
+
+                        <label for="prescriptionDuration">Duration</label>
+                        <input type="text" class="prescriptionDuration" name="prescriptionDuration[]"
+                            placeholder="Duration" value={{prescription.duration}} readonly>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <h3>Test Required</h3>
+                <div class="testSection">
+                    {% for test in tests %}
+                    <label for="requireTest">Does the patient require a test?</label>
+                    <select id="requireTest" name="requireTest">
+                        <option value="No">No</option>
+                        <option value="Yes" selected>Yes</option>
+                    </select>
+                    <div class="testOptions">
+                        <div id="testNamesContainer">
+                            <div class="testName">
+                                <label for="testType">Test Type:</label>
+                                <select class="testTypeSelect" name="testType[]" readonly disabled>
+                                    <option value="Blood Test"
+                                        {% if test.test_type == "Blood Test" %}selected{% endif %}>Blood Test</option>
+                                    <option value="X-ray" {% if test.test_type == "X-ray" %}selected{% endif %}>X-ray
+                                    </option>
+                                </select>
+                                <label for="testName">Test Name:</label>
+                                <input type="text" class="testNameInput" name="testName[]" placeholder="Test Name"
+                                    value="{{ test.test.testname }}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                {% comment %} <h3>Referral</h3>
+                <label for="referralNeeded">Does the patient need to be referred?</label>
+                <select id="referralNeeded">
+                    <option value="No" selected>No</option>
+                    <option value="Yes">Yes</option>
+                </select>
+                <div class="referralSection" style="display: none;">
+                    <div id="referralLocationSection" style="display: none;">
+                        <label for="referralLocation">Referral Location:</label>
+                        <select id="referralLocation">
+                            <option value="" selected disabled>Select location</option>
+                            <option value="Within Hospital">Within Hospital</option>
+                            <option value="Outside of Hospital">Outside of Hospital</option>
+                        </select>
+                        <div id="withinHospitalDetails" style="display: none;">
+                            <label for="referralDepartment">Department:</label>
+                            <select id="referralDepartment">
+                                <option value="" selected disabled>Select department</option>
+                                <option value="Cardiology">Cardiology</option>
+                                <option value="Dermatology">Dermatology</option>
+                                <option value="Emergency">Emergency</option>
+                                <option value="Orthopedics">Orthopedics</option>
+                                <option value="Pediatrics">Pediatrics</option>
+                            </select>
+                        </div>
+                        <div id="outsideHospitalDetails" style="display: none;">
+                            <label for="referralOutsideDetails">Referral Details:</label>
+                            <input type="text" id="referralOutsideDetails" placeholder="Provide details">
+                        </div>
+                    </div>
+                </div> {% endcomment %}
+
+                <h3>Notes</h3>
+                <label for="notes">Additional Notes:</label>
+                <input id="notes" name="notes" placeholder="Enter any additional notes here" value={{notes}}
+                    readonly></input>
+
+                <button onclick="window.location.href='{% url 'booked_appointment' %}'">Back</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        async function fetchSymptoms() {
+            try {
+                const response = await fetch('/doctor/encounter/api/symptoms/');
+                const data = await response.json();
+                if (Array.isArray(data.symptoms)) {
+                    window.symptoms = data.symptoms;
+                } else {
+                    console.error('Fetched data is not an array:', data);
+                    window.symptoms = []; // Initialize as an empty array if data is not as expected
+                }
+            } catch (error) {
+                console.error('Error fetching symptoms:', error);
+            }
+        }
+
+        async function fetchDiagnoses() {
+            try {
+                const response = await fetch('/doctor/encounter/api/diagnoses/');
+                const data = await response.json();
+                if (Array.isArray(data.diagnoses)) {
+                    window.diagnoses = data.diagnoses;
+                } else {
+                    console.error('Fetched data is not an array:', data);
+                    window.diagnoses = []; // Initialize as an empty array if data is not as expected
+                }
+            } catch (error) {
+                console.error('Error fetching diagnoses:', error);
+            }
+        }
+
+        async function fetchPrescriptions() {
+            try {
+                const response = await fetch('/doctor/encounter/api/prescriptions/');
+                const data = await response.json();
+                if (Array.isArray(data.prescriptions)) {
+                    window.prescriptionNames = data.prescriptions;
+                } else {
+                    console.error('Fetched data is not an array:', data);
+                    window.prescriptionNames = [];
+                }
+            } catch (error) {
+                console.error('Error fetching prescriptions:', error);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', async function () {
+            await fetchDiagnoses();
+            await fetchSymptoms();
+            await fetchPrescriptions();
+            const requireTestSelect = document.getElementById('requireTest');
+            const testOptionsDiv = document.querySelector('.testOptions');
+            const addTestButton = document.getElementById('addTest');
+            const testNamesContainer = document.getElementById('testNamesContainer');
+
+            requireTestSelect.addEventListener('change', function () {
+                if (requireTestSelect.value === 'Yes') {
+                    testOptionsDiv.style.display = 'block';
+                } else {
+                    testOptionsDiv.style.display = 'none';
+                }
+            });
+            if (requireTestSelect.value === 'Yes') {
+                testOptionsDiv.style.display = 'block';
+            }
+
+            addTestButton.addEventListener('click', function () {
+                const newTestField = document.createElement('div');
+                newTestField.classList.add('testName');
+                newTestField.innerHTML = `
+            <label for="testType">Test Type:</label>
+            <select class="testTypeSelect" name="testType[]">
+                <option value="Blood Test">Blood Test</option>
+                <option value="X-ray">X-ray</option>
+            </select>
+            <label for="testName">Test Name:</label>
+            <input type="text" class="testNameInput" name="testName[]" placeholder="Test Name">
+        `;
+                testNamesContainer.appendChild(newTestField);
+            });
+        });
+
+        // Event listeners for adding fields
+        document.getElementById('addSymptom').addEventListener('click', addSymptomField);
+        document.getElementById('addDiagnosis').addEventListener('click', addDiagnosisField);
+        document.getElementById('addPrescription').addEventListener('click', addPrescriptionField);
+
+        function addSymptomField() {
+            const newSymptomField = document.createElement('div');
+            newSymptomField.classList.add('symptoms-field');
+            newSymptomField.innerHTML = `
+        <input type="text" class="symptomInput" name="symptoms[]" placeholder="Start typing symptom..." oninput="searchSymptom(this)">
+        <div class="diagnosisResults symptomResults"></div>
+      `;
+            document.getElementById('symptomsContainer').appendChild(newSymptomField);
+        }
+
+        function addDiagnosisField() {
+            const newDiagnosisField = document.createElement('div');
+            newDiagnosisField.classList.add('diagnosis-field');
+            newDiagnosisField.innerHTML = `
+        <label for="diagnosisName">Name</label>
+        <input type="text" class="diagnosisName" name="diagnosisName[]" placeholder="Start typing diagnosis..." oninput="searchDiagnosis(this)">
+        <div class="diagnosisResults"></div>
+        <label for="diagnosisICD">ICD Code</label>
+        <input type="text" class="diagnosisICD" name="diagnosisICD[]" placeholder="ICD Code" readonly>
+      `;
+            document.getElementById('diagnosisFields').appendChild(newDiagnosisField);
+        }
+
+        function addPrescriptionField() {
+            const newPrescriptionField = document.createElement('div');
+            newPrescriptionField.classList.add('prescription-field');
+            newPrescriptionField.innerHTML = `
+        <label for="prescriptionName">Name</label>
+        <input type="text" class="prescriptionName" name="prescriptionName[]" placeholder="Start typing prescription..." oninput="searchPrescription(this)">
+        <div class="diagnosisResults prescriptionResults"></div>
+        <label for="prescriptionDosage">Dosage</label>
+        <input type="text" class="prescriptionDosage" name="prescriptionDosage[]" placeholder="Dosage">
+        <label for="prescriptionFrequency">Frequency</label>
+        <input type="text" class="prescriptionFrequency" name="prescriptionFrequency[]" placeholder="Frequency">
+        <label for="prescriptionDuration">Duration</label>
+        <input type="text" class="prescriptionDuration" name="prescriptionDuration[]" placeholder="Duration">
+      `;
+            document.getElementById('prescriptionFields').appendChild(newPrescriptionField);
+        }
+
+        // Autocomplete search functions
+        function searchSymptom(input) {
+            const query = input.value.toLowerCase();
+            const resultsContainer = input.nextElementSibling;
+            resultsContainer.innerHTML = '';
+            if (query.length > 0 && Array.isArray(window.symptoms)) {
+                const filteredSymptoms = window.symptoms.filter(symptom => symptom.toLowerCase().includes(query));
+                filteredSymptoms.forEach(symptom => {
+                    const option = document.createElement('div');
+                    option.className = 'symptom-option';
+                    option.textContent = symptom;
+                    option.onclick = () => selectSymptom(symptom, input);
+                    resultsContainer.appendChild(option);
+                });
+            }
+        }
+
+        function selectSymptom(symptom, input) {
+            input.value = symptom;
+            window.symptoms = window.symptoms.filter(item => item !==
+                symptom); // Remove selected symptom from the array
+            input.nextElementSibling.innerHTML = ''; // Clear results
+        }
+
+        function searchPrescription(input) {
+            const query = input.value.toLowerCase();
+            const resultsContainer = input.nextElementSibling;
+            resultsContainer.innerHTML = '';
+            if (query.length > 0 && Array.isArray(window.prescriptionNames)) {
+                const filteredPrescriptions = window.prescriptionNames.filter(prescription => prescription.toLowerCase()
+                    .includes(query));
+                filteredPrescriptions.forEach(prescription => {
+                    const option = document.createElement('div');
+                    option.className = 'prescription-option';
+                    option.textContent = prescription;
+                    option.onclick = () => selectPrescription(prescription, input);
+                    resultsContainer.appendChild(option);
+                });
+            }
+        }
+
+        function selectPrescription(prescription, input) {
+            input.value = prescription;
+            window.prescriptionNames = window.prescriptionNames.filter(item => item !==
+                prescription); // Remove selected prescription
+            input.nextElementSibling.innerHTML = ''; // Clear results
+        }
+
+        function searchDiagnosis(input) {
+            const query = input.value.toLowerCase();
+            const resultsContainer = input.nextElementSibling;
+            resultsContainer.innerHTML = '';
+            if (query.length > 0 && Array.isArray(window.diagnoses)) {
+                const filteredDiagnoses = window.diagnoses.filter(diagnosis => diagnosis.diagnosisname.toLowerCase()
+                    .includes(
+                        query));
+                filteredDiagnoses.forEach(diagnosis => {
+                    const option = document.createElement('div');
+                    option.className = 'diagnosis-option';
+                    option.textContent = diagnosis.diagnosisname;
+                    option.onclick = () => selectDiagnosis(diagnosis, input);
+                    resultsContainer.appendChild(option);
+                });
+            }
+        }
+
+        function selectDiagnosis(diagnosis, input) {
+            input.value = diagnosis.diagnosisname;
+            const icdInput = input.parentElement.querySelector('.diagnosisICD');
+            icdInput.value = diagnosis.icd_code;
+            window.diagnoses = window.diagnoses.filter(d => d.diagnosisname !== diagnosis
+                .diagnosisname); // Remove selected diagnosis
+            input.nextElementSibling.innerHTML = ''; // Clear results
+        }
+    </script>
+
+
+
+</body>
+
+</html>

@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views.decorators.csrf import csrf_protect
-from django.http import HttpResponse
-from .models import Patient, MedicalHis, Vaccination, Disease, Illness, PrevSurgery, CurrentMedication, Appointment,Allergies,Test
+from django.http import Http404, HttpResponse
+from .models import Patient, MedicalHis, Vaccination, Disease, Illness, PrevSurgery, CurrentMedication, Appointment,Allergies,Test,Encounters
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_protect
@@ -24,7 +24,10 @@ def profile(request):
 @csrf_protect
 def save_medical_history(request):
     user = request.user
-    patient= get_object_or_404(Patient, user=user)
+    if user.type != 'patient':
+        raise Http404
+        
+    patient = get_object_or_404(Patient, user=user)
 
 
     if request.method == 'POST':
@@ -38,7 +41,8 @@ def save_medical_history(request):
             smoking='Smoking' in request.POST.getlist('conditions'),
             high_blood_pressure='HighBloodPressure' in request.POST.getlist('conditions'),
             diabetes='Diabetes' in request.POST.getlist('conditions'),
-            high_colest='HighCholesterol' in request.POST.getlist('conditions')
+            high_colest='HighCholesterol' in request.POST.getlist('conditions'),
+            additional_notes=request.POST.get('additional_notes')
         )
 
         # Save vaccinations
@@ -84,7 +88,8 @@ def save_medical_history(request):
                     duration=duration,
                     history_no=medical_history
                 )
-
+        patient.is_active = True
+        patient.save()
         messages.success(request, "Your medical history has been updated successfully")
         return redirect('medical_his')
 
@@ -125,7 +130,12 @@ def save_medical_history(request):
 @login_required
 def appointment(request):
     user = request.user
+    if user.type != 'patient':
+        raise Http404
     patient= get_object_or_404(Patient, user=user)
+    if patient.is_active == False:
+        messages.error(request, "Your account can't book appointment till you finish your history.finish it")
+        return redirect('medical_his')
     print(user)
     if request.method == 'POST':
         doctor_id = request.POST.get('doctor')
@@ -165,6 +175,10 @@ def appointment(request):
 
 @login_required
 def patient_home(request):
+    user=request.user
+    if user.type != 'patient':
+        raise Http404
+    return render(request, 'patient/index.html')
     patient = get_object_or_404(Patient, user=request.user)
     assessments = InitialAssessment.objects.filter(patient=patient).values('blood_pressure', 'temperature', 'weight')
     
@@ -180,6 +194,9 @@ def patient_home(request):
 
 @login_required
 def get_doctors_by_department(request):
+    user=request.user
+    if user.type != 'patient':
+        raise Http404
     department_id = request.GET.get('department_id')
     if department_id:
         doctors = Doctor.objects.filter(department_id=department_id).values('id', 'user__first_name', 'user__last_name')
@@ -187,6 +204,9 @@ def get_doctors_by_department(request):
     return JsonResponse({'doctors': []})
 @login_required
 def get_availability_by_doctor(request):
+    user=request.user
+    if user.type != 'patient':
+        raise Http404
     doctor_id = request.GET.get('doctor_id')
     if doctor_id:
         availabilities = DoctorAvailability.objects.filter(doctor_id=doctor_id).values('id', 'availability__day_of_week', 'availability__start_time', 'availability__end_time')
@@ -200,6 +220,8 @@ def get_availability_by_doctor(request):
 @login_required
 def booked_appointment(request):
     user=request.user
+    if user.type != 'patient':
+        raise Http404
     patient= get_object_or_404(Patient, user=user)
     appointments = Appointment.objects.filter(patient_no=patient)
     return render(request, 'patient/booked-appointment.html', {'appointments': appointments})
@@ -207,6 +229,8 @@ def booked_appointment(request):
 @login_required
 def test_results(request):
     user=request.user
+    if user.type != 'patient':
+        raise Http404
     tests=Test.objects.filter(patient__user=user)
     # print(tests[0].test.testname)
     context={
@@ -214,5 +238,35 @@ def test_results(request):
     }
     return render(request, 'patient/test-results.html', context)
 
+@login_required
+def encounter(request, appointment_id):
+    user=request.user
+    if user.type != 'patient':
+        raise Http404
+    appointment = get_object_or_404(Appointment, id=appointment_id)
+    encounters = get_object_or_404(Encounters,appointment=appointment)
+    symptoms =encounters.symptoms.all()
+    diagnosis = encounters.diagnosis.all()
+    prescriptions = encounters.prescription.all()
+    tests = encounters.tests.all()
+    notes = encounters.notes
+    context={
+        'appointment':appointment,
+        'symptoms':symptoms,
+        'diagnosis':diagnosis,
+        'prescriptions':prescriptions,
+        'tests':tests,
+        'notes':notes
+    }
+    return render(request, 'patient/encounter.html', context)
 
-
+@login_required
+def request_delete(request, appointment_id):
+    user=request.user
+    if user.type != 'patient':
+        raise Http404
+    appointment = get_object_or_404(Appointment, id=appointment_id)
+    appointment.status='cancel_request'
+    appointment.save()
+    messages.success(request, "Your cancellation request has been sent successfully")
+    return redirect('booked_appointment')

@@ -27,8 +27,10 @@
                                         <td class="text-center">{{ appointment.doctor.user.first_name }}
                                             {{ appointment.doctor.user.last_name }}</td>
                                         <td class="text-center">{{ appointment.department.name }}</td>
-                                        <td class="text-center">{{ appointment.availability_time.availability.day_of_week }}</td>
-                                        <td class="text-center">{{ appointment.availability_time.availability.start_time }} -
+                                        <td class="text-center">
+                                            {{ appointment.availability_time.availability.day_of_week }}</td>
+                                        <td class="text-center">
+                                            {{ appointment.availability_time.availability.start_time }} -
                                             {{ appointment.availability_time.availability.end_time }} </td>
                                         {% if appointment.status == "Pending" %}
                                         <td class="text-center">
@@ -50,18 +52,40 @@
                                         <td class="text-center">
                                             <label class="badge badge-success">{{  appointment.status }}</label>
                                         </td>
+                                        {% elif appointment.status == "cancel_request" %}
+                                        <td class="text-center">
+                                            <label class="badge badge-danger">{{  appointment.status }}</label>
+                                        </td>
                                         {% endif %}
                                         {% comment %} <td>Canceling 1</td> {% endcomment %}
                                         <td class="text-center">
-                                                <div class="btn-group" role="group" aria-label="Appointment Actions">
-                                                    <button type="button" class="btn btn-primary btn-rounded btn-icon">
-                                                        <i class="mdi mdi-eye"></i>
-                                                    </button>
-                                                    <button type="button" class="btn btn-danger btn-rounded btn-icon">
-                                                        <i class="mdi mdi-window-close"></i>
-                                                    </button>
-                                                </div>
-                                            </td>
+
+                                            <div class="btn-group" role="group" aria-label="Appointment Actions">
+                                                {% if appointment.status == "Completed" %}
+                                                <button type="button" class="btn btn-primary btn-rounded btn-icon"
+                                                    onclick="window.location.href='{% url 'encounter_patient' appointment.pk %}'">
+                                                    <i class="mdi mdi-eye"></i>
+                                                </button>
+                                                {% else %}
+                                                <button type="button" class="btn btn-primary btn-rounded btn-icon"
+                                                    disabled
+                                                    onclick="window.location.href='{% url 'encounter_patient' appointment.pk %}'">
+                                                    <i class="mdi mdi-eye"></i>
+                                                </button>
+                                                {% endif %}
+                                                {% if appointment.status == "Pending" %}
+                                                <button type="button" class="btn btn-danger btn-rounded btn-icon"
+                                                    onclick="window.location.href='{% url 'request_delete' appointment.pk %}'">
+                                                    <i class="mdi mdi-window-close"></i>
+                                                </button>
+                                                {% else %}
+                                                <button type="button" class="btn btn-danger btn-rounded btn-icon"
+                                                    disabled>
+                                                    <i class="mdi mdi-window-close"></i>
+                                                </button>
+                                                {% endif %}
+                                            </div>
+                                        </td>
                                     </tr>
                                     {% endfor %}
                                 </tbody>

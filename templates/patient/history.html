@@ -112,10 +112,6 @@
                   <div class="allergiesFields">
                     <div class="medicationAllergy">
                       <label>Are you allergic to any medications?</label><br>
-                      <label><input type="radio" name="medicationAllergy" value="yes"
-                          {% if medication_allergies %}checked{% endif %}> Yes</label>
-                      <label><input type="radio" name="medicationAllergy" value="no"
-                          {% if not medication_allergies %}checked{% endif %}> No</label>
                       <div id="medicationAllergyDetails">
                         <ul id="medicationAllergyList">
                           {% for allergy in medication_allergies %}
@@ -131,10 +127,6 @@
                     </div>
                     <div class="foodAllergy mt-3">
                       <label>Are you allergic to any foods?</label><br>
-                      <label><input type="radio" name="foodAllergy" value="yes"
-                          {% if food_allergies %}checked{% endif %}> Yes</label>
-                      <label><input type="radio" name="foodAllergy" value="no"
-                          {% if not food_allergies %}checked{% endif %}> No</label>
                       <div id="foodAllergyDetails">
                         <ul id="foodAllergyList">
                           {% for allergy in food_allergies %}
@@ -152,11 +144,7 @@
 
                   <h4 class="card-title mt-4">Current Medications</h4>
                   <div class="currentMedications">
-                    <label>Are you currently taking any medications?</label><br>
-                    <label><input type="radio" name="takingMedications" value="yes"
-                        {% if current_medications %}checked{% endif %}> Yes</label>
-                    <label><input type="radio" name="takingMedications" value="no"
-                        {% if not current_medications %}checked{% endif %}> No</label>
+
                     <div id="medicationsDetails">
                       <div id="medicationFields">
                         {% for medication in current_medications %}
@@ -191,12 +179,12 @@
 
                   <h4 class="card-title mt-4">Additional Notes</h4>
                   <div class="form-group">
-                    {% if medical_history %}
-                    <textarea class="form-control" id="additionalNotes" name="additionalNotes" rows="4"
-                      placeholder="Additional Notes">{{ medical_history.additional_notes }}</textarea>
+                    {% if medical_history.additional_notes %}
+                    <input class="form-control" id="additionalNotes" name="additional_notes"
+                      placeholder="Additional Notes" value="{{ medical_history.additional_notes }}"></input>
                     {% else %}
-                    <textarea class="form-control" id="additionalNotes" name="additionalNotes" rows="4"
-                      placeholder="Additional Notes"></textarea>
+                    <input class="form-control" id="additionalNotes" name="additional_notes"
+                      placeholder="Additional Notes"></input>
                     {% endif %}
                   </div>
 
