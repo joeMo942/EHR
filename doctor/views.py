@@ -181,7 +181,7 @@ def submit_form(request , appointmentid, userid):
         # Save additional notes
         if notes:
             encounter.notes = notes
-
+        appointment.save()
         encounter.save()
         messages.success(request, 'Encounter saved successfully.')
         return redirect('encounter', appointmentid, userid)

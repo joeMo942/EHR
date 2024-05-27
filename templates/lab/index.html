@@ -52,7 +52,7 @@
                                         <span class="badge badge-danger">{{ test.status }}</span>
                                         </td>
                                         <td><button class="btn btn-info btn-sm" disabled
-                                                onclick="window.location.href='{% url 'test_result' %}'">Result
+                                                onclick="window.location.href='{% url 'test_result' test.pk%}'">Result
                                                 Test</button></td>
 
                                         {% endif %}

@@ -198,6 +198,10 @@ def booked_appointment(request):
     if user.type != 'patient':
         raise Http404
     patient= get_object_or_404(Patient, user=user)
+    if patient.is_active == False:
+        messages.error(request, "Your account can't book appointment till you finish your history. <a href='{% url 'medical_his' %}'>Click here</a> to finish it")
+        return render(request, 'patient/booked-appointment.html')
+    patient= get_object_or_404(Patient, user=user)
     appointments = Appointment.objects.filter(patient_no=patient)
     return render(request, 'patient/booked-appointment.html', {'appointments': appointments})
 

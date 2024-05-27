@@ -9,6 +9,7 @@ class Patient(models.Model):
     # assessment = models.ForeignKey(InitialAssessment, models.DO_NOTHING)
     # nikname=models.CharField(max_length=100)
     user = models.ForeignKey(Account, on_delete=models.CASCADE, blank=False,unique=True)
+    is_active = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.user.first_name} {self.user.last_name}"
