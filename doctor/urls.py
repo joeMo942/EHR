@@ -11,4 +11,5 @@ urlpatterns = [
     path('encounter/api/symptoms/', views.get_symptoms, name='get_symptoms'),
     path('encounter/api/prescriptions/', views.get_prescriptions, name='get_prescriptions'),
     path('patient-assessment/<int:patientid>', views.patient_assessment, name='patient_assessment'),
+    path('finish-appoinment/<int:appointmentid>', views.finish_appointment, name='finish_appointment'),
 ]

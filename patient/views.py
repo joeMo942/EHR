@@ -175,7 +175,7 @@ def appointment(request):
 @login_required
 def patient_home(request):
     user=request.user
-    if user.type != 'patient':
+    if user.type not in ['patient','receptionist'] :
         raise Http404
     
     else:
