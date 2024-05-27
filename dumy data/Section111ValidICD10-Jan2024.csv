@@ -1,0 +1,500 @@
+id,SHORT DESCRIPTION (VALID ICD-10 FY2024),CODE
+1,"Cholera due to Vibrio cholerae 01, biovar cholerae",A000
+2,"Cholera due to Vibrio cholerae 01, biovar eltor",A001
+3,"Cholera, unspecified",A009
+4,"Typhoid fever, unspecified",A0100
+5,Typhoid meningitis,A0101
+6,Typhoid fever with heart involvement,A0102
+7,Typhoid pneumonia,A0103
+8,Typhoid arthritis,A0104
+9,Typhoid osteomyelitis,A0105
+10,Typhoid fever with other complications,A0109
+11,Paratyphoid fever A,A011
+12,Paratyphoid fever B,A012
+13,Paratyphoid fever C,A013
+14,"Paratyphoid fever, unspecified",A014
+15,Salmonella enteritis,A020
+16,Salmonella sepsis,A021
+17,"Localized salmonella infection, unspecified",A0220
+18,Salmonella meningitis,A0221
+19,Salmonella pneumonia,A0222
+20,Salmonella arthritis,A0223
+21,Salmonella osteomyelitis,A0224
+22,Salmonella pyelonephritis,A0225
+23,Salmonella with other localized infection,A0229
+24,Other specified salmonella infections,A028
+25,"Salmonella infection, unspecified",A029
+26,Shigellosis due to Shigella dysenteriae,A030
+27,Shigellosis due to Shigella flexneri,A031
+28,Shigellosis due to Shigella boydii,A032
+29,Shigellosis due to Shigella sonnei,A033
+30,Other shigellosis,A038
+31,"Shigellosis, unspecified",A039
+32,Enteropathogenic Escherichia coli infection,A040
+33,Enterotoxigenic Escherichia coli infection,A041
+34,Enteroinvasive Escherichia coli infection,A042
+35,Enterohemorrhagic Escherichia coli infection,A043
+36,Other intestinal Escherichia coli infections,A044
+37,Campylobacter enteritis,A045
+38,Enteritis due to Yersinia enterocolitica,A046
+39,Enterocolitis due to Clostridium difficile,A047
+40,"Enterocolitis due to Clostridium difficile, recurrent",A0471
+41,"Enterocolitis d/t Clostridium difficile, not spcf as recur",A0472
+42,Other specified bacterial intestinal infections,A048
+43,"Bacterial intestinal infection, unspecified",A049
+44,Foodborne staphylococcal intoxication,A050
+45,Botulism food poisoning,A051
+46,Foodborne Clostridium perfringens intoxication,A052
+47,Foodborne Vibrio parahaemolyticus intoxication,A053
+48,Foodborne Bacillus cereus intoxication,A054
+49,Foodborne Vibrio vulnificus intoxication,A055
+50,Other specified bacterial foodborne intoxications,A058
+51,"Bacterial foodborne intoxication, unspecified",A059
+52,Acute amebic dysentery,A060
+53,Chronic intestinal amebiasis,A061
+54,Amebic nondysenteric colitis,A062
+55,Ameboma of intestine,A063
+56,Amebic liver abscess,A064
+57,Amebic lung abscess,A065
+58,Amebic brain abscess,A066
+59,Cutaneous amebiasis,A067
+60,Amebic cystitis,A0681
+61,Other amebic genitourinary infections,A0682
+62,Other amebic infections,A0689
+63,"Amebiasis, unspecified",A069
+64,Balantidiasis,A070
+65,Giardiasis [lambliasis],A071
+66,Cryptosporidiosis,A072
+67,Isosporiasis,A073
+68,Cyclosporiasis,A074
+69,Other specified protozoal intestinal diseases,A078
+70,"Protozoal intestinal disease, unspecified",A079
+71,Rotaviral enteritis,A080
+72,Acute gastroenteropathy due to Norwalk agent,A0811
+73,Acute gastroenteropathy due to other small round viruses,A0819
+74,Adenoviral enteritis,A082
+75,Calicivirus enteritis,A0831
+76,Astrovirus enteritis,A0832
+77,Other viral enteritis,A0839
+78,"Viral intestinal infection, unspecified",A084
+79,Other specified intestinal infections,A088
+80,"Infectious gastroenteritis and colitis, unspecified",A09
+81,Tuberculosis of lung,A150
+82,Tuberculosis of intrathoracic lymph nodes,A154
+83,"Tuberculosis of larynx, trachea and bronchus",A155
+84,Tuberculous pleurisy,A156
+85,Primary respiratory tuberculosis,A157
+86,Other respiratory tuberculosis,A158
+87,Respiratory tuberculosis unspecified,A159
+88,Tuberculous meningitis,A170
+89,Meningeal tuberculoma,A171
+90,Tuberculoma of brain and spinal cord,A1781
+91,Tuberculous meningoencephalitis,A1782
+92,Tuberculous neuritis,A1783
+93,Other tuberculosis of nervous system,A1789
+94,"Tuberculosis of nervous system, unspecified",A179
+95,Tuberculosis of spine,A1801
+96,Tuberculous arthritis of other joints,A1802
+97,Tuberculosis of other bones,A1803
+98,Other musculoskeletal tuberculosis,A1809
+99,"Tuberculosis of genitourinary system, unspecified",A1810
+100,Tuberculosis of kidney and ureter,A1811
+101,Tuberculosis of bladder,A1812
+102,Tuberculosis of other urinary organs,A1813
+103,Tuberculosis of prostate,A1814
+104,Tuberculosis of other male genital organs,A1815
+105,Tuberculosis of cervix,A1816
+106,Tuberculous female pelvic inflammatory disease,A1817
+107,Tuberculosis of other female genital organs,A1818
+108,Tuberculous peripheral lymphadenopathy,A182
+109,Tuberculous peritonitis,A1831
+110,Tuberculous enteritis,A1832
+111,Retroperitoneal tuberculosis,A1839
+112,Tuberculosis of skin and subcutaneous tissue,A184
+113,"Tuberculosis of eye, unspecified",A1850
+114,Tuberculous episcleritis,A1851
+115,Tuberculous keratitis,A1852
+116,Tuberculous chorioretinitis,A1853
+117,Tuberculous iridocyclitis,A1854
+118,Other tuberculosis of eye,A1859
+119,Tuberculosis of (inner) (middle) ear,A186
+120,Tuberculosis of adrenal glands,A187
+121,Tuberculosis of thyroid gland,A1881
+122,Tuberculosis of other endocrine glands,A1882
+123,"Tuberculosis of digestive tract organs, NEC",A1883
+124,Tuberculosis of heart,A1884
+125,Tuberculosis of spleen,A1885
+126,Tuberculosis of other sites,A1889
+127,Acute miliary tuberculosis of a single specified site,A190
+128,Acute miliary tuberculosis of multiple sites,A191
+129,"Acute miliary tuberculosis, unspecified",A192
+130,Other miliary tuberculosis,A198
+131,"Miliary tuberculosis, unspecified",A199
+132,Bubonic plague,A200
+133,Cellulocutaneous plague,A201
+134,Pneumonic plague,A202
+135,Plague meningitis,A203
+136,Septicemic plague,A207
+137,Other forms of plague,A208
+138,"Plague, unspecified",A209
+139,Ulceroglandular tularemia,A210
+140,Oculoglandular tularemia,A211
+141,Pulmonary tularemia,A212
+142,Gastrointestinal tularemia,A213
+143,Generalized tularemia,A217
+144,Other forms of tularemia,A218
+145,"Tularemia, unspecified",A219
+146,Cutaneous anthrax,A220
+147,Pulmonary anthrax,A221
+148,Gastrointestinal anthrax,A222
+149,Anthrax sepsis,A227
+150,Other forms of anthrax,A228
+151,"Anthrax, unspecified",A229
+152,Brucellosis due to Brucella melitensis,A230
+153,Brucellosis due to Brucella abortus,A231
+154,Brucellosis due to Brucella suis,A232
+155,Brucellosis due to Brucella canis,A233
+156,Other brucellosis,A238
+157,"Brucellosis, unspecified",A239
+158,Glanders,A240
+159,Acute and fulminating melioidosis,A241
+160,Subacute and chronic melioidosis,A242
+161,Other melioidosis,A243
+162,"Melioidosis, unspecified",A249
+163,Spirillosis,A250
+164,Streptobacillosis,A251
+165,"Rat-bite fever, unspecified",A259
+166,Cutaneous erysipeloid,A260
+167,Erysipelothrix sepsis,A267
+168,Other forms of erysipeloid,A268
+169,"Erysipeloid, unspecified",A269
+170,Leptospirosis icterohemorrhagica,A270
+171,Aseptic meningitis in leptospirosis,A2781
+172,Other forms of leptospirosis,A2789
+173,"Leptospirosis, unspecified",A279
+174,Pasteurellosis,A280
+175,Cat-scratch disease,A281
+176,Extraintestinal yersiniosis,A282
+177,"Oth zoonotic bacterial diseases, not elsewhere classified",A288
+178,"Zoonotic bacterial disease, unspecified",A289
+179,Indeterminate leprosy,A300
+180,Tuberculoid leprosy,A301
+181,Borderline tuberculoid leprosy,A302
+182,Borderline leprosy,A303
+183,Borderline lepromatous leprosy,A304
+184,Lepromatous leprosy,A305
+185,Other forms of leprosy,A308
+186,"Leprosy, unspecified",A309
+187,Pulmonary mycobacterial infection,A310
+188,Cutaneous mycobacterial infection,A311
+189,Dissem mycobacterium avium-intracellulare complex (DMAC),A312
+190,Other mycobacterial infections,A318
+191,"Mycobacterial infection, unspecified",A319
+192,Cutaneous listeriosis,A320
+193,Listerial meningitis,A3211
+194,Listerial meningoencephalitis,A3212
+195,Listerial sepsis,A327
+196,Oculoglandular listeriosis,A3281
+197,Listerial endocarditis,A3282
+198,Other forms of listeriosis,A3289
+199,"Listeriosis, unspecified",A329
+200,Tetanus neonatorum,A33
+201,Obstetrical tetanus,A34
+202,Other tetanus,A35
+203,Pharyngeal diphtheria,A360
+204,Nasopharyngeal diphtheria,A361
+205,Laryngeal diphtheria,A362
+206,Cutaneous diphtheria,A363
+207,Diphtheritic cardiomyopathy,A3681
+208,Diphtheritic radiculomyelitis,A3682
+209,Diphtheritic polyneuritis,A3683
+210,Diphtheritic tubulo-interstitial nephropathy,A3684
+211,Diphtheritic cystitis,A3685
+212,Diphtheritic conjunctivitis,A3686
+213,Other diphtheritic complications,A3689
+214,"Diphtheria, unspecified",A369
+215,Whooping cough due to Bordetella pertussis without pneumonia,A3700
+216,Whooping cough due to Bordetella pertussis with pneumonia,A3701
+217,Whooping cough due to Bordetella parapertussis w/o pneumonia,A3710
+218,Whooping cough due to Bordetella parapertussis w pneumonia,A3711
+219,Whooping cough due to other Bordetella species w/o pneumonia,A3780
+220,Whooping cough due to oth Bordetella species with pneumonia,A3781
+221,"Whooping cough, unspecified species without pneumonia",A3790
+222,"Whooping cough, unspecified species with pneumonia",A3791
+223,Scarlet fever with otitis media,A380
+224,Scarlet fever with myocarditis,A381
+225,Scarlet fever with other complications,A388
+226,"Scarlet fever, uncomplicated",A389
+227,Meningococcal meningitis,A390
+228,Waterhouse-Friderichsen syndrome,A391
+229,Acute meningococcemia,A392
+230,Chronic meningococcemia,A393
+231,"Meningococcemia, unspecified",A394
+232,"Meningococcal carditis, unspecified",A3950
+233,Meningococcal endocarditis,A3951
+234,Meningococcal myocarditis,A3952
+235,Meningococcal pericarditis,A3953
+236,Meningococcal encephalitis,A3981
+237,Meningococcal retrobulbar neuritis,A3982
+238,Meningococcal arthritis,A3983
+239,Postmeningococcal arthritis,A3984
+240,Other meningococcal infections,A3989
+241,"Meningococcal infection, unspecified",A399
+242,"Sepsis due to streptococcus, group A",A400
+243,"Sepsis due to streptococcus, group B",A401
+244,Sepsis due to Streptococcus pneumoniae,A403
+245,Other streptococcal sepsis,A408
+246,"Streptococcal sepsis, unspecified",A409
+247,Sepsis due to Methicillin susceptible Staphylococcus aureus,A4101
+248,Sepsis due to Methicillin resistant Staphylococcus aureus,A4102
+249,Sepsis due to other specified staphylococcus,A411
+250,Sepsis due to unspecified staphylococcus,A412
+251,Sepsis due to Hemophilus influenzae,A413
+252,Sepsis due to anaerobes,A414
+253,"Gram-negative sepsis, unspecified",A4150
+254,Sepsis due to Escherichia coli [E. coli],A4151
+255,Sepsis due to Pseudomonas,A4152
+256,Sepsis due to Serratia,A4153
+257,Sepsis due to Acinetobacter baumannii,A4154
+258,Other Gram-negative sepsis,A4159
+259,Sepsis due to Enterococcus,A4181
+260,Other specified sepsis,A4189
+261,"Sepsis, unspecified organism",A419
+262,Pulmonary actinomycosis,A420
+263,Abdominal actinomycosis,A421
+264,Cervicofacial actinomycosis,A422
+265,Actinomycotic sepsis,A427
+266,Actinomycotic meningitis,A4281
+267,Actinomycotic encephalitis,A4282
+268,Other forms of actinomycosis,A4289
+269,"Actinomycosis, unspecified",A429
+270,Pulmonary nocardiosis,A430
+271,Cutaneous nocardiosis,A431
+272,Other forms of nocardiosis,A438
+273,"Nocardiosis, unspecified",A439
+274,Systemic bartonellosis,A440
+275,Cutaneous and mucocutaneous bartonellosis,A441
+276,Other forms of bartonellosis,A448
+277,"Bartonellosis, unspecified",A449
+278,Erysipelas,A46
+279,Gas gangrene,A480
+280,Legionnaires' disease,A481
+281,Nonpneumonic Legionnaires' disease [Pontiac fever],A482
+282,Toxic shock syndrome,A483
+283,Brazilian purpuric fever,A484
+284,Infant botulism,A4851
+285,Wound botulism,A4852
+286,Other specified bacterial diseases,A488
+287,"Methicillin suscep staph infection, unsp site",A4901
+288,"Methicillin resis staph infection, unsp site",A4902
+289,"Streptococcal infection, unspecified site",A491
+290,"Hemophilus influenzae infection, unspecified site",A492
+291,"Mycoplasma infection, unspecified site",A493
+292,Other bacterial infections of unspecified site,A498
+293,"Bacterial infection, unspecified",A499
+294,Early congenital syphilitic oculopathy,A5001
+295,Early congenital syphilitic osteochondropathy,A5002
+296,Early congenital syphilitic pharyngitis,A5003
+297,Early congenital syphilitic pneumonia,A5004
+298,Early congenital syphilitic rhinitis,A5005
+299,Early cutaneous congenital syphilis,A5006
+300,Early mucocutaneous congenital syphilis,A5007
+301,Early visceral congenital syphilis,A5008
+302,"Other early congenital syphilis, symptomatic",A5009
+303,"Early congenital syphilis, latent",A501
+304,"Early congenital syphilis, unspecified",A502
+305,"Late congenital syphilitic oculopathy, unspecified",A5030
+306,Late congenital syphilitic interstitial keratitis,A5031
+307,Late congenital syphilitic chorioretinitis,A5032
+308,Other late congenital syphilitic oculopathy,A5039
+309,"Late congenital neurosyphilis, unspecified",A5040
+310,Late congenital syphilitic meningitis,A5041
+311,Late congenital syphilitic encephalitis,A5042
+312,Late congenital syphilitic polyneuropathy,A5043
+313,Late congenital syphilitic optic nerve atrophy,A5044
+314,Juvenile general paresis,A5045
+315,Other late congenital neurosyphilis,A5049
+316,Clutton's joints,A5051
+317,Hutchinson's teeth,A5052
+318,Hutchinson's triad,A5053
+319,Late congenital cardiovascular syphilis,A5054
+320,Late congenital syphilitic arthropathy,A5055
+321,Late congenital syphilitic osteochondropathy,A5056
+322,Syphilitic saddle nose,A5057
+323,"Other late congenital syphilis, symptomatic",A5059
+324,"Late congenital syphilis, latent",A506
+325,"Late congenital syphilis, unspecified",A507
+326,"Congenital syphilis, unspecified",A509
+327,Primary genital syphilis,A510
+328,Primary anal syphilis,A511
+329,Primary syphilis of other sites,A512
+330,Condyloma latum,A5131
+331,Syphilitic alopecia,A5132
+332,Other secondary syphilis of skin,A5139
+333,Secondary syphilitic meningitis,A5141
+334,Secondary syphilitic female pelvic disease,A5142
+335,Secondary syphilitic oculopathy,A5143
+336,Secondary syphilitic nephritis,A5144
+337,Secondary syphilitic hepatitis,A5145
+338,Secondary syphilitic osteopathy,A5146
+339,Other secondary syphilitic conditions,A5149
+340,"Early syphilis, latent",A515
+341,"Early syphilis, unspecified",A519
+342,"Cardiovascular syphilis, unspecified",A5200
+343,Syphilitic aneurysm of aorta,A5201
+344,Syphilitic aortitis,A5202
+345,Syphilitic endocarditis,A5203
+346,Syphilitic cerebral arteritis,A5204
+347,Other cerebrovascular syphilis,A5205
+348,Other syphilitic heart involvement,A5206
+349,Other cardiovascular syphilis,A5209
+350,"Symptomatic neurosyphilis, unspecified",A5210
+351,Tabes dorsalis,A5211
+352,Other cerebrospinal syphilis,A5212
+353,Late syphilitic meningitis,A5213
+354,Late syphilitic encephalitis,A5214
+355,Late syphilitic neuropathy,A5215
+356,Charcot's arthropathy (tabetic),A5216
+357,General paresis,A5217
+358,Other symptomatic neurosyphilis,A5219
+359,Asymptomatic neurosyphilis,A522
+360,"Neurosyphilis, unspecified",A523
+361,Late syphilitic oculopathy,A5271
+362,Syphilis of lung and bronchus,A5272
+363,Symptomatic late syphilis of other respiratory organs,A5273
+364,Syphilis of liver and other viscera,A5274
+365,Syphilis of kidney and ureter,A5275
+366,Other genitourinary symptomatic late syphilis,A5276
+367,Syphilis of bone and joint,A5277
+368,Syphilis of other musculoskeletal tissue,A5278
+369,Other symptomatic late syphilis,A5279
+370,"Late syphilis, latent",A528
+371,"Late syphilis, unspecified",A529
+372,"Latent syphilis, unspecified as early or late",A530
+373,"Syphilis, unspecified",A539
+374,"Gonococcal infection of lower genitourinary tract, unsp",A5400
+375,"Gonococcal cystitis and urethritis, unspecified",A5401
+376,"Gonococcal vulvovaginitis, unspecified",A5402
+377,"Gonococcal cervicitis, unspecified",A5403
+378,Other gonococcal infection of lower genitourinary tract,A5409
+379,Gonocl infct of lower GU tract w periureth and acc glnd abcs,A541
+380,Gonococcal infection of kidney and ureter,A5421
+381,Gonococcal prostatitis,A5422
+382,Gonococcal infection of other male genital organs,A5423
+383,Gonococcal female pelvic inflammatory disease,A5424
+384,Other gonococcal genitourinary infections,A5429
+385,"Gonococcal infection of eye, unspecified",A5430
+386,Gonococcal conjunctivitis,A5431
+387,Gonococcal iridocyclitis,A5432
+388,Gonococcal keratitis,A5433
+389,Other gonococcal eye infection,A5439
+390,"Gonococcal infection of musculoskeletal system, unspecified",A5440
+391,Gonococcal spondylopathy,A5441
+392,Gonococcal arthritis,A5442
+393,Gonococcal osteomyelitis,A5443
+394,Gonococcal infection of other musculoskeletal tissue,A5449
+395,Gonococcal pharyngitis,A545
+396,Gonococcal infection of anus and rectum,A546
+397,Gonococcal meningitis,A5481
+398,Gonococcal brain abscess,A5482
+399,Gonococcal heart infection,A5483
+400,Gonococcal pneumonia,A5484
+401,Gonococcal peritonitis,A5485
+402,Gonococcal sepsis,A5486
+403,Other gonococcal infections,A5489
+404,"Gonococcal infection, unspecified",A549
+405,Chlamydial lymphogranuloma (venereum),A55
+406,"Chlamydial infection of lower genitourinary tract, unsp",A5600
+407,Chlamydial cystitis and urethritis,A5601
+408,Chlamydial vulvovaginitis,A5602
+409,Other chlamydial infection of lower genitourinary tract,A5609
+410,Chlamydial female pelvic inflammatory disease,A5611
+411,Other chlamydial genitourinary infection,A5619
+412,"Chlamydial infection of genitourinary tract, unspecified",A562
+413,Chlamydial infection of anus and rectum,A563
+414,Chlamydial infection of pharynx,A564
+415,Sexually transmitted chlamydial infection of other sites,A568
+416,Chancroid,A57
+417,Granuloma inguinale,A58
+418,"Urogenital trichomoniasis, unspecified",A5900
+419,Trichomonal vulvovaginitis,A5901
+420,Trichomonal prostatitis,A5902
+421,Trichomonal cystitis and urethritis,A5903
+422,Other urogenital trichomoniasis,A5909
+423,Trichomoniasis of other sites,A598
+424,"Trichomoniasis, unspecified",A599
+425,"Herpesviral infection of urogenital system, unspecified",A6000
+426,Herpesviral infection of penis,A6001
+427,Herpesviral infection of other male genital organs,A6002
+428,Herpesviral cervicitis,A6003
+429,Herpesviral vulvovaginitis,A6004
+430,Herpesviral infection of other urogenital tract,A6009
+431,Herpesviral infection of perianal skin and rectum,A601
+432,"Anogenital herpesviral infection, unspecified",A609
+433,Anogenital (venereal) warts,A630
+434,Other specified predominantly sexually transmitted diseases,A638
+435,Unspecified sexually transmitted disease,A64
+436,Nonvenereal syphilis,A65
+437,Initial lesions of yaws,A660
+438,Multiple papillomata and wet crab yaws,A661
+439,Other early skin lesions of yaws,A662
+440,Hyperkeratosis of yaws,A663
+441,Gummata and ulcers of yaws,A664
+442,Gangosa,A665
+443,Bone and joint lesions of yaws,A666
+444,Other manifestations of yaws,A667
+445,Latent yaws,A668
+446,"Yaws, unspecified",A669
+447,Primary lesions of pinta,A670
+448,Intermediate lesions of pinta,A671
+449,Late lesions of pinta,A672
+450,Mixed lesions of pinta,A673
+451,"Pinta, unspecified",A679
+452,Louse-borne relapsing fever,A680
+453,Tick-borne relapsing fever,A681
+454,"Relapsing fever, unspecified",A689
+455,Necrotizing ulcerative stomatitis,A690
+456,Other Vincent's infections,A691
+457,"Lyme disease, unspecified",A6920
+458,Meningitis due to Lyme disease,A6921
+459,Other neurologic disorders in Lyme disease,A6922
+460,Arthritis due to Lyme disease,A6923
+461,Other conditions associated with Lyme disease,A6929
+462,Other specified spirochetal infections,A698
+463,"Spirochetal infection, unspecified",A699
+464,Chlamydia psittaci infections,A70
+465,Initial stage of trachoma,A710
+466,Active stage of trachoma,A711
+467,"Trachoma, unspecified",A719
+468,Chlamydial conjunctivitis,A740
+469,Chlamydial peritonitis,A7481
+470,Other chlamydial diseases,A7489
+471,"Chlamydial infection, unspecified",A749
+472,Epidemic louse-borne typhus fever d/t Rickettsia prowazekii,A750
+473,Recrudescent typhus [Brill's disease],A751
+474,Typhus fever due to Rickettsia typhi,A752
+475,Typhus fever due to Rickettsia tsutsugamushi,A753
+476,"Typhus fever, unspecified",A759
+477,Spotted fever due to Rickettsia rickettsii,A770
+478,Spotted fever due to Rickettsia conorii,A771
+479,Spotted fever due to Rickettsia siberica,A772
+480,Spotted fever due to Rickettsia australis,A773
+481,"Ehrlichiosis, unspecified",A7740
+482,Ehrlichiosis chafeensis [E. chafeensis],A7741
+483,Other ehrlichiosis,A7749
+484,Other spotted fevers,A778
+485,"Spotted fever, unspecified",A779
+486,Q fever,A78
+487,Trench fever,A790
+488,Rickettsialpox due to Rickettsia akari,A791
+489,Rickettsiosis due to Ehrlichia sennetsu,A7981
+490,Anaplasmosis [A. phagocytophilum],A7982
+491,Other specified rickettsioses,A7989
+492,"Rickettsiosis, unspecified",A799
+493,"Acute paralytic poliomyelitis, vaccine-associated",A800
+494,"Acute paralytic poliomyelitis, wild virus, imported",A801
+495,"Acute paralytic poliomyelitis, wild virus, indigenous",A802
+496,"Acute paralytic poliomyelitis, unspecified",A8030
+497,Other acute paralytic poliomyelitis,A8039
+498,Acute nonparalytic poliomyelitis,A804
+499,"Acute poliomyelitis, unspecified",A809

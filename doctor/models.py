@@ -91,3 +91,4 @@ class DoctorAvailability(models.Model):
                 except IntegrityError:
                     # Skip if there's a unique constraint violation
                     continue
+

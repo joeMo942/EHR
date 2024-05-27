@@ -1,4 +1,3 @@
-
 {% load static %}
 {% include "includes/head-patient.html" %}
 <!DOCTYPE html>
@@ -218,8 +217,8 @@
         <div id="diagnosisFields">
           <div class="diagnosis-field">
             <label for="diagnosisName">Name</label>
-            <input type="text" class="diagnosisName" name="diagnosisName[]" placeholder="Start typing diagnosis..."
-              oninput="searchDiagnosis(this)">
+            <input type="text" class="diagnosisName" name="diagnosisName[]" require
+              placeholder="Start typing diagnosis..." oninput="searchDiagnosis(this)">
             <div class="diagnosisResults"></div>
             <label for="diagnosisICD">ICD Code</label>
             <input type="text" class="diagnosisICD" name="diagnosisICD[]" placeholder="ICD Code" readonly>
@@ -512,5 +511,6 @@
 
 </body>
 <script src="{% static 'js/alert.js' %}"></script>
+
 </html>
 {% include "includes/footer-patient.html" %}

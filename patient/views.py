@@ -32,10 +32,8 @@ def save_medical_history(request):
 
 
     if request.method == 'POST':
-        # Delete existing medical history for this patient if it exists
         MedicalHis.objects.filter(patient_no=patient).delete()
 
-        # Save the new medical history
         medical_history = MedicalHis.objects.create(
             patient_no=patient,
             alcohol='Alcohol' in request.POST.getlist('conditions'),
@@ -240,7 +238,6 @@ def test_results(request):
     if user.type != 'patient':
         raise Http404
     tests=Test.objects.filter(patient__user=user)
-    # print(tests[0].test.testname)
     context={
         'tests':tests
     }
