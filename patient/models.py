@@ -25,6 +25,7 @@ class MedicalHis(models.Model):
     high_blood_pressure = models.BooleanField(default=False)
     diabetes = models.BooleanField(default=False)
     high_colest = models.BooleanField(default=False)
+    additional_notes = models.CharField(max_length=500, blank=True, null=True)
 
     def __str__(self):
        return f"{self.patient_no.user.first_name} {self.patient_no.user.last_name} medical history" 
@@ -90,6 +91,7 @@ class Appointment(models.Model):
         ('Declined', 'Declined'),
         ('Not Paid', 'Not Paid'),
         ('Completed', 'Completed'),
+        ('cancel_request', 'cancel_request'),
     ]
     patient_no = models.ForeignKey(Patient, on_delete=models.CASCADE)
     department = models.ForeignKey(Department, on_delete=models.CASCADE)

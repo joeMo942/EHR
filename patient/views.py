@@ -33,7 +33,8 @@ def save_medical_history(request):
             smoking='Smoking' in request.POST.getlist('conditions'),
             high_blood_pressure='HighBloodPressure' in request.POST.getlist('conditions'),
             diabetes='Diabetes' in request.POST.getlist('conditions'),
-            high_colest='HighCholesterol' in request.POST.getlist('conditions')
+            high_colest='HighCholesterol' in request.POST.getlist('conditions'),
+            additional_notes=request.POST.get('additional_notes')
         )
 
         # Save vaccinations
@@ -79,7 +80,8 @@ def save_medical_history(request):
                     duration=duration,
                     history_no=medical_history
                 )
-
+        patient.is_active = True
+        patient.save()
         messages.success(request, "Your medical history has been updated successfully")
         return redirect('medical_his')
 
@@ -123,6 +125,9 @@ def appointment(request):
     if user.type != 'patient':
         raise Http404
     patient= get_object_or_404(Patient, user=user)
+    if patient.is_active == False:
+        messages.error(request, "Your account can't book appointment till you finish your history.finish it")
+        return redirect('medical_his')
     print(user)
     if request.method == 'POST':
         doctor_id = request.POST.get('doctor')
@@ -198,10 +203,6 @@ def booked_appointment(request):
     if user.type != 'patient':
         raise Http404
     patient= get_object_or_404(Patient, user=user)
-    if patient.is_active == False:
-        messages.error(request, "Your account can't book appointment till you finish your history. <a href='{% url 'medical_his' %}'>Click here</a> to finish it")
-        return render(request, 'patient/booked-appointment.html')
-    patient= get_object_or_404(Patient, user=user)
     appointments = Appointment.objects.filter(patient_no=patient)
     return render(request, 'patient/booked-appointment.html', {'appointments': appointments})
 
@@ -238,3 +239,14 @@ def encounter(request, appointment_id):
         'notes':notes
     }
     return render(request, 'patient/encounter.html', context)
+
+@login_required
+def request_delete(request, appointment_id):
+    user=request.user
+    if user.type != 'patient':
+        raise Http404
+    appointment = get_object_or_404(Appointment, id=appointment_id)
+    appointment.status='cancel_request'
+    appointment.save()
+    messages.success(request, "Your cancellation request has been sent successfully")
+    return redirect('booked_appointment')
