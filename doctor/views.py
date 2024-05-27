@@ -7,6 +7,7 @@ from patient.models import Allergies, CurrentMedication, Disease, Encounters, Il
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
 from datetime import date
+from nurse.models import InitialAssessment
 
 
 def doctor_home(request):
@@ -248,5 +249,14 @@ def pattient_history(request, patient):
         }
     return render(request, 'doctor/patient-history.html', context)
 
-def patient_assessment(request):
-    return render(request, 'doctor/patient-assessment.html')
+def patient_assessment(request,patientid):
+    patient=get_object_or_404(Patient,pk=patientid)
+    initialassessment = InitialAssessment.objects.filter(patient=patient).order_by('date').last()
+
+    context={
+        'initialassessment':initialassessment,
+        'patient':patient,
+    }
+
+
+    return render(request, 'doctor/patient-assessment.html',context)

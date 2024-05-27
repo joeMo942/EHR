@@ -30,22 +30,18 @@
                   <th>SSN</th>
                   <th>Gender</th>
                   <th>Date of birth</th>
-
                 </tr>
               </thead>
               <tbody id="patientTableBody">
                 <!-- Dummy Data -->
                 {% for patient in patients %}
                 <tr>
-                  <td><a href="#" class="details-btn" onclick="showDetails('details1')">{{patient.user.first_name}}</a>
-                  </td>
+                  <td>{{patient.user.first_name}} </td>
                   <td>{{patient.user.ssn}}</td>
                   <td>{{patient.user.gender}}</td>
                   <td>{{patient.user.birth_date|date:'Y-m-d'}}</td>
-
                 </tr>
                 {% endfor %}
-
                 <!-- End Dummy Data -->
               </tbody>
             </table>
