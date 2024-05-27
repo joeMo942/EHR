@@ -1,4 +1,4 @@
-from django.http import HttpResponse, JsonResponse
+from django.http import Http404, HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 from doctor.models import Doctor
@@ -8,19 +8,28 @@ from django.contrib import messages
 
 
 def doctor_home(request):
+    user=request.user
+    if user.type != 'doctor':
+        raise Http404
     return render(request, 'doctor/index.html')
 
 
 @login_required
 def appointment(request):
     user=request.user
+    if user.type != 'doctor':
+        raise Http404
     doctor=get_object_or_404(Doctor,user=user)
     
     confirmed_appointments = Appointment.objects.filter(doctor=doctor, status='Confirmed')
     context = {'appointments': confirmed_appointments}
     return render(request, 'doctor/appointments.html', context)
 
+@login_required
 def patients(request):
+    user=request.user
+    if user.type != 'doctor':
+        raise Http404
     return render(request, 'doctor/patient-info.html')
 
 
@@ -28,20 +37,30 @@ def patients(request):
 #     print(request.GET)
 #     return render(request, 'doctor/encounter.html')
 
-
+@login_required
 def get_diagnoses(request):
+    user=request.user
+    if user.type != 'doctor':
+        raise Http404
+    
     if request.method == 'GET':
         diagnoses = Diagnosislu.objects.all().values('diagnosisname', 'icd_code')
         print(diagnoses)
         return JsonResponse({'diagnoses': list(diagnoses)})
-
+@login_required
 def get_symptoms(request):
+    user=request.user
+    if user.type != 'doctor':
+        raise Http404
     if request.method == 'GET':
         symptoms = Symptomslu.objects.all().values_list('symptomsname', flat=True)
         print(symptoms)
         return JsonResponse({'symptoms': list(symptoms)})
-
+@login_required
 def get_prescriptions(request):
+    user=request.user
+    if user.type != 'doctor':
+        raise Http404
     if request.method == 'GET':
         prescriptions = Medicationlu.objects.all().values_list('medicationname', flat=True)
         print(prescriptions)
@@ -50,7 +69,11 @@ def get_prescriptions(request):
 
 
 @csrf_exempt
+@login_required
 def submit_form(request , appointmentid, userid):
+    user=request.user
+    if user.type != 'doctor':
+        raise Http404
     print(userid)
     patient= get_object_or_404(Patient, user=userid)
     appointment = get_object_or_404(Appointment, id=appointmentid)
@@ -168,8 +191,11 @@ def submit_form(request , appointmentid, userid):
             'patient': patient
         }
         return render(request, 'doctor/encounter.html' , context)
-    
+@login_required
 def pattient_history(request, patient):
+    user=request.user
+    if user.type != 'doctor':
+        raise Http404
     patient = get_object_or_404(Patient, pk=patient)
     context = {'patient': patient}
 
