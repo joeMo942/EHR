@@ -32,7 +32,8 @@
                     class="btn btn-primary" onclick="checkAvailability()">Encounter</a></td>
                 <td><a href=" {% url "patients_history" appointment.patient_no.pk %} " class="btn btn-primary">Medical
                     History</a></td>
-                <td><a href="{% url 'patient_assessment' %}" class="btn btn-primary">Initial Assessment</a></td>
+                <td><a href="{% url 'patient_assessment' appointment.patient_no.pk %}" class="btn btn-primary">Initial
+                    Assessment</a></td>
                 <td><button onclick="window.location.href='{% url 'finish_appointment' appointment.pk %}'" type="button"
                     class="btn btn-success btn-rounded btn-icon">
                     <i class="mdi mdi-checkbox-marked-outline"></i>
