@@ -7,6 +7,7 @@ from patient.models import Allergies, CurrentMedication, Disease, Encounters, Il
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
 from datetime import date
+from nurse.models import InitialAssessment
 
 
 def doctor_home(request):
