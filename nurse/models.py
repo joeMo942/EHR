@@ -15,3 +15,4 @@ class InitialAssessment(models.Model):
     notes = models.TextField(blank=True, null=True)
     medical = models.ForeignKey(Nurse, on_delete=models.CASCADE)
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
