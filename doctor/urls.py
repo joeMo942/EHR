@@ -10,4 +10,6 @@ urlpatterns = [
     path('encounter/api/diagnoses/', views.get_diagnoses, name='get_diagnoses'),
     path('encounter/api/symptoms/', views.get_symptoms, name='get_symptoms'),
     path('encounter/api/prescriptions/', views.get_prescriptions, name='get_prescriptions'),
+    path('patient-assessment/', views.patient_assessment, name='patient_assessment'),
+    path('profile/', views.profile, name='profile'),
 ]

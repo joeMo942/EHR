@@ -6,11 +6,6 @@ from accounts.models import Account
 from .models import Nurse
 from patient.models import Patient
 
-def nurse_home(request):
-    return render(request, 'nurse/index.html')
-
-# def init_assessment(request):
-#     return render(request, 'nurse/initial-assessment.html')
 
 def initial_assessment_view(request):
     if request.method == 'POST':

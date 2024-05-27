@@ -1,10 +1,13 @@
+
+{% load static %}
+{% include "includes/head-patient.html" %}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  {% comment %} {% include "includes/head-patient.html" %} {% endcomment %}
+  <script src="{% static 'js/alert.js' %}"></script>
   <title>Encounter Form</title>
 
   <style>
@@ -508,5 +511,6 @@
 
 
 </body>
-
+<script src="{% static 'js/alert.js' %}"></script>
 </html>
+{% include "includes/footer-patient.html" %}

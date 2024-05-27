@@ -1,4 +1,4 @@
-{% extends "includes/base-patient.html" %}
+{% extends "includes/base-doctor.html" %}
 {% load static %}
 {% block content %}
 
@@ -125,13 +125,6 @@
                                     <!-- Medication Allergies -->
                                     <div class="allergiesFields">
                                         <div class="medicationAllergy">
-                                            <label>Are you allergic to any medications?</label><br>
-                                            <label><input type="radio" name="medicationAllergy" value="yes"
-                                                    {% if medication_allergies %}checked{% endif %} readonly>
-                                                Yes</label>
-                                            <label><input type="radio" name="medicationAllergy" value="no"
-                                                    {% if not medication_allergies %}checked{% endif %} readonly>
-                                                No</label>
                                             <div id="medicationAllergyDetails">
                                                 <ul id="medicationAllergyList">
                                                     {% for allergy in medication_allergies %}
@@ -148,11 +141,6 @@
                                             </div>
                                         </div>
                                         <div class="foodAllergy mt-3">
-                                            <label>Are you allergic to any foods?</label><br>
-                                            <label><input type="radio" name="foodAllergy" value="yes"
-                                                    {% if food_allergies %}checked{% endif %} readonly> Yes</label>
-                                            <label><input type="radio" name="foodAllergy" value="no"
-                                                    {% if not food_allergies %}checked{% endif %} readonly> No</label>
                                             <div id="foodAllergyDetails">
                                                 <ul id="foodAllergyList">
                                                     {% for allergy in food_allergies %}
@@ -170,14 +158,8 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <h4 class="card-title mt-4">Current Medications</h4>
                                     <div class="currentMedications">
-                                        <label>Are you currently taking any medications?</label><br>
-                                        <label><input type="radio" name="takingMedications" value="yes"
-                                                {% if current_medications %}checked{% endif %} readonly> Yes</label>
-                                        <label><input type="radio" name="takingMedications" value="no"
-                                                {% if not current_medications %}checked{% endif %} readonly> No</label>
                                         <div id="medicationsDetails">
                                             <div id="medicationFields">
                                                 {% for medication in current_medications %}

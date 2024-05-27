@@ -1,3 +1,4 @@
+from datetime import date
 from django.http import Http404, HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
@@ -5,14 +6,30 @@ from doctor.models import Doctor
 from patient.models import Allergies, CurrentMedication, Disease, Encounters, Illness, MedicalHis, Patient,Appointment,Diagnosislu, PrevSurgery,Symptomslu,Medicationlu, Vaccination,Prescription,Testlu,Test
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
+from datetime import date
 
 
 def doctor_home(request):
     user=request.user
     if user.type != 'doctor':
         raise Http404
-    return render(request, 'doctor/index.html')
+    total_appointments_for_doctor = Appointment.objects.filter(doctor__user=user).count()
+    confirmed_appointments_for_doctor_today = Appointment.objects.filter(doctor__user=user, status='Confirmed', availability_time__date=date.today()).count()
+    total_patients_for_doctor = Patient.objects.filter(appointment__doctor__user=user).count()
+    context = {
+        'total_appointments_for_doctor': total_appointments_for_doctor,
+        'confirmed_appointments_for_doctor_today': confirmed_appointments_for_doctor_today,
+        'total_patients_for_doctor': total_patients_for_doctor,
+    }
+    return render(request, 'doctor/index.html', context)
 
+def profile(request):
+    user=request.user
+    if user.type != 'doctor':
+        raise Http404
+    doctor=get_object_or_404(Doctor,user=user)
+    context = {'doctor': doctor}
+    return render(request, 'doctor/profile.html', context)
 
 @login_required
 def appointment(request):
@@ -231,3 +248,6 @@ def pattient_history(request, patient):
             'current_medications': current_medications,
         }
     return render(request, 'doctor/patient-history.html', context)
+
+def patient_assessment(request):
+    return render(request, 'doctor/patient-assessment.html')

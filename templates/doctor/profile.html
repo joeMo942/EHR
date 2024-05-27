@@ -1,0 +1,214 @@
+{% extends "includes/base-doctor.html" %}
+{% load static %}
+{% block content %}
+<div class="main-panel">        
+<div class="content-wrapper">
+    <div class="row">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 grid-margin">
+            <div class="card">
+                <div class="card-body">
+                <form class="form-sample">
+                    <p class="card-description">
+                        Personal info
+                    </p>
+                    <style>
+                    .img-lg {
+                    width: 150px;
+                    height: 150px;
+                    } 
+                    </style>
+                    <form>
+                    <div class="row align-items-center">
+                    <div class="col-md-8 d-flex">
+                        <img id="profileImage" class="img-md rounded-circle img-lg" src="{% static 'images\faces\default-profile.svg'%}" alt="Profile image">
+                    </div>
+                    <div class="col-md-4 text-right">
+                        <div class="form-group mb-0">
+                            <label>File upload</label>
+                            <input type="file" name="img[]" class="file-upload-default" id="fileUpload" style="display: none;">
+                            <div class="input-group">
+                                <button class="file-upload-browse btn btn-primary" type="button" onclick="document.getElementById('fileUpload').click();">Upload</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                <script>document.getElementById('fileUpload').addEventListener('change', function(event) {
+                    const file = event.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            document.getElementById('profileImage').src = e.target.result;
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+                </script>                        
+                    <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">SSN</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Medical ID</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">First Name</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Last Name</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Gender</label>
+                            <div class="col-sm-9">
+                                <select class="form-control">
+                                    <option>Male</option>
+                                    <option>Female</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Date of Birth</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" placeholder="dd/mm/yyyy"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Category</label>
+                            <div class="col-sm-9">
+                                <select class="form-control">
+                                    <option>patient</option>
+                                    <option>Doctor</option>
+                                    <option>nurse</option>
+                                    <option>labspecialist</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label for="exampleInputPassword2" class="col-sm-3 col-form-label">Mobile Number</label>
+                            <div class="col-sm-9">
+                                    <input type="text" class="form-control"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Email</label>
+                            <div class="col-sm-9">
+
+                                <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Email">
+                            </div>
+                        </div>
+                    </div>
+                
+                    
+                    
+                    
+                    </div>
+                </div>  
+                </form>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>    
+        <div class="content-wrapper">
+            <div class="row">
+            <div class="container">
+            <div class="row justify-content-center">
+            <div class="col-12 grid-margin">
+            <div class="card">
+            <div class="card-body">
+            <form class="form-sample">
+                <p class="card-description">
+                Update Password
+                </p>
+                <form>
+                <div class="row align-items-center">
+            </div>                      
+                <div class="row">
+                <div class="col-md-6">
+                <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Current Password</label>
+                <div class="col-sm-9">
+                <input type="text" class="form-control" />
+                </div>
+                </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                <div class="form-group row">
+                <label class="col-sm-3 col-form-label">New Password</label>
+                <div class="col-sm-9">
+                <input type="text" class="form-control" />
+                </div>
+                </div>
+                </div>
+            </div>
+                <div class="col-md-6">
+                <div class="form-group row">
+                <label for="exampleInputPassword2" class="col-sm-3 col-form-label">New Password</label>
+                <div class="col-sm-9">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="New Password" aria-label="New Password">
+                </div>
+                </div>
+                </div>
+                <div class="input-group-append">
+                    <button class="btn btn-sm btn-primary ml-auto" type="button">  Update  </button>
+                </div>
+                </div>
+            </div>
+            </div>
+            
+                
+                
+                
+                </div>
+            </div>  
+            </form>
+            </div>
+            </div>
+            </div>
+            </div>
+            </div> 
+
+{% endblock %}
