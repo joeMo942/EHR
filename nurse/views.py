@@ -11,16 +11,16 @@ from django.contrib.auth.decorators import login_required
 @login_required
 def nurse_home(request):
     user = request.user
-    if user.type != 'Nurse':
-        return Http404
-    return render(request, 'nurse/index.html')
+    if user.type != 'nurse':
+        raise Http404
+    return redirect('initial_assessment')
 
 
 @login_required
 def initial_assessment_view(request):
     user = request.user
-    if user.type != 'Nurse':
-        return Http404
+    if user.type != 'nurse':
+        raise Http404
 
     if request.method == 'POST':
         ssn=request.POST.get('ssn')

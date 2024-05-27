@@ -23,13 +23,6 @@ def doctor_home(request):
     }
     return render(request, 'doctor/index.html', context)
 
-def profile(request):
-    user=request.user
-    if user.type != 'doctor':
-        raise Http404
-    doctor=get_object_or_404(Doctor,user=user)
-    context = {'doctor': doctor}
-    return render(request, 'doctor/profile.html', context)
 
 @login_required
 def appointment(request):

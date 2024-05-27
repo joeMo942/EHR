@@ -15,7 +15,7 @@ from django.contrib.auth.decorators import login_required
 def receptionist_home(request):
     user=request.user
     if user.type!='receptionist':
-        return Http404
+        raise Http404
     now = datetime.now()
     current_time = now.strftime("%Y-%m-%d %H:%M")
 
@@ -34,7 +34,7 @@ def receptionist_home(request):
 def current_appointments(request):
     user=request.user
     if user.type!='receptionist':
-        return Http404
+        raise Http404
 
     appointments = Appointment.objects.select_related('patient_no__user', 'doctor__user', 'availability_time__availability').all()
     
@@ -65,7 +65,7 @@ def current_appointments(request):
 def update_appointment_status(request):
     user=request.user
     if user.type!='receptionist':
-        return Http404
+        raise Http404
     appointment_id = request.POST.get('appointment_id')
     status = request.POST.get('status')
 
@@ -86,7 +86,7 @@ def update_appointment_status(request):
 def book_appointment(request):
     user=request.user
     if user.type!='receptionist':
-        return Http404
+        raise Http404
     if request.method == 'POST':
         ssn = request.POST.get('ssn')
         try:
@@ -137,7 +137,7 @@ def book_appointment(request):
 def get_doctors_by_department(request):
     user=request.user
     if user.type!='receptionist':
-        return Http404
+        raise Http404
     department_id = request.GET.get('department_id')
     if department_id:
         doctors = Doctor.objects.filter(department_id=department_id).values('id', 'user__first_name', 'user__last_name')
@@ -148,7 +148,7 @@ def get_doctors_by_department(request):
 def get_full_name(request):
     user=request.user
     if user.type!='receptionist':
-        return Http404
+        raise Http404
     ssn = request.GET.get('ssn', None)
     data = {
         'full_name': 'Not found'
@@ -165,7 +165,7 @@ def get_full_name(request):
 def patients_bills(request):
     user=request.user
     if user.type!='receptionist':
-        return Http404
+        raise Http404
     appointments = Appointment.objects.filter(status='Not Paid')
     context = {
         'appointments': appointments
@@ -176,7 +176,7 @@ def patients_bills(request):
 def patients_bills_confirm(request, appointment):
     user=request.user
     if user.type!='receptionist':
-        return Http404
+        raise Http404
     appointments = get_object_or_404(Appointment, id=appointment)
     appointments.status = 'Paid'
     appointments.save()

@@ -179,19 +179,21 @@ def patient_home(request):
     user=request.user
     if user.type != 'patient':
         raise Http404
-    return render(request, 'patient/index.html')
-    patient = get_object_or_404(Patient, user=request.user)
-    assessments = InitialAssessment.objects.filter(patient=patient).values('blood_pressure', 'temperature', 'weight')
     
-    # Assuming there's only one initial assessment per patient, we can fetch the first one
-    assessment = assessments.first() if assessments else None
-    
-    context = {
-        'blood_pressure': assessment['blood_pressure'] if assessment else None,
-        'temperature': assessment['temperature'] if assessment else None,
-        'weight': assessment['weight'] if assessment else None,
-    }
-    return render(request, 'patient/index.html', context)
+    else:
+        patient = get_object_or_404(Patient, user=request.user)
+        assessments = InitialAssessment.objects.filter(patient=patient).values('blood_pressure', 'temperature', 'weight')
+        
+        # Assuming there's only one initial assessment per patient, we can fetch the first one
+        assessment = assessments.first() if assessments else None
+        
+        context = {
+            'blood_pressure': assessment['blood_pressure'] if assessment else None,
+            'temperature': assessment['temperature'] if assessment else None,
+            'weight': assessment['weight'] if assessment else None,
+        }
+        return render(request, 'patient/index.html', context)
+
 
 @login_required
 def get_doctors_by_department(request):

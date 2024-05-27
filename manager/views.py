@@ -14,7 +14,7 @@ from django.contrib.auth.decorators import login_required
 def manager_home(request):
     user = request.user
     if user.type != 'admin':
-        return Http404
+        raise Http404
 
     now = datetime.now()
     current_time = now.strftime("%Y-%m-%d %H:%M")
@@ -35,7 +35,7 @@ def manager_home(request):
 def doctor_operations(request):
     user = request.user
     if user.type != 'admin':
-        return Http404
+        raise Http404
     if request.method == 'POST':
         doctor_id = request.POST.get('doctor')
         department_id = request.POST.get('department')
@@ -57,7 +57,7 @@ def doctor_operations(request):
 def assign_department(request):
     user = request.user
     if user.type != 'admin':
-        return Http404
+        raise Http404
     if request.method == 'POST':
         doctor_id = request.POST.get('doctor')
         department_id = request.POST.get('department')
@@ -72,7 +72,7 @@ def assign_department(request):
 def delete_doctor(request, doctor_id):
     user = request.user
     if user.type != 'admin':
-        return Http404
+        raise Http404
     doctor = Doctor.objects.get(id=doctor_id)
     doctor.delete()
     messages.success(request, 'Doctor deleted successfully')
@@ -83,7 +83,7 @@ def delete_doctor(request, doctor_id):
 def doctor_time_operations(request):
     user = request.user
     if user.type != 'admin':
-        return Http404
+        raise Http404
     if request.method == 'POST':
         doctor=request.POST.get('doctor')
         time=request.POST.get('time')
@@ -111,7 +111,7 @@ def doctor_time_operations(request):
 def delete_doctor_time(request, drtime_id):
     user = request.user
     if user.type != 'admin':
-        return Http404
+        raise Http404
     drtime = DoctorAvailability.objects.get(id=drtime_id)
     drtime.delete()
     messages.success(request, 'Doctor time deleted successfully')
@@ -121,7 +121,7 @@ def delete_doctor_time(request, drtime_id):
 def hospital_time_operations(request):
     user = request.user
     if user.type != 'admin':
-        return Http404
+        raise Http404
     if request.method == 'POST':
         form = AvailabilityTimeForm(request.POST)
         if form.is_valid():
@@ -149,7 +149,7 @@ def hospital_time_operations(request):
 def delete_available_time(request, time_id):
     user = request.user
     if user.type != 'admin':
-        return Http404
+        raise Http404
     time = AvailabilityTime.objects.get(id=time_id)
     time.delete()
     messages.success(request, 'Time deleted successfully')
