@@ -29,6 +29,7 @@ def appointment(request):
     user=request.user
     if user.type != 'doctor':
         raise Http404
+    
     doctor=get_object_or_404(Doctor,user=user)
     
     confirmed_appointments = Appointment.objects.filter(doctor=doctor, status='Confirmed')

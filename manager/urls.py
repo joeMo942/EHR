@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from accounts.views import registerstaff
 
 
 urlpatterns = [
@@ -11,4 +12,5 @@ urlpatterns = [
     path('assign-department/', views.assign_department, name='assign_department'),
     path('delete-available-time/<int:time_id>/', views.delete_available_time, name='delete_available_time'),
     path('delete-doctor-time/<int:drtime_id>/', views.delete_doctor_time, name='delete_dcotor_time'),
+    path('register-staff', registerstaff, name='register_staff')
 ]

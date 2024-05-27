@@ -3,7 +3,7 @@ from django.http import Http404
 from django.shortcuts import redirect, render
 from accounts.models import Account
 from doctor.models import AvailabilityTime, Department, Doctor ,DoctorAvailability
-from patient.models import Appointment, Patient
+from patient.models import Appointment, Patient, Test
 from django.contrib import messages
 from doctor.froms import AvailabilityTimeForm
 from django.contrib.auth.decorators import login_required
@@ -22,12 +22,14 @@ def manager_home(request):
     total_appointments = Appointment.objects.filter(created_at__startswith=current_time[:10]).count()
     total_patients_added_today = Account.objects.filter(date_joined__startswith=current_time[:10], type='patient').count()
     total_doctors = Account.objects.filter(type='doctor').count()
+    total_lab_results_done = Test.objects.filter(status='Completed').count()
 
     context = {
         'total_patients': total_patients,
         'total_appointments': total_appointments,
         'total_patients_added_today': total_patients_added_today,
         'total_doctors': total_doctors,
+        'total_lab_results_done': total_lab_results_done,
     }
     return render(request, 'manager/index.html', context)
 
