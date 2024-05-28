@@ -8,6 +8,7 @@ class Patient(models.Model):
     patient_no = models.IntegerField(primary_key=True,auto_created=True,blank=False) 
     user = models.OneToOneField(Account, on_delete=models.CASCADE)
     is_active = models.BooleanField(default=False)
+    image = models.ImageField(upload_to='patient_images/', default='faces/default-profile.svg')
 
     def __str__(self):
         return f"{self.user.first_name} {self.user.last_name}"

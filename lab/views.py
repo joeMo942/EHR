@@ -1,3 +1,4 @@
+from email.message import EmailMessage
 from django.shortcuts import redirect, render
 from ehr import settings
 from patient.models import Test, TestResultField
@@ -9,12 +10,13 @@ from xhtml2pdf import pisa
 from django.core.files.base import ContentFile
 import os
 from django.contrib.auth.decorators import login_required
+from django.contrib.sites.shortcuts import get_current_site
 
 @login_required
 def lab_home(request):
     user=request.user
     if user.type!='lab':
-        return Http404
+        raise Http404
     tests=Test.objects.all()
     context = {
         'tests': tests
@@ -25,7 +27,7 @@ def lab_home(request):
 def test_result(request , testid):
     user=request.user
     if user.type!='lab':
-        return Http404
+        raise Http404
     test=Test.objects.get(id=testid)
     if request.method == 'POST':
         print("hello")
@@ -53,6 +55,13 @@ def test_result(request , testid):
         test.result.save(f'test_result_{test.patient.user.first_name}_{test.created_at}.pdf', pdf)
         test.status='Completed'
         
+        # current_site = get_current_site(request)
+        # mail_subject = 'Activate your account'
+        # message = render_to_string('lab/lab_result_email.html')
+        # to_email = test.patient.user.email
+        # file = test.result  # Assuming test.result is the file you want to attach
+        # send_email=EmailMessage(mail_subject, message,settings.EMAIL_HOST_USER , to=[to_email], file=file)
+        # send_email.send()
 
         test.save()
         messages.success(request, 'Test result added successfully')
@@ -80,3 +89,16 @@ def get_pdf(context):
     buffer.seek(0)
     pdf_file = ContentFile(buffer.read())
     return pdf_file
+
+
+def send_email(subject, message, recipient_list, file=None):
+    email = EmailMessage(
+        subject,
+        message,
+        settings.EMAIL_HOST_USER,
+        recipient_list
+    )
+    if file:
+        email.attach(file.name, file.read(), file.content_type)
+    email.send()
+    return True
