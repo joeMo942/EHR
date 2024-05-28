@@ -42,14 +42,14 @@ def doctor_operations(request):
         doctor_id = request.POST.get('doctor')
         department_id = request.POST.get('department')
         print(doctor_id, department_id)
-        doctor = Doctor.objects.get(id=doctor_id)
+        doctor = Account.objects.get(pk=doctor_id)
         department = Department.objects.get(id=department_id)
-        doctor.department = department
-        doctor.save()
+        Doctor.objects.create(user=doctor, department=department)
         messages.success(request, 'Doctor assigned to department successfully')
         return redirect('doctor_operations')
     else:
         context={
+            'unassigndoctors': Account.objects.filter(type='doctor'),
             'doctors': Doctor.objects.all(),
             'departments': Department.objects.all(),
         }
@@ -78,7 +78,7 @@ def delete_doctor(request, doctor_id):
     doctor = Doctor.objects.get(id=doctor_id)
     doctor.delete()
     messages.success(request, 'Doctor deleted successfully')
-    return render(request, 'manager/doctor-operations.html')
+    return redirect('doctor_operations')
 
 
 @login_required

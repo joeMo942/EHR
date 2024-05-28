@@ -27,8 +27,8 @@
                 <div class="form-group custom-margin">
                     <label>Doctor</label>
                     <select class="js-example-basic-single w-100" name="doctor">
-                        {% for doctor in doctors %}
-                        <option value="{{ doctor.pk }}">{{doctor.user.first_name}} {{doctor.user.last_name}}</option>
+                        {% for doctor in unassigndoctors %}
+                        <option value="{{ doctor.pk }}">{{doctor.first_name}} {{doctor.last_name}}</option>
                         {% endfor %}
                     </select>
                 </div>
