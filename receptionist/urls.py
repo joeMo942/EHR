@@ -11,5 +11,6 @@ urlpatterns = [
     path('update-appointment-status/', views.update_appointment_status, name='update_appointment_status'),
     path('create-appointment/', views.book_appointment, name='create_appointment'),
     path('patients-bills/<int:appointment>', views.patients_bills_confirm, name='patients_bills_confirm'),
+    path('cancel-appointment/<int:appointment>', views.cancel_appointment, name='cancel_appointment')
 
 ]

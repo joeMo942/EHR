@@ -39,7 +39,7 @@ def current_appointments(request):
         raise Http404
 
     appointments = Appointment.objects.select_related('patient_no__user', 'doctor__user', 'availability_time__availability').all()
-    
+    cancel_appointments = Appointment.objects.filter(status='cancel_request').all()
     # Custom serialization to include related fields
     appointments_list = []
     for appointment in appointments:
@@ -54,11 +54,13 @@ def current_appointments(request):
             'start_time': availability.start_time.strftime('%H:%M:%S'),  # Convert time to string
             'end_time': availability.end_time.strftime('%H:%M:%S'),  # Convert time to string
             'day_of_week': availability.day_of_week,
-            'status': appointment.status
+            'status': appointment.status,
+            
         })
     
     context = {
-        'appointments_json': json.dumps(appointments_list)  # Convert to JSON string
+        'appointments_json': json.dumps(appointments_list),
+        'cancel_appointments':cancel_appointments# Convert to JSON string
     }
     return render(request, 'receptionist/current-appointments.html', context)
 
@@ -184,3 +186,15 @@ def patients_bills_confirm(request, appointment):
     appointments.save()
     messages.success(request, "Payment has been confirmed")
     return redirect('patients_bills')
+
+@login_required
+def cancel_appointment(request, appointment):
+    user=request.user
+    if user.type!='receptionist':
+        raise Http404
+    appointments = get_object_or_404(Appointment, id=appointment)
+    appointments.status='Declined'
+    appointments.delete()
+    # appointments.save()
+    messages.success(request, "Appointment has been cancelled")
+    return redirect('current_appointments')
