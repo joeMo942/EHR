@@ -11,15 +11,74 @@ from django.contrib.auth.decorators import login_required
 from doctor.models import Department , Doctor, DoctorAvailability
 from django.http import JsonResponse
 from nurse.models import Nurse, InitialAssessment
+from django.contrib.auth import authenticate
+from django.core.files.storage import FileSystemStorage
 
 def profile(request):
     user = request.user
     patient = get_object_or_404(Patient, user=user)
+
+    if request.method == 'POST':
+        current_password = request.POST.get('current_password')
+        print(current_password)
+        print(user)
+        
+        # Authenticate the user with the current password
+        user = authenticate(email=user, password=current_password)
+        print(user)
+        if user is not None:
+            # If the password is correct, process the form data and the image upload
+            if 'img[]' in request.FILES:
+                image = request.FILES['img[]']
+                patient.image = image
+                patient.save()
+            else:
+                uploaded_file_url = None
+
+            # Process form data
+            profile_data = {
+                'ssn': request.POST.get('ssn'),
+                'medid': request.POST.get('medid'),
+                'first_name': request.POST.get('first_name'),
+                'last_name': request.POST.get('last_name'),
+                'gender': request.POST.get('gender'),
+                'dob': request.POST.get('dob'),
+                'category': request.POST.get('category'),
+                'mobile_number': request.POST.get('mobile_number'),
+                'email': request.POST.get('email'),
+                'new_password': request.POST.get('new_password')
+            }
+
+            # Update user profile (assuming you have a Profile model or similar)
+            # Example:
+            user.ssn = profile_data['ssn']
+            user.first_name = profile_data['first_name']
+            user.last_name = profile_data['last_name']
+            user.gender = profile_data['gender']
+            # user.birth_date = profile_data['dob']
+            user.contact_no = profile_data['mobile_number']
+            
+            # Update password if provided
+            new_password = profile_data['new_password']
+            if new_password:
+                user.set_password(new_password)
+            
+            user.save()
+            patient.save()
+            
+            messages.success(request, 'Profile updated successfully')
+            return redirect('profile')  # Replace 'profile' with your URL name for the profile page
+
+        else:
+            # If the password is incorrect, show an error message
+            messages.error(request, 'Current password is incorrect')
+
     context = {
-        'user': user,
-        'patient': patient
+       'user': user,
+        'patient': patient  # Default profile image URL
     }
     return render(request, 'patient/profile.html', context)
+
 
 @login_required
 @csrf_protect
