@@ -38,7 +38,8 @@ def current_appointments(request):
     if user.type!='receptionist':
         raise Http404
 
-    appointments = Appointment.objects.select_related('patient_no__user', 'doctor__user', 'availability_time__availability').all()
+    # appointments = Appointment.objects.select_related('patient_no__user', 'doctor__user', 'availability_time__availability').all()
+    appointments = Appointment.objects.filter(status__in=['Pending', 'Confirmed']).exclude(status='cancel_request').order_by('availability_time__date')
     cancel_appointments = Appointment.objects.filter(status='cancel_request').all()
     # Custom serialization to include related fields
     appointments_list = []

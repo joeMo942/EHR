@@ -30,8 +30,11 @@ def appointment(request):
     user=request.user
     if user.type != 'doctor':
         raise Http404
-    
-    doctor=get_object_or_404(Doctor,user=user)
+    try:
+        doctor = Doctor.objects.get(user=user)
+    except Doctor.DoesNotExist:
+        return render(request, 'doctor/appointments ERORR.html')
+    # doctor=get_object_or_404(Doctor,user=user)
     
     confirmed_appointments = Appointment.objects.filter(doctor=doctor, status='Confirmed')
     context = {'appointments': confirmed_appointments}
@@ -42,7 +45,9 @@ def patients(request):
     user=request.user
     if user.type != 'doctor':
         raise Http404
-    return render(request, 'doctor/patient-info.html')
+    patients = Patient.objects.filter(appointment__doctor__user=user).distinct()
+    context = {'patients': patients}
+    return render(request, 'doctor/patient-info.html',context)
 
 
 # def encounter(request):
