@@ -70,7 +70,7 @@
     "browser-sync": "^2.29.3",
     "compass-mixins": "^0.12.10",
     "del": "^4.1.1",
-    "gulp": "^4.0.2",
+    "gulp": "^5.0.1",
     "gulp-concat": "^2.6.1",
     "gulp-inject": "^5.0.2",
     "gulp-inject-partials": "^1.0.3",
