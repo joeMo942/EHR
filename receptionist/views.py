@@ -105,7 +105,6 @@ def book_appointment(request):
         patient = Patient.objects.get(user__ssn=ssn)
         doctor_id = request.POST.get('doctor')
         availability_id = request.POST.get('availableAppointments')
-        print(availability_id)
         doctor = get_object_or_404(Doctor, id=doctor_id)
         availability = get_object_or_404(DoctorAvailability, id=availability_id)
         department = doctor.department
