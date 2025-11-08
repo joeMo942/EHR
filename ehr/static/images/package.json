@@ -68,6 +68,7 @@
   },
   "devDependencies": {
     "browser-sync": "^3.0.4",
+    "browser-sync": "^2.29.3",
     "compass-mixins": "^0.12.10",
     "del": "^4.1.1",
     "gulp": "^4.0.2",
